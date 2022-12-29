@@ -1,8 +1,9 @@
-import '../styles/globals.css'
 import GlobalProvider from '../Providers/GlobalProvider'
 import createEmotionCache from '../utils/createEmotionCache'
 import { CacheProvider } from '@emotion/react';
 import { MyAppProps } from '../models/Props'
+import 'bootstrap/dist/css/bootstrap.css'
+import '../styles/globals.scss'
 
 const clientSideEmotionCache = createEmotionCache();
 

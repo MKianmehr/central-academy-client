@@ -1,0 +1,8 @@
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import 'partials/mixins';
+@import 'partials/variables';
+@import 'partials/fonts';
+
+.title {
+    @include font-size(4rem);
+}
