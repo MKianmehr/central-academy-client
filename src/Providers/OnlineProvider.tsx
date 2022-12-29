@@ -1,8 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react'
 import { OnLineProp } from '../models/Props'
-
-
-export const OnLineContext = createContext<boolean>(true);
+import { OnLineContext } from '../contexts'
 
 
 const OnlineProvider: React.FC<OnLineProp> = ({ children }) => {
