@@ -1,3 +1,4 @@
+import { appWithTranslation } from 'next-i18next';
 import GlobalProvider from '../Providers/GlobalProvider'
 import createEmotionCache from '../utils/createEmotionCache'
 import { CacheProvider } from '@emotion/react';
@@ -7,7 +8,7 @@ import '../styles/globals.scss'
 
 const clientSideEmotionCache = createEmotionCache();
 
-export default function App(props: MyAppProps) {
+function App(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   return (
     <GlobalProvider>
@@ -17,3 +18,5 @@ export default function App(props: MyAppProps) {
     </GlobalProvider>
   )
 }
+
+export default appWithTranslation(App);

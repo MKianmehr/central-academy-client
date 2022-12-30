@@ -1,0 +1,14 @@
+@function get-text-color($bg-color) {
+    $r: red($bg-color);
+    $g: green($bg-color);
+    $b: blue($bg-color);
+    $luminance: (0.299 * $r + 0.587 * $g + 0.114 * $b) / 255;
+
+    @if $luminance >0.5 {
+        @return darken($bg-color, 95); // white for light backgrounds
+    }
+
+    @else {
+        @return lighten($bg-color, 10) // black for dark backgrounds
+    }
+}

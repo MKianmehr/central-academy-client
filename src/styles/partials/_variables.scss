@@ -1,0 +1,23 @@
+$input-border-radius: 0.2rem;
+
+
+
+
+
+
+// dark modde colors
+$primary-color: #fff;
+$secondary-color: #E5E5E5;
+$tertiary-color: #1750FF;
+$quaternary-color: #000;
+$color-error: #ff0000;
+$primary-color-text: #000;
+
+[data-theme="dark"] {
+    $primary-color: #1C1C24;
+    $secondary-color: #000;
+    $tertiary-color: #4447E2;
+    $quaternary-color: #E5E5E5;
+    $color-error: #ff0000;
+    $primary-color-text: #E5E5E5;
+}

@@ -1,0 +1,38 @@
+@import '../../../styles/main.scss';
+
+.inputContainer {
+    @include align-center;
+    @include make-container(15px, $input-border-radius);
+    background-color: $secondary-color;
+
+    &:focus-within {
+        @include box-shadow;
+    }
+}
+
+.input {
+    flex: 1;
+    background-color: inherit;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    font-family: IranYekan;
+
+    color: get-text-color($secondary-color);
+
+    &:focus {
+        outline: none
+    }
+
+    ;
+
+    &:autofill {
+        @include autofill-color($secondary-color, get-text-color($secondary-color))
+    }
+}
+
+.error {
+    color: $color-error;
+    font-size: .9rem;
+    margin: 0;
+}
