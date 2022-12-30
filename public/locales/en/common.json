@@ -1,4 +1,9 @@
 {
     "email": "Email",
-    "password": "Password"
+    "password": "Password",
+    "Sign in with Google": "Sign in with Google",
+    "forget password": "Don't remember your password?",
+    "or": "Or",
+    "create account": "Create a new account",
+    "login": "Login"
 }

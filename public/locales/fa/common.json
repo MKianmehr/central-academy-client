@@ -1,4 +1,9 @@
 {
     "email": "ایمیل",
-    "password": "پسورد"
+    "password": "پسورد",
+    "Sign in with Google": "ورود با حساب گوگل",
+    "forget password": "رمز خود را فراموش کرده اید؟",
+    "or": "یا",
+    "create account": "حساب جدید بسازید",
+    "login": "ورود"
 }

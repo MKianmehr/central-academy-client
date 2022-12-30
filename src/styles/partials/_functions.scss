@@ -9,6 +9,6 @@
     }
 
     @else {
-        @return lighten($bg-color, 10) // black for dark backgrounds
+        @return lighten($bg-color, 90) // black for dark backgrounds
     }
 }

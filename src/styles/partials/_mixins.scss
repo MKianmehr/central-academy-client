@@ -3,6 +3,11 @@
     align-items: center;
 }
 
+@mixin justify-center {
+    display: flex;
+    justify-content: center;
+}
+
 @mixin make-container($padding-x, $border-radius: 0) {
     width: 100%;
     padding-right: $padding-x;
@@ -12,12 +17,33 @@
     border-radius: $border-radius;
 }
 
-@mixin box-shadow {
-    box-shadow: 0 0 0 3px var(--quaternary-color);
-    transition: all 0.3s ease;
+@mixin border-transition($color) {
+    box-shadow: 0 0 0 3px $color;
+    transition: all 1s ease;
 }
 
 @mixin autofill-color($bg-color, $text-color) {
     box-shadow: inset 0 0 0 50px $bg-color !important;
     -webkit-text-fill-color: $text-color;
+}
+
+@mixin border($color, $width: 1px) {
+    border: $width solid $color;
+}
+
+@mixin align-justify-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin large-screens($size) {
+    @media only screen and (min-width: $size ) {
+        @content
+    }
+}
+
+@mixin margin-horizontal($margin) {
+    margin-left: $margin;
+    margin-right: $margin;
 }

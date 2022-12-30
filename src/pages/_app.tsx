@@ -13,7 +13,9 @@ function App(props: MyAppProps) {
   return (
     <GlobalProvider>
       <CacheProvider value={emotionCache}>
-        <Component {...pageProps} />
+        <div style={{ display: "flex", flexDirection: "column", height: "calc(var(--vh, 1vh) * 100)" }}>
+          <Component {...pageProps} />
+        </div>
       </CacheProvider>
     </GlobalProvider>
   )

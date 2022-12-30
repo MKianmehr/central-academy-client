@@ -6,7 +6,7 @@
     background-color: $secondary-color;
 
     &:focus-within {
-        @include box-shadow;
+        @include border-transition($quaternary-color);
     }
 }
 
