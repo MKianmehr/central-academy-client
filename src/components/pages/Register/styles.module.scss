@@ -1,0 +1,71 @@
+@import '../../../styles/main.scss';
+
+.container {
+    @include align-justify-center;
+    flex: 1;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    background-color: $primary-color;
+    width: 100%;
+    height: 100%;
+    padding-top: 85px;
+
+    @include large-screens(768px) {
+        & {
+            width: 500px;
+            height: max-content;
+            min-height: 600px;
+            border-radius: 10px;
+        }
+    }
+}
+
+.option {
+    @include border($secondary-color);
+    @include margin-horizontal(5px);
+
+    color: get-text-color($secondary-color);
+    gap: 0.3rem;
+    height: $input-height;
+    font-family: IranYekan;
+    font-weight: 700;
+    font-size: 0.9rem;
+
+    &:hover {
+        background-color: $secondary-color;
+    }
+}
+
+.icon {
+    color: get-text-color($secondary-color);
+}
+
+.link {
+    @include justify-center;
+    color: get-text-color($secondary-color);
+}
+
+.or {
+    @include justify-center;
+}
+
+.button {
+    @include make-container(0);
+    padding: 1rem;
+    font-family: IranYekan;
+    font-size: 1.2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    flex: 1
+}
+
+.inputs {
+    @include margin-horizontal(8px);
+    flex: 1;
+}

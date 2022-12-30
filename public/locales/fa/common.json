@@ -5,5 +5,9 @@
     "forget password": "رمز خود را فراموش کرده اید؟",
     "or": "یا",
     "create account": "حساب جدید بسازید",
-    "login": "ورود"
+    "login": "ورود",
+    "name": "نام",
+    "confirm password": "تاییدیه پسورد",
+    "Sign up with Google": "ثبت نام با گوگل",
+    "register": "ثبت نام"
 }

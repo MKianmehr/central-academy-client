@@ -5,5 +5,9 @@
     "forget password": "Don't remember your password?",
     "or": "Or",
     "create account": "Create a new account",
-    "login": "Login"
+    "login": "Login",
+    "name": "Name",
+    "confirm password": "Confirm Password",
+    "Sign up with Google": "Sign up with google",
+    "register": "Register"
 }
