@@ -9,5 +9,6 @@
     "name": "Name",
     "confirm password": "Confirm Password",
     "Sign up with Google": "Sign up with google",
-    "register": "Register"
+    "register": "Register",
+    "already have an account": "Already have an account?"
 }

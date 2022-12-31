@@ -83,14 +83,9 @@ const Register = () => {
                         <Height16 />
                     </div>
                     <Height16 />
-                    <Link className={styles.link} style={{ textDecoration: 'none' }} href="#">
-                        {t('forget password')}
-                    </Link>
-                    <Height16 />
-                    <div className={styles.or}>{t('or')}</div>
                     <Height16 />
                     <Link style={{ textDecoration: 'none' }} className={styles.link} href="/register">
-                        {t('create account')}
+                        {t('already have an account')}
                     </Link>
                     <Height16 />
                     <Button type='submit' className={styles.button} variant="contained">
