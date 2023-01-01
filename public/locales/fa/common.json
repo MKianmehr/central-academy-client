@@ -10,5 +10,12 @@
     "confirm password": "تاییدیه پسورد",
     "Sign up with Google": "ثبت نام با گوگل",
     "register": "ثبت نام",
-    "already have an account": "از قبل حساب کاربری دارید؟"
+    "already have an account": "از قبل حساب کاربری دارید؟",
+    "website-name": "سنترال آکادمی",
+    "dark mode": "حالت شب",
+    "light mode": "حالت روز",
+    "logout": "خروج از حساب ",
+    "profile": "حساب کاربری",
+    "home page": "صفحه اصلی",
+    "lang-en": "انگلیسی"
 }

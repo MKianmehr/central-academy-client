@@ -47,3 +47,18 @@
     margin-left: $margin;
     margin-right: $margin;
 }
+
+@mixin margin-vertical($margin) {
+    margin-top: $margin;
+    margin-bottom: $margin;
+}
+
+@mixin padding-horizontal($padding) {
+    padding-left: $padding;
+    padding-right: $padding;
+}
+
+@mixin padding-vertical($padding) {
+    padding-top: $padding;
+    padding-bottom: $padding;
+}

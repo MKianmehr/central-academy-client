@@ -1,24 +1,25 @@
 $input-border-radius: 0.2rem;
 $input-height: 4rem;
+$breakpoint-sm: 576px;
 
+// light theme
+$colors: (
+    primary: #fff,
+    secondary: #E5E5E5,
+    tertiary: #1750FF,
+    quaternary: #000,
+    error: #ff0000,
+    primary-text: #000,
+    dark-mode: #4447E2,
+);
 
-
-
-
-
-// dark modde colors
-$primary-color: #fff;
-$secondary-color: #E5E5E5;
-$tertiary-color: #1750FF;
-$quaternary-color: #000;
-$color-error: #ff0000;
-$primary-color-text: #000;
-
-[data-theme="dark"] {
-    $primary-color: #1C1C24;
-    $secondary-color: #000;
-    $tertiary-color: #4447E2;
-    $quaternary-color: #E5E5E5;
-    $color-error: #ff0000;
-    $primary-color-text: #E5E5E5;
-}
+// dark theme
+$colors-dark: (
+    primary: #1C1C24,
+    secondary: #000,
+    tertiary: #4447E2,
+    quaternary: #E5E5E5,
+    error: #ff0000,
+    primary-text: #E5E5E5,
+    dark-mode: #FFFF00,
+);

@@ -3,10 +3,10 @@
 .inputContainer {
     @include align-center;
     @include make-container(15px, $input-border-radius);
-    background-color: $secondary-color;
+    background-color: getColor(secondary);
 
     &:focus-within {
-        @include border-transition($quaternary-color);
+        @include border-transition(getColor(quaternary));
     }
 }
 
@@ -16,9 +16,8 @@
     border: none;
     padding: 1rem;
     font-size: 1rem;
-    font-family: IranYekan;
 
-    color: get-text-color($secondary-color);
+    color: getColor(quaternary);
 
     &:focus {
         outline: none
@@ -27,12 +26,12 @@
     ;
 
     &:autofill {
-        @include autofill-color($secondary-color, get-text-color($secondary-color))
+        @include autofill-color(getColor(secondary), getColor(quaternary))
     }
 }
 
 .error {
-    color: $color-error;
+    color: getColor(error);
     font-size: .9rem;
     margin: 0;
 }

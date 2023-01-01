@@ -1,0 +1,26 @@
+@import '../../../styles/main.scss';
+
+.container {
+    display: none;
+
+    @include large-screens($breakpoint-sm) {
+        @include align-center;
+        justify-content: space-between;
+        background-color: getColor(primary);
+        @include padding-horizontal(10px);
+        @include padding-vertical(5px);
+        z-index: 1;
+    }
+
+    ;
+}
+
+.pages {
+    display: flex;
+    margin: 0;
+}
+
+.page {
+    list-style-type: none;
+    color: getColor(primary-text);
+}

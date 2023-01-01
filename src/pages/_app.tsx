@@ -1,5 +1,7 @@
 import { appWithTranslation } from 'next-i18next';
-import GlobalProvider from '../Providers/GlobalProvider'
+import GlobalProvider from '../Providers/GlobalProvider';
+import Navbar from '../components/commons/Navbar';
+import SwipeableTempDrawer from '../components/commons/SwipeableTempDrawer'
 import createEmotionCache from '../utils/createEmotionCache'
 import { CacheProvider } from '@emotion/react';
 import { MyAppProps } from '../models/Props'
@@ -14,6 +16,8 @@ function App(props: MyAppProps) {
     <GlobalProvider>
       <CacheProvider value={emotionCache}>
         <div style={{ display: "flex", flexDirection: "column", height: "calc(var(--vh, 1vh) * 100)" }}>
+          <SwipeableTempDrawer />
+          <Navbar />
           <Component {...pageProps} />
         </div>
       </CacheProvider>

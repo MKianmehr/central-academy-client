@@ -14,6 +14,8 @@ export interface GlobalProp extends children {
 
 }
 
+export interface DarkModeProp extends children { }
+
 export interface MyAppProps extends AppProps {
     emotionCache?: EmotionCache;
 }
@@ -31,4 +33,22 @@ export interface InputProp {
 export interface UseLoginProp {
     email: string;
     password: string;
+}
+
+export interface CheckButtonProp {
+    onIcon: React.ReactElement;
+    offIcon: React.ReactElement;
+    htmlFor: string;
+    isOn: string;
+    onChange: React.ChangeEventHandler<HTMLInputElement>;
+}
+
+export interface DarkModeProviderProp {
+    theme: string | null | undefined;
+    toggleTheme: React.ChangeEventHandler<HTMLInputElement>;
+}
+
+export interface AccountMenuProp {
+    theme: string | null | undefined;
+    toggleTheme: React.ChangeEventHandler<HTMLInputElement>;
 }

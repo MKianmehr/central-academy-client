@@ -10,5 +10,12 @@
     "confirm password": "Confirm Password",
     "Sign up with Google": "Sign up with google",
     "register": "Register",
-    "already have an account": "Already have an account?"
+    "already have an account": "Already have an account?",
+    "website-name": "Central Academy",
+    "dark mode": "Dark Mode",
+    "light mode": "Light Mode",
+    "logout": "Logout",
+    "profile": "Profile",
+    "home page": "Home Page",
+    "lang-fa": "Persian"
 }

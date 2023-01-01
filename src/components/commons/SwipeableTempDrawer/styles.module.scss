@@ -1,0 +1,17 @@
+@import '../../../styles/main.scss';
+
+.container {
+    background-color: getColor(primary);
+
+    @include large-screens($breakpoint-sm) {
+        display: none;
+    }
+}
+
+.menu {
+    color: getColor(primary-text);
+}
+
+.menuItem {
+    color: getColor(primary-text)
+}

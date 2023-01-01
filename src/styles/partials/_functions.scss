@@ -1,14 +1,7 @@
-@function get-text-color($bg-color) {
-    $r: red($bg-color);
-    $g: green($bg-color);
-    $b: blue($bg-color);
-    $luminance: (0.299 * $r + 0.587 * $g + 0.114 * $b) / 255;
+@import './variables';
 
-    @if $luminance >0.5 {
-        @return darken($bg-color, 95); // white for light backgrounds
-    }
+//creating a function to get color instead of using css varible
 
-    @else {
-        @return lighten($bg-color, 90) // black for dark backgrounds
-    }
+@function getColor($color-name) {
+    @return var(--color-#{$color-name});
 }

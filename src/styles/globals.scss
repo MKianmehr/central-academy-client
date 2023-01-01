@@ -1,6 +1,33 @@
 @import './main.scss';
 
 body {
-    font-family: IranYekan;
-    background-color: $secondary-color;
+    background-color: getColor(secondary);
+}
+
+
+* {
+    font-family: IranYekan, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+}
+
+
+
+
+:root {
+
+    @each $name,
+    $color in $colors {
+        --color-#{$name} : #{$color};
+    }
+
+    --theme: 'light';
+}
+
+[data-theme="dark"] {
+
+    @each $name,
+    $color in $colors-dark {
+        --color-#{$name} : #{$color};
+    }
+
+    --theme : 'dark';
 }

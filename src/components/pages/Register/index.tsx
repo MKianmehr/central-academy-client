@@ -84,7 +84,7 @@ const Register = () => {
                     </div>
                     <Height16 />
                     <Height16 />
-                    <Link style={{ textDecoration: 'none' }} className={styles.link} href="/register">
+                    <Link style={{ textDecoration: 'none' }} className={styles.link} href="/login">
                         {t('already have an account')}
                     </Link>
                     <Height16 />
