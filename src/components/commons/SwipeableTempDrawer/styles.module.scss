@@ -2,6 +2,7 @@
 
 .container {
     background-color: getColor(primary);
+    z-index: 1;
 
     @include large-screens($breakpoint-sm) {
         display: none;

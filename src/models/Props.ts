@@ -16,6 +16,8 @@ export interface GlobalProp extends children {
 
 export interface DarkModeProp extends children { }
 
+export interface MiniDrawerProp extends children { }
+
 export interface MyAppProps extends AppProps {
     emotionCache?: EmotionCache;
 }

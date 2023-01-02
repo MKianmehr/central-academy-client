@@ -17,5 +17,7 @@
     "logout": "Logout",
     "profile": "Profile",
     "home page": "Home Page",
-    "lang-fa": "Persian"
+    "lang-fa": "Persian",
+    "dashboard": "Dashboard",
+    "course create": "Course create"
 }
