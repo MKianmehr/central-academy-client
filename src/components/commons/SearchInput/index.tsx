@@ -11,7 +11,7 @@ const SearchInput = ({ value, onChange, placeHolder, className }: SearchInputPro
     return (
         <form className={styles.container} onSubmit={onSubmit}>
             <IconButton type='submit'>
-                <SearchIcon />
+                <SearchIcon className={styles.icon} />
             </IconButton>
             <input value={value} onChange={onChange} className={[styles.input, className].join(" ")} placeholder={placeHolder} />
         </form>

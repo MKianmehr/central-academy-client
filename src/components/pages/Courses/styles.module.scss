@@ -13,8 +13,20 @@
     max-width: 1500px;
     height: 100%;
     border-radius: $border-radius;
+    overflow-y: scroll;
     @include padding-horizontal(5px);
     @include padding-vertical(15px);
+
+    @include large-screens($breakpoint-sm) {
+        @include padding-horizontal(20px)
+    }
+}
+
+.courseContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
 }
 
 .header {

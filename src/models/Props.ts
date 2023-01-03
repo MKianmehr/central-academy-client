@@ -71,3 +71,11 @@ export interface SearchInputProp {
     className?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
+
+export interface InstructorCourseCardProp {
+    title: { fa: string, en: string };
+    src: string;
+    rate: number;
+    numberOfRate: number;
+    numberOfStudent: number;
+}

@@ -15,4 +15,10 @@
 .input {
     border: none;
     outline: none;
+    background-color: inherit;
+    color: getColor(primary-text);
+}
+
+.icon {
+    color: getColor(primary-text);
 }

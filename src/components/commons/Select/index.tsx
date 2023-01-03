@@ -4,6 +4,7 @@ import FormControl from '@mui/material/FormControl';
 import { SelectLabelsProp } from '../../../models/Props';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useTranslation } from 'next-i18next';
+import styles from './styles.module.scss'
 
 export default function SelectLabels({ labels }: SelectLabelsProp) {
     const { t } = useTranslation("common")
@@ -18,6 +19,7 @@ export default function SelectLabels({ labels }: SelectLabelsProp) {
         <div>
             <FormControl size='small' sx={{ minWidth: 120 }}>
                 <Select
+                    className={styles.form}
                     value={value}
                     onChange={handleChange}
                     displayEmpty
