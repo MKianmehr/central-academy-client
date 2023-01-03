@@ -1,0 +1,26 @@
+@import '../../../styles/main.scss';
+
+.container {
+    @include align-justify-center;
+    height: 100%;
+}
+
+.card {
+    @include align-justify-center;
+    flex-direction: column;
+    @include padding-horizontal(15px);
+    @include padding-vertical(10px);
+    background-color: getColor(primary);
+    @include box-shadow(getColor(box-shadow-color));
+    width: 90%;
+    border-radius: $border-radius;
+    gap: 25px;
+    color: getColor(primary-text);
+    letter-spacing: 0.8px;
+
+    @include large-screens($breakpoint-sm) {
+        max-width: 500px;
+    }
+
+    ;
+}

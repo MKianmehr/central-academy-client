@@ -1,0 +1,55 @@
+@import '../../../styles/main.scss';
+
+.container {
+    height: 100%;
+    @include justify-center;
+    align-items: flex-start;
+    @include padding-vertical(15px);
+}
+
+.courses {
+    background-color: getColor(primary);
+    width: 97%;
+    max-width: 1500px;
+    height: 100%;
+    border-radius: $border-radius;
+    @include padding-horizontal(5px);
+    @include padding-vertical(15px);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.header_input {
+    @include flex-column;
+    justify-content: space-between;
+
+}
+
+.title {
+    font-weight: bold;
+    color: getColor(primary-text);
+}
+
+.header_createCourse {
+    @include flex-column-reverse;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: flex-end;
+
+    @include large-screens($breakpoint-sm) {
+        flex: 1;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+        @include padding-horizontal(5px);
+    }
+}
+
+.input {
+    width: 100%
+}

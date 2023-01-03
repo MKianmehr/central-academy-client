@@ -13,6 +13,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import ListItemText from '@mui/material/ListItemText';
 import { MiniDrawerProp } from '../../../models/Props';
 import { useRouter } from 'next/router';
@@ -86,10 +87,12 @@ export default function MiniDrawer({ children }: MiniDrawerProp) {
         setOpen(false)
     }
 
+    const padding = router.locale === "fa" ? { paddingRight: "65px" } : { paddingLeft: "65px" }
+
 
     return (
-        <Box sx={{ display: 'flex', zIndex: 0 }} >
-            <Drawer variant="permanent" open={open} anchor={(router.locale === "fa") ? "right" : "left"} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <Box sx={{ display: 'flex', zIndex: 0, height: "100%", overflowX: "scroll" }} >
+            <Drawer variant="permanent" open={open} anchor={(router.locale === "fa") ? "right" : "left"} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} style={{ position: "absolute" }}>
                 <DrawerHeader />
                 <DrawerHeader>
                     <IconButton onClick={handleDrawer}>
@@ -98,7 +101,7 @@ export default function MiniDrawer({ children }: MiniDrawerProp) {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    <Link href="/instructor" style={{ textDecoration: "none" }}>
+                    <Link href="/instructor/courses" style={{ textDecoration: "none" }}>
                         <ListItem disablePadding sx={{ display: 'block', borderRight: "2px solid rgb(3, 169, 244)", backgroundColor: "rgba(0, 0, 0, 0.04)" }}>
                             <ListItemButton
                                 sx={{
@@ -114,10 +117,10 @@ export default function MiniDrawer({ children }: MiniDrawerProp) {
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    <DashboardIcon />
+                                    <OndemandVideoIcon />
 
                                 </ListItemIcon>
-                                <ListItemText primary={t("dashboard")} sx={{ opacity: open ? 1 : 0 }} />
+                                <ListItemText primary={t("courses")} sx={{ opacity: open ? 1 : 0 }} />
                             </ListItemButton>
                         </ListItem>
                     </Link>
@@ -146,9 +149,9 @@ export default function MiniDrawer({ children }: MiniDrawerProp) {
                 </List>
                 <Divider />
             </Drawer>
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+            <Box component="main" sx={{ flexGrow: 1, height: "100%", ...padding }}>
                 {children}
             </Box>
-        </Box>
+        </Box >
     );
 }

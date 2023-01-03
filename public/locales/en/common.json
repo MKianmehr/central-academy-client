@@ -18,6 +18,11 @@
     "profile": "Profile",
     "home page": "Home Page",
     "lang-fa": "Persian",
-    "dashboard": "Dashboard",
-    "course create": "Course create"
+    "courses": "Courses",
+    "course create": "Course create",
+    "Jump into Course Creation": "Jump into Course Creation",
+    "Create Your Course": "Create Your Course",
+    "Courses": "Courses",
+    "search your courses": "Search your courses",
+    "newest": "Newest"
 }

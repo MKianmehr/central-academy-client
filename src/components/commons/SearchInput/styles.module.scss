@@ -1,0 +1,18 @@
+@import '../../../styles/main.scss';
+
+.container {
+    @include border(1px, getColor(secondary));
+    @include align-center;
+    @include border-transition(getColor(secondary), 1px);
+    border-radius: 4px;
+    height: 40px;
+
+    &:focus-within {
+        @include box-shadow(getColor(box-shadow-color));
+    }
+}
+
+.input {
+    border: none;
+    outline: none;
+}

@@ -1,11 +1,11 @@
 import React from 'react'
-import Instructor from '../components/pages/Instructor';
 import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import CourseCreate from '../../../components/pages/CourseCreate'
 
-const instructor = () => {
+const index = () => {
     return (
-        <Instructor />
+        <CourseCreate />
     )
 }
 
@@ -17,4 +17,4 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     }
 }
 
-export default instructor
+export default index

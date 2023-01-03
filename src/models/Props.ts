@@ -54,3 +54,20 @@ export interface AccountMenuProp {
     theme: string | null | undefined;
     toggleTheme: React.ChangeEventHandler<HTMLInputElement>;
 }
+
+export interface SelectLabelsProp {
+    labels: string[]
+}
+
+export interface LinkButtonProp {
+    href: string;
+    text: string;
+    className?: string;
+}
+
+export interface SearchInputProp {
+    placeHolder: string;
+    value: string;
+    className?: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}

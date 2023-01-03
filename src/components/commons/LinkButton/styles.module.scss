@@ -1,0 +1,11 @@
+@import '../../../styles/main.scss';
+
+.button {
+    @include align-justify-center;
+    text-decoration-line: none;
+    border-radius: 5px;
+    padding: 5px;
+    @include padding-horizontal(10px);
+    border: 1px solid getColor(border-color);
+    color: getColor(link-color);
+}

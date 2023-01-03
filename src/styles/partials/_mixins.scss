@@ -8,6 +8,16 @@
     justify-content: center;
 }
 
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flex-column-reverse {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
 @mixin make-container($padding-x, $border-radius: 0) {
     width: 100%;
     padding-right: $padding-x;
@@ -17,8 +27,8 @@
     border-radius: $border-radius;
 }
 
-@mixin border-transition($color) {
-    box-shadow: 0 0 0 3px $color;
+@mixin border-transition($color, $width: 3px) {
+    box-shadow: 0 0 0 $width $color;
     transition: all 1s ease;
 }
 
@@ -61,4 +71,8 @@
 @mixin padding-vertical($padding) {
     padding-top: $padding;
     padding-bottom: $padding;
+}
+
+@mixin box-shadow($color) {
+    box-shadow: 0 2px 4px $color, 0 4px 12px $color;
 }
