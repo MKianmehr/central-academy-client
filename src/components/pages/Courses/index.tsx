@@ -12,13 +12,13 @@ import { Divider } from '@mui/material';
 
 const labels = ["newest"]
 const images = [
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100 }
+    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 1 },
+    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 2 },
+    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 3 },
+    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 4 },
+    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 5 },
+    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 6 },
+    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 7 }
 ]
 
 
@@ -44,13 +44,13 @@ const Courses = () => {
                         </div>
                         <div className={styles.header_createCourse}>
                             <SelectLabels labels={labels} />
-                            <LinkButton href='' text={t("Create Your Course")} />
+                            <LinkButton href='/course/create' text={t("Create Your Course")} />
                         </div>
                     </div>
                     <Divider />
                     <div className={styles.courseContainer}>
                         {images.map((image) => {
-                            return <InstructorCourseCard src={image.src} title={image.title} rate={image.rate} numberOfStudent={image.numberOfStudent} numberOfRate={image.numberOfRate} />
+                            return <InstructorCourseCard key={image._id} src={image.src} title={image.title} rate={image.rate} numberOfStudent={image.numberOfStudent} numberOfRate={image.numberOfRate} />
                         })}
                     </div>
                 </div>

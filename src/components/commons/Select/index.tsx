@@ -26,7 +26,7 @@ export default function SelectLabels({ labels }: SelectLabelsProp) {
                     inputProps={{ 'aria-label': 'Without label' }}
                 >
                     {labels.map((label) => {
-                        return <MenuItem value={label}>{t(`${label}`)}</MenuItem>
+                        return <MenuItem key={label} value={label}>{t(`${label}`)}</MenuItem>
                     })}
                 </Select>
             </FormControl>
