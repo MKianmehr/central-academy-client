@@ -5,7 +5,7 @@ interface createCourseStepsState {
 
 }
 
-const initialState: createCourseStepsState = {}
+const initialState: createCourseStepsState = { value: "" }
 
 export const createCourseStepsSlice = createSlice({
     name: "createStep",
