@@ -33,3 +33,7 @@ body {
 
     --theme : 'dark';
 }
+
+.MuiPaper-root {
+    background-color: getColor(primary);
+}

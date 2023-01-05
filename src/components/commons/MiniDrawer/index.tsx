@@ -18,6 +18,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { MiniDrawerProp } from '../../../models/Props';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import styles from './styles.module.scss'
 
 const drawerWidth = 240;
 
@@ -95,7 +96,7 @@ export default function MiniDrawer({ children }: MiniDrawerProp) {
             <Drawer variant="permanent" open={open} anchor={(router.locale === "fa") ? "right" : "left"} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} style={{ position: "absolute" }}>
                 <DrawerHeader />
                 <DrawerHeader>
-                    <IconButton onClick={handleDrawer}>
+                    <IconButton className={styles.color} onClick={handleDrawer}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                     </IconButton>
                 </DrawerHeader>
@@ -117,10 +118,10 @@ export default function MiniDrawer({ children }: MiniDrawerProp) {
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    <OndemandVideoIcon />
+                                    <OndemandVideoIcon className={styles.color} />
 
                                 </ListItemIcon>
-                                <ListItemText primary={t("courses")} sx={{ opacity: open ? 1 : 0 }} />
+                                <ListItemText className={styles.color} primary={t("courses")} sx={{ opacity: open ? 1 : 0 }} />
                             </ListItemButton>
                         </ListItem>
                     </Link>
@@ -140,9 +141,9 @@ export default function MiniDrawer({ children }: MiniDrawerProp) {
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    <CreateIcon />
+                                    <CreateIcon className={styles.color} />
                                 </ListItemIcon>
-                                <ListItemText primary={t("course create")} sx={{ opacity: open ? 1 : 0 }} />
+                                <ListItemText className={styles.color} primary={t("course create")} sx={{ opacity: open ? 1 : 0 }} />
                             </ListItemButton>
                         </ListItem>
                     </Link>
