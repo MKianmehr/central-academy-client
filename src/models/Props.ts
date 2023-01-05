@@ -79,3 +79,16 @@ export interface InstructorCourseCardProp {
     numberOfRate: number;
     numberOfStudent: number;
 }
+
+export interface StepperProp extends children { }
+
+export interface StepOneProp extends children { }
+
+export interface StepOneOptionCardProp {
+    icon: React.ReactNode;
+    type: string;
+    description: string;
+    isActive: boolean;
+    index: number;
+    onClick: (index: number) => void
+}

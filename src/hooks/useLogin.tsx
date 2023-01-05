@@ -6,7 +6,6 @@ const useLogin = ({ email, password }: UseLoginProp) => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log("submit")
     }
 
     return { onSubmit }

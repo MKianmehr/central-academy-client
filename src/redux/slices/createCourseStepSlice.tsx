@@ -2,16 +2,25 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
 interface createCourseStepsState {
-
+    steps: string[];
+    state: {};
 }
 
-const initialState: createCourseStepsState = { value: "" }
+const initialState: createCourseStepsState = {
+    steps: [],
+    state: { stepOneState: "course" }
+}
 
 export const createCourseStepsSlice = createSlice({
     name: "createStep",
     initialState,
     reducers: {
-        stepOne: (state, action: PayloadAction<number>) => { },
+        setSteps: (state, action: PayloadAction<string[]>) => {
+            state.steps = action.payload
+        },
+        setStepOne: (state, action: PayloadAction<string>) => {
+            state.state = { ...state, stepOneState: action.payload }
+        },
         stepTwo: state => { },
         stepThree: state => { },
         stepFour: state => { },
@@ -20,7 +29,8 @@ export const createCourseStepsSlice = createSlice({
 })
 
 export const {
-    stepOne,
+    setSteps,
+    setStepOne,
     stepTwo,
     stepThree,
     stepFour,

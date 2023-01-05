@@ -26,5 +26,15 @@
     "search your courses": "Search your courses",
     "newest": "Newest",
     "rate": "Rate",
-    "Number of students": "Number of students"
+    "Number of students": "Number of students",
+    "step 1": "Step 1",
+    "step 2": "Step 2",
+    "step 3": "Step 3",
+    "step 4": "Step 4",
+    "question step one": "First, let's find out what type of course you're making.",
+    "course-create-step1-option1-type": "Course",
+    "course-create-step1-option1-description": "Create rich learning experiences with the help of video lectures, quizzes, coding exercises, etc.",
+    "course-create-step1-option2-type": "Test",
+    "course-create-step1-option2-description": "Help students prepare for certification exams by providing practice questions.",
+    "next": "Next"
 }

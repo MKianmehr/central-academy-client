@@ -1,0 +1,30 @@
+@import '../../../styles/main.scss';
+
+.option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    border: 1px solid black;
+    margin: 5px;
+    width: 100%;
+    color: getColor(primary-text);
+    cursor: pointer;
+
+    &>div {
+        text-align: center;
+    }
+
+    @include large-screens($breakpoint-sm) {
+        max-width: 350px;
+    }
+}
+
+.type {
+    margin: 5px;
+    font-weight: bold;
+}
+
+.active {
+    border: 2px solid getColor(border-color);
+}

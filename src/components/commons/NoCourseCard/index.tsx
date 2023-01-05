@@ -4,7 +4,7 @@ import styles from './styles.module.scss'
 import LinkButton from '../LinkButton';
 import Link from 'next/link'
 
-const index = () => {
+const NoCourseCard = () => {
     const { t } = useTranslation("common")
     return (
         <div className={styles.container}>
@@ -16,4 +16,4 @@ const index = () => {
     )
 }
 
-export default index
+export default NoCourseCard

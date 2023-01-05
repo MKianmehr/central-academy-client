@@ -44,7 +44,7 @@ const Courses = () => {
                         </div>
                         <div className={styles.header_createCourse}>
                             <SelectLabels labels={labels} />
-                            <LinkButton href='/course/create' text={t("Create Your Course")} />
+                            <LinkButton href='/course/create/1' text={t("Create Your Course")} />
                         </div>
                     </div>
                     <Divider />

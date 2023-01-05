@@ -26,5 +26,15 @@
     "search your courses": "جستجو در دوره ها",
     "newest": "جدید ترین",
     "rate": "امتیاز",
-    "Number of students": "تعداد دانشجو"
+    "Number of students": "تعداد دانشجو",
+    "step 1": "مرحله اول",
+    "step 2": "مرحله دوم",
+    "step 3": "مرحله سوم",
+    "step 4": "مرحله چهارم",
+    "question step one": "ابتدا, بیایید نوع دوره ای که میخواهید ایجاد کنید را مشخص کنیم",
+    "course-create-step1-option1-type": "دوره",
+    "course-create-step1-option1-description": "با کمک دوره های ویدیویی تجربه یادگیری خوب ایجاد کنید.",
+    "course-create-step1-option2-type": "تست",
+    "course-create-step1-option2-description": "با ارائه سوالات تمرینی به دانشجویان کمک کنید تا برای امتحانات آماده شوند.",
+    "next": "قدم بعدی"
 }
