@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'next-i18next';
 import Button from '@mui/material/Button';
 import Link from 'next/link';
@@ -21,6 +21,10 @@ const StepTwo = ({ children }: StepTwoProp) => {
     const [initialValue, setInitialValue] = useState(60)
     const [remaining, setRemaining] = useState(initialValue)
     usePreventBreakLine(textareaRef)
+
+    useEffect(() => {
+        return () => setText("")
+    }, [])
 
     const onChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setText(e.target.value)

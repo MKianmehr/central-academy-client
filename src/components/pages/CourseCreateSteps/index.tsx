@@ -14,6 +14,7 @@ const Index = () => {
     const step = router.query.step
     useEffect(() => {
         return () => {
+            console.log("unmount")
             dispatch(resetSteps())
         }
     }, [])

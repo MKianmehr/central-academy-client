@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'next-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../redux/hooks';
 import { setStepOne } from '../../../../redux/slices/createCourseStepSlice';
@@ -29,6 +29,10 @@ const StepOne = ({ children }: StepOneProp) => {
         })
         return activeIndex
     })
+
+    useEffect(() => {
+        return () => setActive(0)
+    }, [])
 
     const onOptionClick = useCallback((index: number) => {
         setActive(index)

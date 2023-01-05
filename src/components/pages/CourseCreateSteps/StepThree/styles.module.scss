@@ -1,0 +1,25 @@
+@import '../../../../styles/main.scss';
+
+.container {
+    height: 100%;
+    @include justify-center;
+    align-items: flex-start;
+    @include padding-vertical(15px);
+}
+
+.createBox {
+    display: flex;
+    flex-direction: column;
+    background-color: getColor(primary);
+    width: 97%;
+    max-width: 1500px;
+    height: 100%;
+    border-radius: $border-radius;
+    overflow-y: scroll;
+    @include padding-horizontal(5px);
+    @include padding-vertical(15px);
+
+    @include large-screens($breakpoint-sm) {
+        @include padding-horizontal(20px)
+    }
+}
