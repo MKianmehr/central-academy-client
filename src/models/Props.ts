@@ -84,6 +84,11 @@ export interface StepperProp extends children { }
 
 export interface StepOneProp extends children { }
 
+export interface StepTwoProp extends children { }
+
+export interface StepThreeProp extends children { }
+
+
 export interface StepOneOptionCardProp {
     icon: React.ReactNode;
     type: string;

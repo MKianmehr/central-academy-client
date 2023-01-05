@@ -36,5 +36,8 @@
     "course-create-step1-option1-description": "Create rich learning experiences with the help of video lectures, quizzes, coding exercises, etc.",
     "course-create-step1-option2-type": "Test",
     "course-create-step1-option2-description": "Help students prepare for certification exams by providing practice questions.",
-    "next": "Next"
+    "next": "Next",
+    "question step two": "How about a working title?",
+    "course-create-step2-it's okay": "It's ok if you can't think of a good title now. You can change it later.",
+    "course-create-step2-placeholder": "e.g. Learn Photoshop CS6 from Scratch"
 }

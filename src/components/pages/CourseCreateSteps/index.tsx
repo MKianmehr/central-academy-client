@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import MiniDrawer from '../../commons/MiniDrawer'
 import { useRouter } from 'next/router'
 import StepOne from './StepOne'
+import StepTwo from './StepTwo'
 import Stepper from '../../commons/Stepper'
 import { useAppDispatch } from '../../../redux/hooks'
-import { setSteps } from '../../../redux/slices/createCourseStepSlice'
+import { resetSteps } from '../../../redux/slices/createCourseStepSlice'
+import StepThree from './StepThree'
 
 const Index = () => {
     const dispatch = useAppDispatch()
-    dispatch(setSteps(["step 1", "step 2", "step 3", "step 4"]))
     const router = useRouter()
     const step = router.query.step
+    useEffect(() => {
+        return () => {
+            dispatch(resetSteps())
+        }
+    }, [])
 
     const WhichStep = () => {
         switch (step) {
@@ -22,15 +28,15 @@ const Index = () => {
                 )
             case "2":
                 return (
-                    <StepOne>
+                    <StepTwo>
                         <Stepper />
-                    </StepOne>
+                    </StepTwo>
                 )
             case "3":
                 return (
-                    <StepOne>
+                    <StepThree>
                         <Stepper />
-                    </StepOne>
+                    </StepThree>
                 )
             case "4":
                 return (

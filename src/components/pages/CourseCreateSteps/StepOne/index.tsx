@@ -1,30 +1,43 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'next-i18next';
-import { useAppDispatch } from '../../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../redux/hooks';
 import { setStepOne } from '../../../../redux/slices/createCourseStepSlice';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import QuizIcon from '@mui/icons-material/Quiz';
 import Button from '@mui/material/Button';
 import StepOneOptionCard from '../../../commons/StepOneOptionCard'
 import { StepOneProp } from '../../../../models/Props'
-import styles from './styles.module.scss'
 import Link from 'next/link';
+import styles from './styles.module.scss'
+
+
+const options = [
+    { name: "course", type: "course-create-step1-option1-type", description: "course-create-step1-option1-description", icon: <OndemandVideoIcon /> },
+    { name: "test", type: "course-create-step1-option2-type", description: "course-create-step1-option2-description", icon: <QuizIcon /> }
+]
 
 const StepOne = ({ children }: StepOneProp) => {
     const dispatch = useAppDispatch()
+    const state = useAppSelector((state) => state.createCourseSteps.state.stepOne)
     const { t } = useTranslation("common")
-    const options = [
-        { name: "course", type: "course-create-step1-option1-type", description: "course-create-step1-option1-description", icon: <OndemandVideoIcon /> },
-        { name: "test", type: "course-create-step1-option2-type", description: "course-create-step1-option2-description", icon: <QuizIcon /> }
-    ]
-    const [active, setActive] = useState(0)
+    const [active, setActive] = useState(() => {
+        let activeIndex = 0
+        options.forEach((option, index) => {
+            if (option.name === state) {
+                activeIndex = index
+            }
+        })
+        return activeIndex
+    })
 
-    const onClickOption = (index: number) => {
+    const onOptionClick = useCallback((index: number) => {
         setActive(index)
-    }
-    const onNextButtonClick = () => {
+    }, [])
+
+    const onNextButtonClick = useCallback(() => {
         dispatch(setStepOne(options[active].name))
-    }
+    }, [active])
+
     return (
         <div className={styles.container}>
             <div className={styles.createBox}>
@@ -41,13 +54,14 @@ const StepOne = ({ children }: StepOneProp) => {
                                     description={t(`${option.description}`)}
                                     icon={option.icon}
                                     isActive={isActive}
-                                    onClick={onClickOption}
+                                    onClick={onOptionClick}
                                     index={index}
                                 />
                             )
                         })}
                     </div>
                     <div className={styles.buttonBox}>
+                        <Link href="/instructor/courses"> <Button variant="outlined">{t("exit")}</Button></Link>
                         <Link href="/course/create/2"> <Button onClick={onNextButtonClick} variant="outlined">{t("next")}</Button></Link>
                     </div>
                 </div>
