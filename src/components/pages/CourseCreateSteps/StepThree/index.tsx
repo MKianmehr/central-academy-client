@@ -1,57 +1,69 @@
-import React, { useState } from 'react'
+import React, { Ref, forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react'
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { StepThreeProp } from '../../../../models/Props'
-import Link from 'next/link';
-import { Button } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import SelectLabels from '../../../commons/Select';
+import { StepperChildProp } from '../../../../models/Props';
 import styles from './styles.module.scss'
+import { useAppDispatch, useAppSelector } from '../../../../redux/hooks';
+import { setStepThree } from '../../../../redux/slices/createCourseStepSlice';
 
-const StepThree = ({ children }: StepThreeProp) => {
+
+const StepThree = forwardRef((_, ref: Ref<StepperChildProp>) => {
     const labels = [{ fa: "یک دسته بندی را انتخاب کنید", en: "Choose a category" }, { fa: "آی تی و نرم افزار", en: "It & software" }]
     const { t } = useTranslation("common")
-    const [value, setValue] = useState(labels[0]);
+    const [mounted, setMounted] = useState(false)
+    const dispatch = useAppDispatch()
+    const state = useAppSelector(state => state.createCourseSteps.state.stepThree)
+    const [value, setValue] = useState(state.en ? state : labels[0]);
     const router = useRouter()
     const isEng = router.locale === "en"
 
-    const onNextClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-
-        if (labels[0].en !== value.en) {
-            router.push('/course/create/4')
+    useEffect(() => {
+        if (mounted) {
+            return () => {
+                setValue(labels[0])
+            }
+        } else {
+            setMounted(true)
         }
-    }
+    }, [])
 
-    const handleChange = (event: SelectChangeEvent) => {
+    const onNextButtonClick = useCallback(() => {
+        if (labels[0].en !== value.en) {
+            dispatch(setStepThree(value))
+            return true
+        } else {
+            return false
+        }
+    }, [value, labels])
+
+    useImperativeHandle(ref, () => ({
+        onNextButtonClick: () => onNextButtonClick(),
+        title: "question step three",
+        isOkay: "course-create-step3-it's okay"
+    }))
+
+    const handleChange = useCallback((event: SelectChangeEvent) => {
         labels.forEach((label, index) => {
             if (event.target.value === (isEng ? label.en : label.fa)) {
                 setValue(labels[index]);
             }
         });
-    };
+    }, [isEng, labels])
+
     return (
-        <div className={styles.container}>
-            <div className={styles.createBox}>
-                {children}
-                <div className={styles.questionsBox}>
-                    <div>
-                        <h3 className={styles.title}>{t("question step three")}</h3>
-                        <p className={styles.okay}>{t("course-create-step3-it's okay")}</p>
-                    </div>
-                    <div className={styles.select}>
-                        <SelectLabels height="50px" value={value} labels={labels} minWidth={200} maxWidth={700} onChange={handleChange} />
-                    </div>
-                    <div className={styles.buttons}>
-                        <div>
-                            <Link href="/course/create/2"> <Button variant="outlined">{t("previous")}</Button></Link>
-                            <Link href="/instructor/courses"> <Button variant="outlined">{t("exit")}</Button></Link>
-                        </div>
-                        <Button onClick={onNextClick} variant="outlined">{t("next")}</Button>
-                    </div>
-                </div>
-            </div>
+        <div className={styles.select}>
+            <SelectLabels
+                height="50px"
+                value={value}
+                labels={labels}
+                minWidth={200}
+                maxWidth={700}
+                onChange={handleChange}
+            />
         </div>
     )
-}
+})
 
 export default StepThree

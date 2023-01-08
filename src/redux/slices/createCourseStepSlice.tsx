@@ -3,12 +3,27 @@ import type { RootState } from "../store";
 
 interface createCourseStepsState {
     steps: string[];
-    state: { stepOne: string, stepTwo: string };
+    state: {
+        stepOne: string,
+        stepTwo: string,
+        stepThree: { fa: string; en: string; },
+        stepFour: { fa: string; en: string }
+    };
 }
+interface stepThreePayload {
+    fa: string;
+    en: string;
+}
+interface stepFourPayload extends stepThreePayload { }
 
 const initialState: createCourseStepsState = {
     steps: ["step 1", "step 2", "step 3", "step 4"],
-    state: { stepOne: "course", stepTwo: "" }
+    state: {
+        stepOne: "course",
+        stepTwo: "",
+        stepThree: { fa: "", en: "" },
+        stepFour: { fa: "", en: "" }
+    }
 }
 
 export const createCourseStepsSlice = createSlice({
@@ -24,8 +39,12 @@ export const createCourseStepsSlice = createSlice({
         setStepTwo: (state, action: PayloadAction<string>) => {
             state.state = { ...state.state, stepTwo: action.payload }
         },
-        setStepThree: state => { },
-        setStepFour: state => { },
+        setStepThree: (state, action: PayloadAction<stepThreePayload>) => {
+            state.state = { ...state.state, stepThree: action.payload }
+        },
+        setStepFour: (state, action: PayloadAction<stepFourPayload>) => {
+            state.state = { ...state.state, stepFour: action.payload }
+        },
         resetSteps: state => {
             state = initialState
         }

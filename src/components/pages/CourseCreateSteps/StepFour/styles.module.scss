@@ -1,0 +1,18 @@
+@import '../../../../styles/main.scss';
+
+.container {
+    @include padding-horizontal(15px);
+    @include justify-center;
+}
+
+.formcontrol {
+    width: 100%;
+    max-width: 900px;
+}
+
+.each {
+    @include padding-horizontal(5px);
+    border: 1px solid getColor(primary-text);
+    margin: 5px;
+    width: 100%;
+}

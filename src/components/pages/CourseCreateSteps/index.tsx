@@ -3,10 +3,12 @@ import MiniDrawer from '../../commons/MiniDrawer'
 import { useRouter } from 'next/router'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
+import StepThree from './StepThree'
+import StepFour from './StepFour'
 import Stepper from '../../commons/Stepper'
 import { useAppDispatch } from '../../../redux/hooks'
 import { resetSteps } from '../../../redux/slices/createCourseStepSlice'
-import StepThree from './StepThree'
+
 
 const Index = () => {
     const dispatch = useAppDispatch()
@@ -22,27 +24,27 @@ const Index = () => {
         switch (step) {
             case "1":
                 return (
-                    <StepOne>
-                        <Stepper />
-                    </StepOne>
+                    <Stepper>
+                        <StepOne />
+                    </Stepper>
                 )
             case "2":
                 return (
-                    <StepTwo>
-                        <Stepper />
-                    </StepTwo>
+                    <Stepper>
+                        <StepTwo />
+                    </Stepper>
                 )
             case "3":
                 return (
-                    <StepThree>
-                        <Stepper />
-                    </StepThree>
+                    <Stepper>
+                        <StepThree />
+                    </Stepper>
                 )
             case "4":
                 return (
-                    <StepOne>
-                        <Stepper />
-                    </StepOne>
+                    <Stepper>
+                        <StepFour />
+                    </Stepper>
                 )
             default:
                 return <></>

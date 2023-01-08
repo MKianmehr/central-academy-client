@@ -1,43 +1,5 @@
 @import '../../../../styles/main.scss';
 
-.container {
-    height: 100%;
-    @include justify-center;
-    align-items: flex-start;
-    @include padding-vertical(15px);
-}
-
-.createBox {
-    display: flex;
-    flex-direction: column;
-    background-color: getColor(primary);
-    width: 97%;
-    max-width: 1500px;
-    height: 100%;
-    border-radius: $border-radius;
-    overflow-y: scroll;
-    @include padding-horizontal(5px);
-    @include padding-vertical(15px);
-
-    @include large-screens($breakpoint-sm) {
-        @include padding-horizontal(20px)
-    }
-}
-
-.questionsBox {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.title {
-    font-size: 1.2rem;
-    @include margin-vertical(35px);
-    text-align: center;
-    color: getColor(primary-text);
-}
-
 .options {
     display: flex;
     flex-direction: column;
@@ -47,10 +9,4 @@
         flex-direction: row;
         justify-content: center;
     }
-}
-
-.buttonBox {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
 }

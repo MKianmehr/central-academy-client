@@ -88,13 +88,11 @@ export interface InstructorCourseCardProp {
 
 export interface StepperProp extends children { }
 
-export interface StepOneProp extends children { }
-
-export interface StepTwoProp extends children { }
-
-export interface StepThreeProp extends children { }
-
-
+export interface StepperChildProp {
+    onNextButtonClick: () => boolean;
+    title?: string;
+    isOkay?: string;
+}
 export interface StepOneOptionCardProp {
     icon: React.ReactNode;
     type: string;
