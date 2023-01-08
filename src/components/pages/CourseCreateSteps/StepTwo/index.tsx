@@ -11,11 +11,10 @@ import { useRouter } from 'next/router';
 
 const StepTwo = ({ children }: StepTwoProp) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const [mounted, setMounted] = useState(false)
     const router = useRouter()
     const dispatch = useAppDispatch()
-    const state = useAppSelector(state => {
-        return state.createCourseSteps.state.stepTwo
-    })
+    const state = useAppSelector(state => state.createCourseSteps.state.stepTwo)
     const { t } = useTranslation("common")
     const [text, setText] = useState(state ? state : "")
     const [initialValue, setInitialValue] = useState(60)
@@ -23,7 +22,11 @@ const StepTwo = ({ children }: StepTwoProp) => {
     usePreventBreakLine(textareaRef)
 
     useEffect(() => {
-        return () => setText("")
+        if (mounted) {
+            return () => setText("")
+        } else {
+            setMounted(true)
+        }
     }, [])
 
     const onChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -35,7 +38,7 @@ const StepTwo = ({ children }: StepTwoProp) => {
         if (text) {
             dispatch(setStepTwo(text))
             router.push('/course/create/3')
-        }
+        } else { }
     }
 
     return (

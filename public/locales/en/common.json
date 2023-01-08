@@ -37,7 +37,11 @@
     "course-create-step1-option2-type": "Test",
     "course-create-step1-option2-description": "Help students prepare for certification exams by providing practice questions.",
     "next": "Next",
+    "previous": "Previous",
+    "exit": "Exit",
     "question step two": "How about a working title?",
     "course-create-step2-it's okay": "It's ok if you can't think of a good title now. You can change it later.",
-    "course-create-step2-placeholder": "e.g. Learn Photoshop CS6 from Scratch"
+    "course-create-step2-placeholder": "e.g. Learn Photoshop CS6 from Scratch",
+    "question step three": "What category best fits the knowledge you'll share?",
+    "course-create-step3-it's okay": "If you're not sure about the right category, you can change it later."
 }

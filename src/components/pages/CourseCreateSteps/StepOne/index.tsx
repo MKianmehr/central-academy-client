@@ -18,6 +18,7 @@ const options = [
 
 const StepOne = ({ children }: StepOneProp) => {
     const dispatch = useAppDispatch()
+    const [mounted, setMounted] = useState(false)
     const state = useAppSelector((state) => state.createCourseSteps.state.stepOne)
     const { t } = useTranslation("common")
     const [active, setActive] = useState(() => {
@@ -31,8 +32,15 @@ const StepOne = ({ children }: StepOneProp) => {
     })
 
     useEffect(() => {
-        return () => setActive(0)
+        if (mounted) {
+            return () => {
+                setActive(0)
+            }
+        } else {
+            setMounted(true)
+        }
     }, [])
+
 
     const onOptionClick = useCallback((index: number) => {
         setActive(index)

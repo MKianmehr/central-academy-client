@@ -37,7 +37,11 @@
     "course-create-step1-option2-type": "تست",
     "course-create-step1-option2-description": "با ارائه سوالات تمرینی به دانشجویان کمک کنید تا برای امتحانات آماده شوند.",
     "next": "قدم بعدی",
+    "previous": "قدم قبلی",
+    "exit": "خروج",
     "question step two": "بیا عنوان دوره رو انتخاب کنیم",
     "course-create-step2-it's okay": "مشکلی نیست اگه عنوان خوبی به ذهنت نمیاد میتونی بعدا تغییرش بدی.",
-    "course-create-step2-placeholder": "به عنوان مثال، فتوشاپ CS6 را از صفر یاد بگیرید"
+    "course-create-step2-placeholder": "به عنوان مثال، فتوشاپ CS6 را از صفر یاد بگیرید",
+    "question step three": "چه دسته‌ای با دانشی که به اشتراک می‌گذارید مناسب‌تر است؟",
+    "course-create-step3-it's okay": "اگر در مورد دسته بندی مناسب مطمئن نیستید، می توانید بعداً آن را تغییر دهید."
 }

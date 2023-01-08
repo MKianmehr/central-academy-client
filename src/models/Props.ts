@@ -1,6 +1,7 @@
 import React from "react"
 import type { AppProps } from 'next/app'
 import { EmotionCache } from '@emotion/react';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 interface children {
     children: React.ReactElement
@@ -56,7 +57,12 @@ export interface AccountMenuProp {
 }
 
 export interface SelectLabelsProp {
-    labels: string[]
+    value: { fa: string; en: string; };
+    labels: { fa: string; en: string; }[];
+    height?: string;
+    minWidth?: number;
+    maxWidth?: number;
+    onChange?: ((event: SelectChangeEvent<any>, child: React.ReactNode) => void) | undefined;
 }
 
 export interface LinkButtonProp {
