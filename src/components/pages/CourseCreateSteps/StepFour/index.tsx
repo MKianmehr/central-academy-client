@@ -74,7 +74,7 @@ const StepFour = forwardRef((_, ref: Ref<StepperChildProp>) => {
                 >
                     {values.map((value) => {
                         return (
-                            <FormControlLabel key={JSON.stringify(value)} className={styles.each} value={JSON.stringify(value)} control={<Radio />} label={isEng ? value.en : value.fa} />
+                            <FormControlLabel key={JSON.stringify(value)} className={styles.each} value={JSON.stringify(value)} control={<Radio className={styles.radio} />} label={isEng ? value.en : value.fa} />
                         )
                     })}
                 </RadioGroup>

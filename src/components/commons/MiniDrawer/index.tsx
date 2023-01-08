@@ -88,7 +88,7 @@ export default function MiniDrawer({ children }: MiniDrawerProp) {
         setOpen(false)
     }
 
-    const padding = router.locale === "fa" ? { paddingRight: "65px" } : { paddingLeft: "65px" }
+    const padding = router.locale === "fa" ? { paddingRight: "56px" } : { paddingLeft: "56px" }
 
 
     return (

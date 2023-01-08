@@ -59,7 +59,7 @@ const StepThree = forwardRef((_, ref: Ref<StepperChildProp>) => {
                 value={value}
                 labels={labels}
                 minWidth={200}
-                maxWidth={700}
+                maxWidth={900}
                 onChange={handleChange}
             />
         </div>

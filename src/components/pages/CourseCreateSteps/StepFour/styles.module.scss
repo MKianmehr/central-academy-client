@@ -15,4 +15,9 @@
     border: 1px solid getColor(primary-text);
     margin: 5px;
     width: 100%;
+    color: getColor(primary-text);
+}
+
+.radio {
+    color: getColor(primary-text);
 }

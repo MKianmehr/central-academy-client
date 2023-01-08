@@ -47,16 +47,18 @@ const StepTwo = forwardRef((_, ref: Ref<StepperChildProp>) => {
     }))
 
     return (
-        <div className={styles.inputContainer}>
-            <textarea
-                ref={textareaRef}
-                maxLength={60}
-                rows={1}
-                value={text}
-                onChange={onChangeText}
-                placeholder={`${t("course-create-step2-placeholder")}`}
-            />
-            <span className={styles.remaining}>{remaining}</span>
+        <div className={styles.container}>
+            <div className={styles.inputContainer}>
+                <textarea
+                    ref={textareaRef}
+                    maxLength={60}
+                    rows={1}
+                    value={text}
+                    onChange={onChangeText}
+                    placeholder={`${t("course-create-step2-placeholder")}`}
+                />
+                <span className={styles.remaining}>{remaining}</span>
+            </div>
         </div>
     )
 })

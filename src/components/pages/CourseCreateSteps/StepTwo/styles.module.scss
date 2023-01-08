@@ -1,11 +1,17 @@
 @import '../../../../styles/main.scss';
 
+.container {
+    @include justify-center;
+}
+
 .inputContainer {
     @include align-center;
     @include padding-horizontal(4px);
     gap: 5px;
     border: 1px solid getColor(primary-text);
     border-radius: 2px;
+    max-width: 900px;
+    width: 100%;
 
     &:focus-within {
         @include border-transition(getColor(quaternary), 1px);

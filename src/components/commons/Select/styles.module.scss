@@ -1,5 +1,15 @@
 @import '../../../styles/main.scss';
 
+.formcontrol {
+    border: 1px solid getColor(tertiary);
+    border-radius: 5px;
+}
+
 .form {
+    color: getColor(primary-text);
+    background-color: getColor(primary);
+}
+
+.select {
     color: getColor(primary-text);
 }

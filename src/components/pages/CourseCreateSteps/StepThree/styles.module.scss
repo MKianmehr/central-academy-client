@@ -7,6 +7,6 @@
     margin-left: auto;
 
     @include large-screens($breakpoint-sm) {
-        max-width: 700px;
+        max-width: 900px;
     }
 }

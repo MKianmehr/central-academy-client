@@ -13,7 +13,7 @@ export default function SelectLabels({ labels, height, minWidth, maxWidth, value
     const locale = router.locale
 
     return (
-        <div>
+        <div className={styles.formcontrol}>
             <FormControl sx={{ minWidth: minWidth ? minWidth : 120, width: "100%", maxWidth: maxWidth ? maxWidth : 100 }}>
                 <Select
                     className={styles.form}
@@ -24,7 +24,7 @@ export default function SelectLabels({ labels, height, minWidth, maxWidth, value
                     inputProps={{ 'aria-label': 'Without label' }}
                 >
                     {labels.map((label) => {
-                        return <MenuItem key={label.en} value={locale === "en" ? label.en : label.fa}>{t(`${locale === "en" ? label.en : label.fa}`)}</MenuItem>
+                        return <MenuItem className={styles.select} key={label.en} value={locale === "en" ? label.en : label.fa}>{t(`${locale === "en" ? label.en : label.fa}`)}</MenuItem>
                     })}
                 </Select>
             </FormControl>
