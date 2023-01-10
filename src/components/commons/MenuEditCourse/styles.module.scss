@@ -1,0 +1,90 @@
+@import '../../../styles/main.scss';
+
+
+.container {
+    padding: 10px;
+    color: getColor(primary-text);
+}
+
+.menuIcon {
+    color: getColor(primary-text);
+
+    @include large-screens($breakpoint-lm) {
+        display: none;
+    }
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-top: 1px solid getColor(primary-text);
+    margin-top: 7px;
+
+    @include padding-vertical(15px);
+
+    @include large-screens($breakpoint-sm) {
+        justify-content: flex-start;
+        gap: 30px;
+    }
+
+    @include large-screens($breakpoint-lm) {
+        flex-direction: column;
+        gap: unset;
+        border: none;
+        justify-content: space-between;
+    }
+}
+
+.menu_open {
+    display: flex;
+}
+
+.menu_close {
+    display: none;
+
+    @include large-screens($breakpoint-lm) {
+        display: unset;
+    }
+}
+
+.header {
+    display: flex;
+    gap: 5px;
+
+    & h5 {
+        padding: .8rem 0 .8rem 2.4rem;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -.02rem;
+        font-size: 1.3rem;
+        margin: 0;
+        padding: 0;
+    }
+
+    @include large-screens($breakpoint-lm) {
+        @include margin-vertical(20px)
+    }
+}
+
+.list {
+    list-style: none;
+    font-weight: 400;
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+
+    &:hover {
+        background-color: aliceblue;
+    }
+
+    @include large-screens($breakpoint-lm) {
+        gap: unset;
+        @include padding-vertical(10px)
+    }
+}
+
+.active {
+    border-right: 4px solid getColor(primary-text);
+    border-left: 4px solid getColor(primary-text);
+}

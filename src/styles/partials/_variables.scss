@@ -1,6 +1,7 @@
 $input-border-radius: 0.2rem;
 $input-height: 4rem;
 $breakpoint-sm: 576px;
+$breakpoint-lm: 980px;
 $border-radius: 1px;
 
 // light theme
@@ -11,6 +12,7 @@ $colors: (
     quaternary: #000,
     error: #ff0000,
     primary-text: #000,
+    secondary-text: #fff,
     dark-mode: #4447E2,
     box-shadow-color: rgba(0, 0, 0, .08),
     border-color: #1750FF,
@@ -26,6 +28,7 @@ $colors-dark: (
     quaternary: #E5E5E5,
     error: #ff0000,
     primary-text: #E5E5E5,
+    secondary-text: #000,
     dark-mode: #FFFF00,
     box-shadow-color: rgba(0, 0, 0, .08),
     border-color: #1750FF,

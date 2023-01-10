@@ -63,4 +63,6 @@ const StepTwo = forwardRef((_, ref: Ref<StepperChildProp>) => {
     )
 })
 
+StepTwo.displayName = "StepTwo"
+
 export default StepTwo

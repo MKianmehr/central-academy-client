@@ -101,3 +101,17 @@ export interface StepOneOptionCardProp {
     index: number;
     onClick: (index: number) => void
 }
+
+export type EditCourseMenuProp = {
+    header: {
+        fa: string;
+        en: string;
+    };
+    sublists: {
+        link: string;
+        text: {
+            fa: string;
+            en: string;
+        };
+    }[];
+}[]
