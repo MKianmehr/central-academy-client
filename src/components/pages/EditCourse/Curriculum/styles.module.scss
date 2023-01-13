@@ -1,3 +1,21 @@
+@import '../../../../styles/main.scss';
+
 .container {
-    background-color: aliceblue;
+    @include padding-horizontal(15px);
+    background-color: getColor(primary);
+}
+
+.header {
+    color: getColor(primary-text);
+    border-bottom: 1px solid getColor(primary-text);
+    @include padding-vertical(10px);
+}
+
+.paragraph {
+    color: getColor(primary-text);
+    padding: 2px;
+
+    @include large-screens($breakpoint-sm) {
+        padding: 20px;
+    }
 }

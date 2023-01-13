@@ -6,7 +6,11 @@
     position: "absolute";
     width: 100%;
     max-width: 300px;
-    margin: 20px;
+    margin: 0px;
+
+    @include large-screens($breakpoint-sm) {
+        margin: 10px;
+    }
 }
 
 .title {

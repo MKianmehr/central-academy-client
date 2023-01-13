@@ -1,0 +1,66 @@
+@import '../../../../styles/main.scss';
+
+.container {
+    width: 100%;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    padding-top: 10px;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 1px solid getColor(primary-text);
+    @include padding-horizontal(5px);
+
+    & input {
+        border: none;
+        flex: 1;
+        outline: none
+    }
+}
+
+.cancel {
+    background-color: transparent;
+    border: none;
+    font-weight: 600;
+    color: getColor(primary-text);
+}
+
+.confirm {
+    background-color: getColor(primary-text);
+    border: none;
+    color: getColor(primary);
+    padding: 3px;
+    @include padding-horizontal(5px);
+
+    &:hover {
+        background-color: getColor(primary-text);
+    }
+}
+
+.description {
+    width: 100%;
+    outline: none;
+    border: 1px solid getColor(primary-text);
+    padding: 8px;
+    background-color: getColor(primary);
+    color: getColor(primary-text);
+    @include margin-vertical(15px);
+}
+
+.preview {
+    border: 1px solid getColor(border-color);
+}
+
+.markdown {
+    background-color: transparent;
+    padding: 8px;
+    margin-top: 15px;
+    border: 1px solid getColor(primary-text);
+}

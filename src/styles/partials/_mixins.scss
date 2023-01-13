@@ -81,3 +81,94 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, .08), 0 4px 12px rgba(0, 0, 0, .24);
     ;
 }
+
+
+@mixin multiply_sign_active {
+    transform: translate(-10px, 10px);
+
+    &::after {
+        right: 10px;
+        top: 0px;
+        transform: rotate(45deg);
+    }
+
+    &::before {
+        right: 10px;
+        top: 0px;
+        transform: rotate(-45deg);
+    }
+
+    @content
+}
+
+@mixin multiply_sign {
+    position: absolute;
+    width: 25px;
+    height: 20px;
+    display: block;
+    background-color: transparent;
+    border: none;
+    transform: translate(0px, 28px);
+    transition: transform 400ms linear;
+    z-index: 1;
+
+
+    &::after {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        height: 18px;
+        width: 0px;
+        border: 1.5px solid getColor(primary-text);
+        border-radius: 50px;
+        right: 10px;
+        top: 1px;
+        transform: rotate(90deg);
+        transition: right 400ms linear, transform 400ms cubic-bezier(.2, 0, .38, .9);
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        height: 18px;
+        width: 0px;
+        border: 1.5px solid getColor(primary-text);
+        border-radius: 50px;
+        right: 10px;
+        top: 1px;
+        transition: right 400ms linear, transform 400ms cubic-bezier(.2, 0, .38, .9);
+    }
+
+    @content
+}
+
+@mixin square_sign {
+    position: absolute;
+    border: 1px dashed getColor(primary-text);
+    border-right: none;
+    width: 40px;
+    height: 28px;
+    display: inline-block;
+    top: 0px;
+    left: -65px;
+    background-color: getColor(section);
+    transition: background-color 400ms linear, border 400ms linear;
+
+    &::before {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 22px;
+        height: 22px;
+        top: 2px;
+        right: -11px;
+        border: 1px dashed getColor(primary-text);
+        transform: rotate(35deg) skew(-15deg);
+        border-bottom: 0;
+        border-left: 0;
+        transition: right 400ms linear, background-color 400ms linear;
+    }
+
+    @content
+}

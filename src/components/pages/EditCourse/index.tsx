@@ -85,7 +85,7 @@ const EditCourse = () => {
             </nav>
             <main className={styles.main}>
                 <MenuEditCourse lists={lists} />
-                <div className={styles.content}>
+                <div className={[styles.content, !isEnglish && styles.content_rtl].join(" ")}>
                     {WhichStep()}
                 </div>
             </main>

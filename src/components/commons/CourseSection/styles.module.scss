@@ -1,0 +1,97 @@
+@import '../../../styles/main.scss';
+
+.container {
+    border: 1px solid getColor(primary-text);
+    background-color: getColor(section);
+    @include padding-horizontal(10px);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.header {
+    display: flex;
+    cursor: move;
+    @include align-center;
+    @include padding-vertical(5px);
+    gap: 8px;
+
+    &:hover {
+        & .icons {
+            opacity: 1;
+        }
+    }
+}
+
+.title {
+    font-weight: 550;
+    font-size: 1.1rem;
+}
+
+.name {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.icons {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    opacity: 0;
+}
+
+.icon {
+    color: getColor(primary-text);
+}
+
+.onDrag {
+    border: 1px solid getColor(primary-text);
+}
+
+.lecture {
+    padding-left: 45px;
+}
+
+.addButton {
+    margin-top: 20px;
+
+    & button {
+        background-color: getColor(primary);
+        border: 1px solid getColor(primary-text);
+        padding: 5px;
+        // padding-left: 25px;
+        font-weight: 600;
+        border-radius: 0;
+        text-transform: none;
+
+    }
+}
+
+.SubSectionCreationContent {
+    margin-top: 20px;
+}
+
+
+.mult {
+    @include multiply_sign
+}
+
+;
+
+.mult_active {
+    @include multiply_sign_active
+}
+
+.mult_active_rtl {
+    @include multiply_sign_active {
+        &::after {
+            right: -10px;
+        }
+
+        &::before {
+            right: -10px;
+        }
+    }
+}

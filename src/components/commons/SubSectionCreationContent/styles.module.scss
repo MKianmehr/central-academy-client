@@ -1,0 +1,27 @@
+@import '../../../styles/main.scss';
+
+.beforeContent {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px dashed getColor(primary-text);
+    margin-bottom: 25px;
+    padding: 10px;
+}
+
+.enableSubSectionCreation {
+    border: 1px solid getColor(primary-text);
+    background-color: getColor(primary);
+}
+
+.addButton {
+    @include align-center;
+    background-color: transparent;
+    border: none;
+    color: getColor(link-color);
+    margin: 10px;
+    font-weight: 550;
+
+    &:hover {
+        color: getColor(primary-text);
+    }
+}

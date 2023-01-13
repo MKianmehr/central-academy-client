@@ -4,6 +4,12 @@
 .container {
     padding: 10px;
     color: getColor(primary-text);
+    background-color: getColor(primary);
+
+    @include large-screens($breakpoint-lm) {
+        position: fixed;
+        height: 100%;
+    }
 }
 
 .menuIcon {

@@ -8,6 +8,7 @@
 
     @include large-screens($breakpoint-sm) {
         @include padding-vertical(15px);
+        @include padding-horizontal(20px)
     }
 }
 
@@ -22,7 +23,7 @@
     @include padding-horizontal(5px);
     @include padding-vertical(35px);
 
-    @include large-screens($breakpoint-sm) {
+    @include large-screens($breakpoint-xl) {
         @include padding-horizontal(20px);
         width: 97%;
         max-height: 900px;

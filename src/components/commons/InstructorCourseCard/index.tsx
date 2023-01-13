@@ -13,7 +13,7 @@ const InstructorCourseCard = ({ title, src, rate, numberOfRate, numberOfStudent 
     const { t } = useTranslation("common")
     const router = useRouter()
     return (
-        <Link href="" style={{ textDecorationLine: "none" }}>
+        <Link href="/instructor/course/edit/curriculum" style={{ textDecorationLine: "none" }}>
             <div className={styles.container}>
                 <Image
                     src={src}

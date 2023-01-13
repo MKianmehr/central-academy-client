@@ -1,7 +1,10 @@
 $input-border-radius: 0.2rem;
 $input-height: 4rem;
 $breakpoint-sm: 576px;
+$breakpoint-md: 768px;
 $breakpoint-lm: 980px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1400px;
 $border-radius: 1px;
 
 // light theme
@@ -18,6 +21,9 @@ $colors: (
     border-color: #1750FF,
     link-color:#1750FF,
     rating: #b4690e,
+    color-08: rgba(0, 0, 0, .08),
+    color-16: rgba(0, 0, 0, .16),
+    section: #F7F9FA,
 );
 
 // dark theme
@@ -34,4 +40,7 @@ $colors-dark: (
     border-color: #1750FF,
     link-color:#1750FF,
     rating: #b4690e,
+    color-08: rgba(255, 255, 255, .08),
+    color-16: rgba(255, 255, 255, .16),
+    section: #F7F9FA,
 );

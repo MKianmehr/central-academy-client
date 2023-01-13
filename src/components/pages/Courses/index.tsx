@@ -57,7 +57,7 @@ const Courses = () => {
                             <SearchInput placeHolder={t("search your courses")} value={searchText} onChange={onSearchSubmit} className={styles.input} />
                         </div>
                         <div className={styles.header_createCourse}>
-                            <SelectLabels minWidth={140} value={value} labels={labels} onChange={handleChange} />
+                            <SelectLabels minWidth={100} value={value} labels={labels} onChange={handleChange} />
                             <LinkButton href='/course/create/1' text={t("Create Your Course")} />
                         </div>
                     </div>

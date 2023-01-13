@@ -115,3 +115,46 @@ export type EditCourseMenuProp = {
         };
     }[];
 }[]
+
+export interface CourseSection {
+    index: number;
+    name: string;
+    numberOfSubSectionsOfPreviousSection: number;
+    subSections: {
+        title: {
+            fa: string;
+            en: string;
+        };
+        type: {
+            fa: string;
+            en: string;
+        };
+        _id: number;
+    }[]
+}
+
+export interface CourseSubSectionProp {
+    content: {
+        title: {
+            fa: string;
+            en: string;
+        };
+        type: {
+            fa: string;
+            en: string;
+        };
+        _id: number;
+    }
+    index: number;
+    subSectionOptions: {
+        fa: string;
+        en: string;
+    }[];
+}
+
+export interface SubSectionOptionsProp {
+    subSectionOptions: {
+        fa: string;
+        en: string;
+    }[];
+}
