@@ -12,6 +12,33 @@ import CourseSubSection from '../CourseSubSection'
 import SubSectionCreationContent from '../SubSectionCreationContent';
 import { useRouter } from 'next/router';
 
+
+const SectionHeader = ({ index, name }: { index: number; name: string }) => {
+
+    const { t } = useTranslation("common")
+
+    return (
+        <>
+            <span className={styles.title}>{t("Section")}: {index}</span>
+            <StickyNote2OutlinedIcon fontSize='small' />
+            <span className={styles.name}>{name}</span>
+            <span className={styles.icons}>
+                <span>
+                    <IconButton className={styles.icon}>
+                        <EditIcon fontSize='small' />
+                    </IconButton>
+                    <IconButton className={styles.icon}>
+                        <DeleteIcon fontSize='small' />
+                    </IconButton>
+                </span>
+                <IconButton>
+                    <MenuOutlinedIcon />
+                </IconButton>
+            </span>
+        </>
+    )
+}
+
 const subSectionOptions = [
     { fa: "دوره", en: "Lecture" },
     { fa: "کوییز", en: "Quiz" },
@@ -26,6 +53,7 @@ const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPrevious
     const router = useRouter()
     const isRtl = router.locale === "fa"
     const draggableRef = useRef<HTMLDivElement>(null);
+    const ghostRef = useRef<HTMLDivElement>(null);
     const padding = isRtl ? { paddingRight: "45px" } : { paddingLeft: "45px" }
     const [onDrag, setOnDrag] = useState(false)
     const [isOpenAddCurriculum, setIsOpenAddCurriculum] = useState(false)
@@ -33,18 +61,11 @@ const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPrevious
 
     const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         const draggable = draggableRef.current;
-        if (draggable) {
-            const crt = draggable.cloneNode(true) as HTMLDivElement;
-            crt.style.border = `2px solid ${theme === "light" ? "black" : "white"}`;
-            crt.style.width = `${draggable.offsetWidth + 23}px`
-            crt.style.paddingLeft = "10px"
-            crt.style.paddingRight = "10px"
-            crt.style.paddingTop = "20px"
-            crt.style.paddingBottom = "20px"
-            crt.style.opacity = "1"
-            document.body.appendChild(crt);
+        const ghost = ghostRef.current
+        if (draggable && ghost) {
             const rect = draggable.getBoundingClientRect();
-            e.dataTransfer.setDragImage(crt, e.clientX - rect.x + 11.5, e.clientY - rect.y + 20);
+            // ghost.style.width = `${draggable.offsetWidth + 20}px`
+            e.dataTransfer.setDragImage(ghost, e.clientX - rect.x + 11.5, e.clientY - rect.y + 20);
         }
         setOnDrag(true)
     }
@@ -66,7 +87,6 @@ const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPrevious
             <div className={styles.container}>
                 <div
                     ref={draggableRef}
-                    className={[styles.header].join(" ")}
                     onDragOver={(e) => { e.preventDefault() }}
                     onDragStart={handleOnDragStart}
                     onDragEnd={handleOnDragEnd}
@@ -76,22 +96,12 @@ const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPrevious
                     onDrop={handleOnDrop}
                     draggable
                 >
-                    <span className={styles.title}>{t("Section")}: {index}</span>
-                    <StickyNote2OutlinedIcon fontSize='small' />
-                    <span className={styles.name}>{name}</span>
-                    <span className={styles.icons}>
-                        <span>
-                            <IconButton className={styles.icon}>
-                                <EditIcon fontSize='small' />
-                            </IconButton>
-                            <IconButton className={styles.icon}>
-                                <DeleteIcon fontSize='small' />
-                            </IconButton>
-                        </span>
-                        <IconButton>
-                            <MenuOutlinedIcon />
-                        </IconButton>
-                    </span>
+                    <div className={[styles.header].join(" ")}>
+                        <SectionHeader index={index} name={name} />
+                    </div>
+                    <div ref={ghostRef} className={[styles.header, styles.ghost].join(" ")}>
+                        <SectionHeader index={index} name={name} />
+                    </div>
                 </div>
                 <div style={padding}>
                     {subSections.map((list, index) => {

@@ -2,11 +2,23 @@
 
 .container {
     border: 1px solid getColor(primary-text);
+    position: relative;
     background-color: getColor(section);
     @include padding-horizontal(10px);
     padding-bottom: 15px;
     margin-bottom: 20px;
+
+    & .ghost {
+        @include padding-vertical(25px);
+        @include padding-horizontal(9px);
+        z-index: -1;
+        border: 1px solid getColor(primary-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 }
+
 
 .header {
     display: flex;
@@ -14,6 +26,7 @@
     @include align-center;
     @include padding-vertical(5px);
     gap: 8px;
+    width: 100%;
 
     &:hover {
         & .icons {
@@ -21,6 +34,7 @@
         }
     }
 }
+
 
 .title {
     font-weight: 550;
