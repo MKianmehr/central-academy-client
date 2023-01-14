@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'next-i18next';
+import { SectionContext } from '../../../contexts';
 import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -45,56 +46,58 @@ const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPrevious
         setIsOpenAddCurriculum(!isOpenAddCurriculum)
     }
     return (
-        <div className={styles.container}>
-            <div
-                className={[styles.header].join(" ")}
-                onDragOver={(e) => { e.preventDefault() }}
-                onDragStart={handleOnDragStart}
-                onDragEnd={handleOnDragEnd}
-                onDrop={handleOnDrop}
-                draggable
-            >
-                <span className={styles.title}>{t("Section")}: {index}</span>
-                <StickyNote2OutlinedIcon fontSize='small' />
-                <span className={styles.name}>{name}</span>
-                <span className={styles.icons}>
-                    <span>
-                        <IconButton className={styles.icon}>
-                            <EditIcon fontSize='small' />
-                        </IconButton>
-                        <IconButton className={styles.icon}>
-                            <DeleteIcon fontSize='small' />
+        <SectionContext.Provider value={{ subSectionOptions }}>
+
+            <div className={styles.container}>
+                <div
+                    className={[styles.header].join(" ")}
+                    onDragOver={(e) => { e.preventDefault() }}
+                    onDragStart={handleOnDragStart}
+                    onDragEnd={handleOnDragEnd}
+                    onDrop={handleOnDrop}
+                    draggable
+                >
+                    <span className={styles.title}>{t("Section")}: {index}</span>
+                    <StickyNote2OutlinedIcon fontSize='small' />
+                    <span className={styles.name}>{name}</span>
+                    <span className={styles.icons}>
+                        <span>
+                            <IconButton className={styles.icon}>
+                                <EditIcon fontSize='small' />
+                            </IconButton>
+                            <IconButton className={styles.icon}>
+                                <DeleteIcon fontSize='small' />
+                            </IconButton>
+                        </span>
+                        <IconButton>
+                            <MenuOutlinedIcon />
                         </IconButton>
                     </span>
-                    <IconButton>
-                        <MenuOutlinedIcon />
-                    </IconButton>
-                </span>
+                </div>
+                <div style={padding}>
+                    {subSections.map((list, index) => {
+                        return (
+                            <CourseSubSection
+                                key={list._id}
+                                index={index + numberOfSubSectionsOfPreviousSection + 1}
+                                content={list}
+                            />)
+                    })}
+                    <button
+                        onClick={onAddCurriculumClick}
+                        className={[styles.mult, isOpenAddCurriculum && (isRtl ? styles.mult_active_rtl : styles.mult_active)].join(" ")}
+                    ></button>
+                    {isOpenAddCurriculum && (
+                        <div className={styles.SubSectionCreationContent}>
+                            <SubSectionCreationContent />
+                        </div>
+                    )}
+                    {!isOpenAddCurriculum && <div className={styles.addButton}>
+                        <Button style={addButtonPadding} onClick={onAddCurriculumClick}>{t("Curriculum item")}</Button>
+                    </div>}
+                </div>
             </div>
-            <div style={padding}>
-                {subSections.map((list, index) => {
-                    return (
-                        <CourseSubSection
-                            subSectionOptions={subSectionOptions}
-                            key={list._id}
-                            index={index + numberOfSubSectionsOfPreviousSection + 1}
-                            content={list}
-                        />)
-                })}
-                <button
-                    onClick={onAddCurriculumClick}
-                    className={[styles.mult, isOpenAddCurriculum && (isRtl ? styles.mult_active_rtl : styles.mult_active)].join(" ")}
-                ></button>
-                {isOpenAddCurriculum && (
-                    <div className={styles.SubSectionCreationContent}>
-                        <SubSectionCreationContent subSectionOptions={subSectionOptions} />
-                    </div>
-                )}
-                {!isOpenAddCurriculum && <div className={styles.addButton}>
-                    <Button style={addButtonPadding} onClick={onAddCurriculumClick}>{t("Curriculum item")}</Button>
-                </div>}
-            </div>
-        </div>
+        </SectionContext.Provider>
     )
 }
 

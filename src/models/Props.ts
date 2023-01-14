@@ -146,13 +146,24 @@ export interface CourseSubSectionProp {
         _id: number;
     }
     index: number;
+}
+
+export interface SubContentTypeProp {
+    icon: React.ReactNode;
+    type: string;
+    onClick: (type: string) => void
+}
+
+export interface SubSectionContextProp {
+    onContentButtonClick: () => void;
+    onResourseButtonClick: () => void;
     subSectionOptions: {
         fa: string;
         en: string;
     }[];
 }
 
-export interface SubSectionOptionsProp {
+export interface SectionContextProp {
     subSectionOptions: {
         fa: string;
         en: string;

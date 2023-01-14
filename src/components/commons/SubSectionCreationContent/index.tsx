@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Quiz from './Quiz'
 import LCA from './LCA'
-import { SubSectionOptionsProp } from '../../../models/Props';
+import { SectionContext } from '../../../contexts';
 import AddIcon from '@mui/icons-material/Add';
 import text from '../../../utils/textEnOrFa';
 import styles from './styles.module.scss'
 import { useRouter } from 'next/router';
 
-const SubSectionCreationContent = ({ subSectionOptions }: SubSectionOptionsProp) => {
+const SubSectionCreationContent = () => {
+    const { subSectionOptions } = useContext(SectionContext)
     const [subSectionOption, setSubSectionOption] = useState<React.ReactElement>(<></>)
     const [enableSubSectionCreation, setShowSubSectionCreation] = useState(false)
     const router = useRouter()

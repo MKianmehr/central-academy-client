@@ -5,113 +5,37 @@
     flex-direction: column;
 }
 
-.before {
+.icons {
     opacity: 0;
-    transition: opacity 400ms linear, transform 400ms cubic-bezier(.2, 0, .38, .9);
-
-    &:hover {
-        opacity: 1;
-    }
 }
 
-.before_active {
-    opacity: 1;
-}
-
-.lecture {
+.subsection {
     background-color: getColor(primary);
     border: 1px solid getColor(primary-text);
     padding: 10px;
     cursor: move;
-}
+    @include align-center;
+    justify-content: space-between;
+    gap: 5px;
 
-.hoverButton {
-    position: relative;
-    background-color: transparent;
-    border: none;
-    width: 20px;
-    height: 20px;
-
-}
-
-.square {
-    @include square_sign
-}
-
-.square_rtl {
-    @include square_sign {
-        left: 43px;
-        transform: rotate(180deg);
-    }
-}
-
-.square_active {
-    border: none;
-    background-color: transparent;
-
-    &::before {
-        right: 20px;
-        background-color: getColor(primary);
-    }
-
-}
-
-.mult {
-    @include multiply_sign {
-        transform: translate(-20px, 4px);
-
-        &::after {
-            top: -10px;
-            right: 45px;
-        }
-
-        &::before {
-            right: 45px;
-            top: -10px;
+    &:hover {
+        .icons {
+            opacity: 1;
         }
     }
 }
 
-.mult_rtl {
-    @include multiply_sign {
-        transform: translate(-20px, 4px);
-
-        &::after {
-            top: -10px;
-            right: -63px;
-        }
-
-        &::before {
-            right: -63px;
-            top: -10px;
-        }
-    }
+.left {
+    flex: 1;
+    @include align-center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-.mult_active {
-    @include multiply_sign_active {
-        &::after {
-            right: 13px;
-            top: -7px;
-        }
+.addContentButton {
+    border: 1px solid getColor(primary-text);
 
-        &::before {
-            right: 13px;
-            top: -7px;
-        }
-    }
-}
-
-.mult_active_rtl {
-    @include multiply_sign_active {
-        &::after {
-            right: -10px;
-            top: -7px;
-        }
-
-        &::before {
-            right: -10px;
-            top: -7px;
-        }
+    & button {
+        color: getColor(primary-text);
     }
 }
