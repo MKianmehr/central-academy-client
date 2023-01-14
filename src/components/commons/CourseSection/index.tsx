@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { useTranslation } from 'next-i18next';
-import { SectionContext } from '../../../contexts';
+import { SectionContext, DarkModeContext } from '../../../contexts';
 import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -21,17 +21,32 @@ const subSectionOptions = [
 ]
 
 const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPreviousSection }: CourseSection) => {
+    const { theme } = useContext(DarkModeContext)
     const { t } = useTranslation("common")
     const router = useRouter()
     const isRtl = router.locale === "fa"
+    const draggableRef = useRef<HTMLDivElement>(null);
     const padding = isRtl ? { paddingRight: "45px" } : { paddingLeft: "45px" }
     const [onDrag, setOnDrag] = useState(false)
     const [isOpenAddCurriculum, setIsOpenAddCurriculum] = useState(false)
     const addButtonPadding = isRtl ? { paddingRight: "25px" } : { paddingLeft: "25px" }
 
     const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+        const draggable = draggableRef.current;
+        if (draggable) {
+            const crt = draggable.cloneNode(true) as HTMLDivElement;
+            crt.style.border = `2px solid ${theme === "light" ? "black" : "white"}`;
+            crt.style.width = `${draggable.offsetWidth + 23}px`
+            crt.style.paddingLeft = "10px"
+            crt.style.paddingRight = "10px"
+            crt.style.paddingTop = "20px"
+            crt.style.paddingBottom = "20px"
+            crt.style.opacity = "1"
+            document.body.appendChild(crt);
+            const rect = draggable.getBoundingClientRect();
+            e.dataTransfer.setDragImage(crt, e.clientX - rect.x + 11.5, e.clientY - rect.y + 20);
+        }
         setOnDrag(true)
-        console.log("onDragtotall")
     }
 
     const handleOnDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
@@ -50,10 +65,14 @@ const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPrevious
 
             <div className={styles.container}>
                 <div
+                    ref={draggableRef}
                     className={[styles.header].join(" ")}
                     onDragOver={(e) => { e.preventDefault() }}
                     onDragStart={handleOnDragStart}
                     onDragEnd={handleOnDragEnd}
+                    onDrag={(e) => {
+                        console.log(index)
+                    }}
                     onDrop={handleOnDrop}
                     draggable
                 >
