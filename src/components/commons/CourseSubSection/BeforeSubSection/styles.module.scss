@@ -23,7 +23,7 @@
 }
 
 .square {
-    @include square_sign
+    @include square_sign;
 }
 
 .square_rtl {

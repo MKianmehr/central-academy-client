@@ -89,23 +89,52 @@
 
 
 .mult {
-    @include multiply_sign
+    @include multiply_sign;
+    bottom: 0;
+    transform: translate(0px, -23px);
+    transition: unset;
 }
 
 ;
 
+.mult_rtl {
+    @include multiply_sign;
+    bottom: 0;
+    transform: translate(0px, -23px);
+    transition: unset;
+}
+
 .mult_active {
-    @include multiply_sign_active
+    @include multiply_sign_active;
+    transform: translate(0px, 0px);
+    transition: unset;
+
+    &::after {
+        right: 20px;
+        top: -140px;
+        transform: rotate(45deg);
+    }
+
+    &::before {
+        right: 20px;
+        top: -140px;
+        transform: rotate(-45deg);
+    }
 }
 
 .mult_active_rtl {
+    transform: translate(0px, 0px);
+    transition: unset;
+
     @include multiply_sign_active {
         &::after {
             right: -10px;
+            top: -105px;
         }
 
         &::before {
             right: -10px;
+            top: -105px;
         }
     }
 }

@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react'
 import { useTranslation } from 'next-i18next';
-import { SectionContext, DarkModeContext } from '../../../contexts';
+import { SectionContext, CurriculumContext } from '../../../contexts';
 import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -48,34 +48,59 @@ const subSectionOptions = [
 ]
 
 const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPreviousSection }: CourseSection) => {
-    const { theme } = useContext(DarkModeContext)
     const { t } = useTranslation("common")
     const router = useRouter()
     const isRtl = router.locale === "fa"
     const draggableRef = useRef<HTMLDivElement>(null);
+    const { onDragSection, sections, onDragSubSection } = useContext(CurriculumContext)
     const ghostRef = useRef<HTMLDivElement>(null);
     const padding = isRtl ? { paddingRight: "45px" } : { paddingLeft: "45px" }
-    const [onDrag, setOnDrag] = useState(false)
     const [isOpenAddCurriculum, setIsOpenAddCurriculum] = useState(false)
     const addButtonPadding = isRtl ? { paddingRight: "25px" } : { paddingLeft: "25px" }
 
-    const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>, index: number, name: string, type: string) => {
         const draggable = draggableRef.current;
         const ghost = ghostRef.current
         if (draggable && ghost) {
             const rect = draggable.getBoundingClientRect();
             // ghost.style.width = `${draggable.offsetWidth + 20}px`
             e.dataTransfer.setDragImage(ghost, e.clientX - rect.x + 11.5, e.clientY - rect.y + 20);
+            e.dataTransfer.setData("sectionIndex", `${index}`)
+            e.dataTransfer.setData("sectionName", name)
+            e.dataTransfer.setData("type", type)
         }
-        setOnDrag(true)
     }
 
-    const handleOnDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
-        setOnDrag(false)
-    }
+    const handleOnDragOver = (e: React.DragEvent<HTMLDivElement>, sectionIndex: number, name: string, type: string) => {
+        const movingSectionType = e.dataTransfer.getData("type")
+        if (movingSectionType !== type) {
 
-    const handleOnDrop = (e: React.DragEvent<HTMLDivElement>) => {
-        console.log("onDropTotall")
+            if (!(sections[sectionIndex - 1].subSections.length === 0)) {
+                return
+            }
+
+            const movingSubSectionIndex = parseInt(e.dataTransfer.getData("subSectionIndex"))
+            const movingSubSectionId = parseInt(e.dataTransfer.getData("subSectionId"))
+            const movingSubSectionSectionIndex = parseInt(e.dataTransfer.getData("subSectionSectionIndex"))
+            let isFind = false
+            for (let i = 0; i < sections[movingSubSectionSectionIndex].subSections.length; i++) {
+
+                if (sections[movingSubSectionSectionIndex].subSections[i]._id === movingSubSectionId) {
+                    isFind = true;
+                }
+            }
+            if (!isFind) {
+                return
+            }
+            onDragSubSection({ currentPosition: { sectionIndex: movingSubSectionSectionIndex, currentIndex: movingSubSectionIndex }, targetPosition: { sectionIndex: sectionIndex - 1, index: 0 } })
+        }
+        else {
+            const movingSectionIndex = parseInt(e.dataTransfer.getData("sectionIndex"))
+            const movingSectionName = e.dataTransfer.getData("sectionName")
+            if (name === movingSectionName) return
+            const targetSectionIndex = sectionIndex
+            onDragSection({ currentIndex: movingSectionIndex, targetIndex: targetSectionIndex })
+        }
     }
 
     const onAddCurriculumClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -84,16 +109,15 @@ const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPrevious
     return (
         <SectionContext.Provider value={{ subSectionOptions }}>
 
-            <div className={styles.container}>
+            <div className={styles.container}
+            >
                 <div
                     ref={draggableRef}
-                    onDragOver={(e) => { e.preventDefault() }}
-                    onDragStart={handleOnDragStart}
-                    onDragEnd={handleOnDragEnd}
-                    onDrag={(e) => {
-                        console.log(index)
+                    onDragOver={(e) => {
+                        e.preventDefault()
+                        handleOnDragOver(e, index, name, "section")
                     }}
-                    onDrop={handleOnDrop}
+                    onDragStart={(e) => handleOnDragStart(e, index, name, "section")}
                     draggable
                 >
                     <div className={[styles.header].join(" ")}>
@@ -104,17 +128,19 @@ const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPrevious
                     </div>
                 </div>
                 <div style={padding}>
-                    {subSections.map((list, index) => {
+                    {subSections?.map((list, subSectionIndex) => {
                         return (
                             <CourseSubSection
                                 key={list._id}
-                                index={index + numberOfSubSectionsOfPreviousSection + 1}
+                                index={subSectionIndex + numberOfSubSectionsOfPreviousSection + 1}
+                                realIndex={subSectionIndex}
+                                sectionIndex={index - 1}
                                 content={list}
                             />)
                     })}
                     <button
                         onClick={onAddCurriculumClick}
-                        className={[styles.mult, isOpenAddCurriculum && (isRtl ? styles.mult_active_rtl : styles.mult_active)].join(" ")}
+                        className={[isRtl ? styles.mult_rtl : styles.mult, isOpenAddCurriculum && (isRtl ? styles.mult_active_rtl : styles.mult_active)].join(" ")}
                     ></button>
                     {isOpenAddCurriculum && (
                         <div className={styles.SubSectionCreationContent}>

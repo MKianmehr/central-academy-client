@@ -146,6 +146,8 @@ export interface CourseSubSectionProp {
         _id: number;
     }
     index: number;
+    realIndex: number;
+    sectionIndex: number;
 }
 
 export interface SubContentTypeProp {

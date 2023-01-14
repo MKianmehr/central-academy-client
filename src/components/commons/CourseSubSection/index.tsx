@@ -5,7 +5,7 @@ import SubSectionResourse from './SubSectionResourse'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useTranslation } from 'next-i18next';
 import { CourseSubSectionProp } from '../../../models/Props';
-import { SubSectionContext, SectionContext } from '../../../contexts';
+import { SubSectionContext, SectionContext, CurriculumContext } from '../../../contexts';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -18,7 +18,8 @@ import text from '../../../utils/textEnOrFa';
 import { Button, IconButton } from '@mui/material';
 
 
-const CourseSubSection = ({ index, content }: CourseSubSectionProp) => {
+const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSubSectionProp) => {
+    const { onDragSubSection, sections } = useContext(CurriculumContext)
     const { t } = useTranslation("common")
     const { subSectionOptions } = useContext(SectionContext)
     const [isContentOpen, setIsContentOpen] = useState(false)
@@ -27,16 +28,31 @@ const CourseSubSection = ({ index, content }: CourseSubSectionProp) => {
     const isEnglish = router.locale === "en"
 
     // drag handlers
-    const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>, index: number) => {
-        console.log("onDrag", index)
+    const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>, index: number, id: number, type: string) => {
+        e.dataTransfer.setData("subSectionIndex", `${index}`)
+        e.dataTransfer.setData("subSectionSectionIndex", `${sectionIndex}`)
+        e.dataTransfer.setData("subSectionId", `${id}`)
+        e.dataTransfer.setData("type", type)
     }
 
-    const handleOnDragEnd = (e: React.DragEvent<HTMLDivElement>, index: number) => {
-        console.log("OnDragEnd", index)
-    }
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>, index: number, id: number, type: string) => {
+        const movingSubSectionType = e.dataTransfer.getData("type")
+        if (movingSubSectionType !== type) return
+        const movingSubSectionIndex = parseInt(e.dataTransfer.getData("subSectionIndex"))
+        const movingSubSectionId = parseInt(e.dataTransfer.getData("subSectionId"))
+        const movingSubSectionSectionIndex = parseInt(e.dataTransfer.getData("subSectionSectionIndex"))
+        if (id === movingSubSectionId) return
+        let isFind = false
+        for (let i = 0; i < sections[movingSubSectionSectionIndex].subSections.length; i++) {
 
-    const handleOnDrop = (e: React.DragEvent<HTMLDivElement>, index: number) => {
-        console.log("onDrop", index)
+            if (sections[movingSubSectionSectionIndex].subSections[i]._id === movingSubSectionId) {
+                isFind = true;
+            }
+        }
+        if (!isFind) {
+            return
+        }
+        onDragSubSection({ currentPosition: { sectionIndex: movingSubSectionSectionIndex, currentIndex: movingSubSectionIndex }, targetPosition: { sectionIndex, index } })
     }
     // drag handlers
 
@@ -62,10 +78,11 @@ const CourseSubSection = ({ index, content }: CourseSubSectionProp) => {
 
                 {/* subsection */}
                 <div
-                    onDragOver={(e) => { e.preventDefault() }}
-                    onDragStart={(e) => handleOnDragStart(e, index)}
-                    onDragEnd={(e) => handleOnDragEnd(e, index)}
-                    onDrop={(e) => handleOnDrop(e, index)}
+                    onDragOver={(e) => {
+                        e.preventDefault()
+                        handleDragOver(e, realIndex, content._id, "subSection")
+                    }}
+                    onDragStart={(e) => handleOnDragStart(e, realIndex, content._id, "subSection")}
                     draggable
                 >
                     <div className={styles.subsection}>

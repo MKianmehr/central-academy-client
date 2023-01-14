@@ -98,7 +98,7 @@
         transform: rotate(-45deg);
     }
 
-    @content
+    @content;
 }
 
 @mixin multiply_sign {
@@ -140,7 +140,7 @@
         transition: right 400ms linear, transform 400ms cubic-bezier(.2, 0, .38, .9);
     }
 
-    @content
+    @content;
 }
 
 @mixin square_sign {
@@ -170,5 +170,5 @@
         transition: right 400ms linear, background-color 400ms linear;
     }
 
-    @content
+    @content;
 }
