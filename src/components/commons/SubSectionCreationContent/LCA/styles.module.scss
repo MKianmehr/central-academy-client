@@ -11,20 +11,6 @@
     padding-top: 10px;
 }
 
-.input {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border: 1px solid getColor(primary-text);
-    @include padding-horizontal(5px);
-
-    & input {
-        border: none;
-        flex: 1;
-        outline: none
-    }
-}
-
 .cancel {
     background-color: transparent;
     border: none;

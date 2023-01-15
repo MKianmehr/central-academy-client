@@ -152,7 +152,10 @@ export interface CourseSubSectionProp {
 
 export interface SubContentTypeProp {
     icon: React.ReactNode;
-    type: string;
+    type: {
+        fa: string;
+        en: string;
+    };
     onClick: (type: string) => void
 }
 

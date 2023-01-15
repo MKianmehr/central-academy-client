@@ -59,5 +59,20 @@
     "Enter a title": "یک عنوان وارد کنید",
     "add": "اضافه کردن",
     "Cancel": "لغو",
-    "Description": "توضیح"
+    "Description": "توضیح",
+    "New Section": "بخش جدید",
+    "Add Section": "اضافه کردن بخش",
+    "sectionIncome": "دانشجویان بعد از تمام کردن این بخش چه چیزی یاد می گیرند؟",
+    "learning objective": "هدف یادگیری را وارد کنید",
+    "Content": "محتوا",
+    "Select content type": "انتخاب نوع محتوا",
+    "Add Video": "انتخاب ویدیو",
+    "Add Article": "انتخاب مقاله",
+    "Add Video & Slide Mashup": "انتخاب ویدیو و اسلاید",
+    "Upload Video": "آپلود ویدیو",
+    "contentType-des": "نوع اصلی محتوا را انتخاب کنید. فایل ها و لینک ها را می توان به عنوان منبع اضافه کرد.",
+    "video input condition": "همه فایل ها باید حداقل 720p و کمتر از 4.0 گیگابایت باشند.",
+    "Note": "توجه",
+    "No file selected": "فایلی انتخاب نشده است",
+    "Select": "انتخاب"
 }

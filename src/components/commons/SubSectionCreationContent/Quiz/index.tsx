@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
+import RemainingInput from '../../RemaingInput';
 import styles from './styles.module.scss';
 import { useTranslation } from 'next-i18next';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
 
 const Quiz = ({ name, handleCloseSubSectionOption }: { name: string; handleCloseSubSectionOption: () => void }) => {
-    const initialValue = 60
-    const [remaing, setRemaing] = useState(initialValue)
     const router = useRouter()
     const isEnglish = router.locale === "en"
     const [text, setText] = useState<string>("")
@@ -17,7 +16,6 @@ const Quiz = ({ name, handleCloseSubSectionOption }: { name: string; handleClose
 
     const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value)
-        setRemaing(initialValue - e.target.value.length)
     }
 
     const onCancelClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -34,15 +32,12 @@ const Quiz = ({ name, handleCloseSubSectionOption }: { name: string; handleClose
     return (
         <div className={styles.container}>
             <h6>{isEnglish ? `${t("new")} ${name}` : `${name} ${t("new")}`}:</h6>
-            <div className={styles.input}>
-                <input
-                    value={text}
-                    onChange={onChangeTitle}
-                    placeholder={`${t("Enter a title")}`}
-                    maxLength={60}
-                />
-                {remaing}
-            </div>
+            <RemainingInput
+                value={text}
+                onChange={onChangeTitle}
+                maxLength={60}
+                placeHolder={`${t("Enter a title")}`}
+            />
             {preview ? (
                 <div className={styles.markdown}>
                     <ReactMarkdown>

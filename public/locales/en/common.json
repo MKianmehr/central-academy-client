@@ -59,5 +59,20 @@
     "Enter a title": "Enter a title",
     "add": "Add",
     "Cancel": "Cancel",
-    "Description": "Description"
+    "Description": "Description",
+    "New Section": "New Section",
+    "Add Section": "Add Section",
+    "sectionIncome": "What will students be able to do at the end of this section",
+    "learning objective": "Enter a Learning Objective",
+    "Content": "Content",
+    "Select content type": "Select content type",
+    "Add Video": "Add Video",
+    "Add Article": "Add Article",
+    "Add Video & Slide Mashup": "Add Video & Slide Mashup",
+    "Upload Video": "Upload Video",
+    "contentType-des": "Select the main type of content. Files and links can be added as resources.",
+    "video input condition": "All files should be at least 720p and less than 4.0 GB.",
+    "Note": "Note",
+    "No file selected": "No file selected",
+    "Select": "Select"
 }

@@ -14,6 +14,7 @@
 .paragraph {
     color: getColor(primary-text);
     padding: 2px;
+    margin-bottom: 50px;
 
     @include large-screens($breakpoint-sm) {
         padding: 20px;

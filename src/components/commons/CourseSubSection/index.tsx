@@ -101,7 +101,7 @@ const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSub
                                     <div className={styles.addContentButton}>
                                         <Button onClick={onContentButtonClick}>
                                             <AddIcon />
-                                            Content
+                                            {t("Content")}
                                         </Button>
                                     </div>
                                 )

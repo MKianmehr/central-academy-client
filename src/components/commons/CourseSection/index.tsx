@@ -11,6 +11,7 @@ import { Button, IconButton } from '@mui/material';
 import CourseSubSection from '../CourseSubSection'
 import SubSectionCreationContent from '../SubSectionCreationContent';
 import { useRouter } from 'next/router';
+import BeforeSection from './BeforeSection';
 
 
 const SectionHeader = ({ index, name }: { index: number; name: string }) => {
@@ -38,6 +39,7 @@ const SectionHeader = ({ index, name }: { index: number; name: string }) => {
         </>
     )
 }
+
 
 const subSectionOptions = [
     { fa: "دوره", en: "Lecture" },
@@ -109,47 +111,50 @@ const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPrevious
     return (
         <SectionContext.Provider value={{ subSectionOptions }}>
 
-            <div className={styles.container}
-            >
-                <div
-                    ref={draggableRef}
-                    onDragOver={(e) => {
-                        e.preventDefault()
-                        handleOnDragOver(e, index, name, "section")
-                    }}
-                    onDragStart={(e) => handleOnDragStart(e, index, name, "section")}
-                    draggable
+            <div>
+                <BeforeSection />
+                <div className={styles.container}
                 >
-                    <div className={[styles.header].join(" ")}>
-                        <SectionHeader index={index} name={name} />
-                    </div>
-                    <div ref={ghostRef} className={[styles.header, styles.ghost].join(" ")}>
-                        <SectionHeader index={index} name={name} />
-                    </div>
-                </div>
-                <div style={padding}>
-                    {subSections?.map((list, subSectionIndex) => {
-                        return (
-                            <CourseSubSection
-                                key={list._id}
-                                index={subSectionIndex + numberOfSubSectionsOfPreviousSection + 1}
-                                realIndex={subSectionIndex}
-                                sectionIndex={index - 1}
-                                content={list}
-                            />)
-                    })}
-                    <button
-                        onClick={onAddCurriculumClick}
-                        className={[isRtl ? styles.mult_rtl : styles.mult, isOpenAddCurriculum && (isRtl ? styles.mult_active_rtl : styles.mult_active)].join(" ")}
-                    ></button>
-                    {isOpenAddCurriculum && (
-                        <div className={styles.SubSectionCreationContent}>
-                            <SubSectionCreationContent />
+                    <div
+                        ref={draggableRef}
+                        onDragOver={(e) => {
+                            e.preventDefault()
+                            handleOnDragOver(e, index, name, "section")
+                        }}
+                        onDragStart={(e) => handleOnDragStart(e, index, name, "section")}
+                        draggable
+                    >
+                        <div className={[styles.header].join(" ")}>
+                            <SectionHeader index={index} name={name} />
                         </div>
-                    )}
-                    {!isOpenAddCurriculum && <div className={styles.addButton}>
-                        <Button style={addButtonPadding} onClick={onAddCurriculumClick}>{t("Curriculum item")}</Button>
-                    </div>}
+                        <div ref={ghostRef} className={[styles.header, styles.ghost].join(" ")}>
+                            <SectionHeader index={index} name={name} />
+                        </div>
+                    </div>
+                    <div style={padding}>
+                        {subSections?.map((list, subSectionIndex) => {
+                            return (
+                                <CourseSubSection
+                                    key={list._id}
+                                    index={subSectionIndex + numberOfSubSectionsOfPreviousSection + 1}
+                                    realIndex={subSectionIndex}
+                                    sectionIndex={index - 1}
+                                    content={list}
+                                />)
+                        })}
+                        <button
+                            onClick={onAddCurriculumClick}
+                            className={[isRtl ? styles.mult_rtl : styles.mult, isOpenAddCurriculum && (isRtl ? styles.mult_active_rtl : styles.mult_active)].join(" ")}
+                        ></button>
+                        {isOpenAddCurriculum && (
+                            <div className={styles.SubSectionCreationContent}>
+                                <SubSectionCreationContent />
+                            </div>
+                        )}
+                        {!isOpenAddCurriculum && <div className={styles.addButton}>
+                            <Button style={addButtonPadding} onClick={onAddCurriculumClick}>{t("Curriculum item")}</Button>
+                        </div>}
+                    </div>
                 </div>
             </div>
         </SectionContext.Provider>

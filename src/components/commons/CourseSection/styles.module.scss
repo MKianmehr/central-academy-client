@@ -6,7 +6,7 @@
     background-color: getColor(section);
     @include padding-horizontal(10px);
     padding-bottom: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 
     & .ghost {
         @include padding-vertical(25px);
