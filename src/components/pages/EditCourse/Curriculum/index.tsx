@@ -110,10 +110,28 @@ const Curriculum = () => {
         // or return false
     }
 
-    const handleAddSubSection = () => { }
+    const handleDeleteSubSection = ({ sectionIndex, index }: { sectionIndex: number; index: number }) => {
+        const allSections = [...sections]
+        allSections[sectionIndex].subSections.splice(index, 1)
+        setSections(allSections)
+        return true
+    }
+
+    const handleAddSubSection = () => {
+        return false
+    }
 
     return (
-        <CurriculumContext.Provider value={{ onDragSection, onDragSubSection, sections, handleAddSection, handleEditSection, handleDeleteSection }}>
+        <CurriculumContext.Provider value={{
+            onDragSection,
+            onDragSubSection,
+            sections,
+            handleAddSection,
+            handleEditSection,
+            handleDeleteSection,
+            handleDeleteSubSection
+        }}
+        >
             <div className={styles.container}>
                 <h3 className={styles.header}>{t("Curriculum")}</h3>
                 <p className={styles.paragraph}>{t("curriculum-describe")}</p>

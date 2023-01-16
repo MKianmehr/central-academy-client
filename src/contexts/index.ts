@@ -35,5 +35,6 @@ export const CurriculumContext = createContext<CurriculumContextProp>(
         handleAddSection: () => { return false },
         handleEditSection: () => { return false },
         handleDeleteSection: () => { return false },
+        handleDeleteSubSection: () => { return false }
     }
 )

@@ -14,10 +14,12 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MenuIcon from '@mui/icons-material/Menu';
 import styles from './styles.module.scss'
 import { Button, IconButton } from '@mui/material';
+import AlertDialog from '../AlertDialog';
 
 
 const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSubSectionProp) => {
-    const { onDragSubSection, sections } = useContext(CurriculumContext)
+    const { onDragSubSection, sections, handleDeleteSubSection } = useContext(CurriculumContext)
+    const [isOpenDialog, setIsOpenDialog] = useState(false)
     const { t } = useTranslation("common")
     const { subSectionOptions } = useContext(SectionContext)
     const [isContentOpen, setIsContentOpen] = useState(false)
@@ -61,6 +63,17 @@ const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSub
         setIsResourseOpen(!isResourseOpen)
         setIsContentOpen(false)
     }
+
+    const onOpenDialog = () => {
+        setIsOpenDialog(!isOpenDialog)
+    }
+
+    const onConfirmDialog = () => {
+        const res = handleDeleteSubSection({ sectionIndex, index: realIndex })
+        if (res) {
+            onOpenDialog()
+        }
+    }
     // ui handlers
     return (
         <SubSectionContext.Provider value={{ subSectionOptions, onContentButtonClick, onResourseButtonClick }}>
@@ -88,7 +101,13 @@ const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSub
                                 <span>{content.title}</span>
                                 <span className={styles.icons}>
                                     <IconButton><EditIcon className={styles.editIcon} fontSize='small' /></IconButton>
-                                    <IconButton><DeleteIcon className={styles.editIcon} fontSize='small' /></IconButton>
+                                    <IconButton onClick={onOpenDialog}><DeleteIcon className={styles.editIcon} fontSize='small' /></IconButton>
+                                    <AlertDialog
+                                        onConfirmDialog={onConfirmDialog}
+                                        onOpenDialog={onOpenDialog}
+                                        isOpen={isOpenDialog}
+                                        describtion={t("section delete message")}
+                                        notificationMessage={t("Please Confirm")} />
                                 </span>
                             </div>
                             {content.type.toLowerCase() === "lecture" && (

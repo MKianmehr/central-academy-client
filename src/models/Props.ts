@@ -191,5 +191,5 @@ export interface CurriculumContextProp {
     handleAddSection: ({ title, goal, sectionIndex }: { title: string; goal: string; sectionIndex: number }) => boolean;
     handleEditSection: ({ title, goal, sectionIndex }: { title: string; goal: string; sectionIndex: number }) => boolean;
     handleDeleteSection: ({ sectionIndex }: { sectionIndex: number }) => boolean;
-
+    handleDeleteSubSection: ({ sectionIndex, index }: { sectionIndex: number; index: number }) => boolean;
 }
