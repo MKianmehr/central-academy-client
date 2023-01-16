@@ -1,5 +1,9 @@
 @import '../../../styles/main.scss';
 
+.container {
+    border: none;
+}
+
 .input {
     display: flex;
     align-items: center;
@@ -12,4 +16,14 @@
         flex: 1;
         outline: none
     }
+}
+
+.error {
+    color: getColor(border-error);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.input_error {
+    border: 2px solid getColor(border-error);
 }

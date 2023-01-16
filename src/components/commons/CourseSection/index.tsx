@@ -109,7 +109,7 @@ const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPrevious
         setIsOpenAddCurriculum(!isOpenAddCurriculum)
     }
     return (
-        <SectionContext.Provider value={{ subSectionOptions }}>
+        <SectionContext.Provider value={{ subSectionOptions, index: index - 1 }}>
 
             <div>
                 <BeforeSection />

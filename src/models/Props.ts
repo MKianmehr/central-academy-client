@@ -79,7 +79,7 @@ export interface SearchInputProp {
 }
 
 export interface InstructorCourseCardProp {
-    title: { fa: string, en: string };
+    title: string;
     src: string;
     rate: number;
     numberOfRate: number;
@@ -121,28 +121,16 @@ export interface CourseSection {
     name: string;
     numberOfSubSectionsOfPreviousSection: number;
     subSections: {
-        title: {
-            fa: string;
-            en: string;
-        };
-        type: {
-            fa: string;
-            en: string;
-        };
+        title: string;
+        type: string;
         _id: number;
     }[]
 }
 
 export interface CourseSubSectionProp {
     content: {
-        title: {
-            fa: string;
-            en: string;
-        };
-        type: {
-            fa: string;
-            en: string;
-        };
+        title: string;
+        type: string;
         _id: number;
     }
     index: number;
@@ -173,4 +161,5 @@ export interface SectionContextProp {
         fa: string;
         en: string;
     }[];
+    index: number;
 }

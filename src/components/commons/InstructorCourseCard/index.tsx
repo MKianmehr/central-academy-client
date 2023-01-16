@@ -25,7 +25,7 @@ const InstructorCourseCard = ({ title, src, rate, numberOfRate, numberOfStudent 
                         height: 'auto',
                     }} />
                 <Height16 />
-                <h6 className={styles.title}>{router.locale === "fa" ? title.fa : title.en}</h6>
+                <h6 className={styles.title}>{title}</h6>
                 <div className={styles.numbers}>
                     <div className={styles.numberOfStudents}>
                         <div>{t("Number of students")}</div>

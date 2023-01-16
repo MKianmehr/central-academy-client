@@ -2,36 +2,34 @@ import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'next-i18next';
 import CourseSection from '../../../commons/CourseSection'
 import styles from './styles.module.scss'
-import { useRouter } from 'next/router';
 import { CurriculumContext } from '../../../../contexts';
-import text from '../../../../utils/textEnOrFa';
 
 const initialSections = [
     {
-        title: { fa: "مقدمه", en: "Introduction" },
+        title: "Introduction",
         subSections: [
-            { title: { fa: "امنیت", en: "Security" }, type: { fa: "درس", en: "Lecture" }, _id: 1 },
-            { title: { fa: "احراز هویت", en: "Authentication" }, type: { fa: "تست", en: "Test" }, _id: 2 },
+            { title: "Security", type: "Lecture", _id: 1 },
+            { title: "Authentication", type: "Test", _id: 2 },
 
         ],
         _id: 1
     },
     {
-        title: { fa: "فرانت اند", en: "Front-end" },
+        title: "Front-end",
         subSections: [
-            { title: { fa: "امنیت2", en: "Security2" }, type: { fa: "درس", en: "Lecture" }, _id: 3 },
-            { title: { fa: "2احراز هویت", en: "Authentication2" }, type: { fa: "درس", en: "Lecture" }, _id: 4 },
-            { title: { fa: "2احراز هویت", en: "Authentication3" }, type: { fa: "درس", en: "Lecture" }, _id: 5 },
-            { title: { fa: "2احراز هویت", en: "Authentication4" }, type: { fa: "درس", en: "Lecture" }, _id: 6 }
+            { title: "Security2", type: "Lecture", _id: 3 },
+            { title: "Authentication2", type: "Lecture", _id: 4 },
+            { title: "Authentication3", type: "Lecture", _id: 5 },
+            { title: "Authentication4", type: "Lecture", _id: 6 }
 
         ],
         _id: 2
     },
     {
-        title: { fa: "فرانت اند", en: "Front-end" },
+        title: "Front-end2",
         subSections: [
-            { title: { fa: "امنیت2", en: "Security2" }, type: { fa: "درس", en: "Lecture" }, _id: 7 },
-            { title: { fa: "2احراز هویت", en: "Authentication5" }, type: { fa: "درس", en: "Lecture" }, _id: 8 },
+            { title: "Security2", type: "Lecture", _id: 7 },
+            { title: "Authentication5", type: "Lecture", _id: 8 },
 
         ],
         _id: 3
@@ -40,8 +38,6 @@ const initialSections = [
 
 const Curriculum = () => {
     const { t } = useTranslation("common")
-    const router = useRouter()
-    const isEnglish = router.locale === "en"
     const [sections, setSections] = useState(initialSections)
 
     const numberOfSubSectionsOfPreviousSections = useMemo(() => {
@@ -78,8 +74,14 @@ const Curriculum = () => {
         setSections(allSections)
     }
 
+    const handleAddSection = ({ title, goal, sectionIndex }: { title: string; goal?: string; sectionIndex: number }) => {
+        const allSections = [...sections]
+        allSections.splice(sectionIndex, 0,)
+
+    }
+
     return (
-        <CurriculumContext.Provider value={{ onDragSection, onDragSubSection, sections }}>
+        <CurriculumContext.Provider value={{ onDragSection, onDragSubSection, sections, handleAddSection }}>
             <div className={styles.container}>
                 <h3 className={styles.header}>{t("Curriculum")}</h3>
                 <p className={styles.paragraph}>{t("curriculum-describe")}</p>
@@ -90,7 +92,7 @@ const Curriculum = () => {
                             numberOfSubSectionsOfPreviousSection={numberOfSubSectionsOfPreviousSections[index]}
                             subSections={sections[index].subSections}
                             index={index + 1}
-                            name={text(section.title, isEnglish)}
+                            name={section.title}
                         />
                     )
                 })}

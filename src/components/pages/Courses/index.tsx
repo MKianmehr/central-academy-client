@@ -14,13 +14,13 @@ import { Divider } from '@mui/material';
 
 const labels = [{ fa: "جدید ترین", en: "Newest" }, { fa: "پرفروش ترین", en: "Popular" }]
 const images = [
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 1 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 2 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 3 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 4 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 5 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 6 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: { fa: "دوره مبتدی تا پیشرفته C#", en: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class" }, rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 7 }
+    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class", rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 1 },
+    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class", rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 2 },
+    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class", rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 3 },
+    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class", rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 4 },
+    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class", rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 5 },
+    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class", rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 6 },
+    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class", rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 7 }
 ]
 
 

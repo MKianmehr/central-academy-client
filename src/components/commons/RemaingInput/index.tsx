@@ -6,9 +6,11 @@ interface RemainingInputProp {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     maxLength: number;
     placeHolder: string;
+    className?: string;
+    errorValue?: string;
 }
 
-const RemainingInput = ({ value, onChange, maxLength, placeHolder }: RemainingInputProp) => {
+const RemainingInput = ({ value, onChange, maxLength, placeHolder, className, errorValue }: RemainingInputProp) => {
     const [initialValue, setInitialValue] = useState(maxLength)
     const [remaing, setRemaing] = useState(initialValue)
 
@@ -18,14 +20,17 @@ const RemainingInput = ({ value, onChange, maxLength, placeHolder }: RemainingIn
     }
 
     return (
-        <div className={styles.input}>
-            <input
-                value={value}
-                onChange={onChangeText}
-                placeholder={placeHolder}
-                maxLength={maxLength}
-            />
-            {remaing}
+        <div className={styles.container}>
+            <div className={[styles.input, errorValue && styles.input_error].join(" ")}>
+                <input
+                    value={value}
+                    onChange={onChangeText}
+                    placeholder={placeHolder}
+                    maxLength={maxLength}
+                />
+                {remaing}
+            </div>
+            {errorValue && <span className={styles.error}>{errorValue}</span>}
         </div>
     )
 }

@@ -74,5 +74,6 @@
     "video input condition": "همه فایل ها باید حداقل 720p و کمتر از 4.0 گیگابایت باشند.",
     "Note": "توجه",
     "No file selected": "فایلی انتخاب نشده است",
-    "Select": "انتخاب"
+    "Select": "انتخاب",
+    "This field may not be blank.": "این بخش نمی تواند خالی باشد."
 }

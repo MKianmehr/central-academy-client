@@ -18,7 +18,8 @@ export const SubSectionContext = createContext<SubSectionContextProp>(
 
 
 export const SectionContext = createContext<SectionContextProp>({
-    subSectionOptions: [{ fa: "", en: "" }]
+    subSectionOptions: [{ fa: "", en: "" }],
+    index: 0
 })
 
 interface CurriculumContextProp {
@@ -37,24 +38,16 @@ interface CurriculumContextProp {
         };
     }) => void;
     sections: {
-        title: {
-            fa: string;
-            en: string;
-        };
+        title: string;
         subSections: {
-            title: {
-                fa: string;
-                en: string;
-            };
-            type: {
-                fa: string;
-                en: string;
-            };
+            title: string;
+            type: string;
             _id: number;
         }[];
         _id: number;
-    }[]
+    }[];
+    handleAddSection: ({ title, goal, sectionIndex }: { title: string; goal: string; sectionIndex: number }) => void;
 
 }
 
-export const CurriculumContext = createContext<CurriculumContextProp>({ onDragSection: () => { }, onDragSubSection: () => { }, sections: [] })
+export const CurriculumContext = createContext<CurriculumContextProp>({ onDragSection: () => { }, onDragSubSection: () => { }, sections: [], handleAddSection: () => { } })
