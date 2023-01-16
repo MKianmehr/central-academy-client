@@ -118,7 +118,7 @@ export type EditCourseMenuProp = {
 
 export interface CourseSection {
     index: number;
-    name: string;
+    title: string;
     numberOfSubSectionsOfPreviousSection: number;
     subSections: {
         title: string;
@@ -162,4 +162,34 @@ export interface SectionContextProp {
         en: string;
     }[];
     index: number;
+}
+
+export interface CurriculumContextProp {
+    onDragSection: ({ currentIndex, targetIndex }: {
+        currentIndex: number;
+        targetIndex: number;
+    }) => void;
+    onDragSubSection: ({ currentPosition, targetPosition }: {
+        currentPosition: {
+            sectionIndex: number;
+            currentIndex: number;
+        };
+        targetPosition: {
+            sectionIndex: number;
+            index: number;
+        };
+    }) => void;
+    sections: {
+        title: string;
+        subSections: {
+            title: string;
+            type: string;
+            _id: number;
+        }[];
+        _id: number;
+    }[];
+    handleAddSection: ({ title, goal, sectionIndex }: { title: string; goal: string; sectionIndex: number }) => boolean;
+    handleEditSection: ({ title, goal, sectionIndex }: { title: string; goal: string; sectionIndex: number }) => boolean;
+    handleDeleteSection: ({ sectionIndex }: { sectionIndex: number }) => boolean;
+
 }

@@ -62,6 +62,7 @@
     "Description": "Description",
     "New Section": "New Section",
     "Add Section": "Add Section",
+    "Edit Section": "Edit Section",
     "sectionIncome": "What will students be able to do at the end of this section",
     "learning objective": "Enter a Learning Objective",
     "Content": "Content",
@@ -75,5 +76,8 @@
     "Note": "Note",
     "No file selected": "No file selected",
     "Select": "Select",
-    "This field may not be blank.": "This field may not be blank."
+    "This field may not be blank.": "This field may not be blank.",
+    "Please Confirm": "Please Confirm",
+    "section delete message": "You are about to remove a curriculum item. Are you sure you want to continue?",
+    "ok": "OK"
 }

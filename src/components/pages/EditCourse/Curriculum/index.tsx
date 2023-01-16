@@ -75,13 +75,45 @@ const Curriculum = () => {
     }
 
     const handleAddSection = ({ title, goal, sectionIndex }: { title: string; goal?: string; sectionIndex: number }) => {
+        const newSection = {
+            title,
+            goal,
+            subSections: [
+            ],
+            _id: 4
+        }
         const allSections = [...sections]
-        allSections.splice(sectionIndex, 0,)
-
+        allSections.splice(sectionIndex, 0, newSection)
+        // request to server if okay setSections
+        setSections(allSections)
+        return true
+        // or return false
     }
 
+    const handleEditSection = ({ title, goal, sectionIndex }: { title: string; goal?: string; sectionIndex: number }) => {
+        const allSections = [...sections]
+        const newSection = { ...allSections[sectionIndex], title, goal }
+        allSections.splice(sectionIndex, 1)
+        allSections.splice(sectionIndex, 0, newSection)
+        // request to server
+        setSections(allSections)
+        return true
+        // or return false
+    }
+
+    const handleDeleteSection = ({ sectionIndex }: { sectionIndex: number }) => {
+        const allSections = [...sections]
+        allSections.splice(sectionIndex, 1)
+        // request to server
+        setSections(allSections)
+        return true
+        // or return false
+    }
+
+    const handleAddSubSection = () => { }
+
     return (
-        <CurriculumContext.Provider value={{ onDragSection, onDragSubSection, sections, handleAddSection }}>
+        <CurriculumContext.Provider value={{ onDragSection, onDragSubSection, sections, handleAddSection, handleEditSection, handleDeleteSection }}>
             <div className={styles.container}>
                 <h3 className={styles.header}>{t("Curriculum")}</h3>
                 <p className={styles.paragraph}>{t("curriculum-describe")}</p>
@@ -92,7 +124,7 @@ const Curriculum = () => {
                             numberOfSubSectionsOfPreviousSection={numberOfSubSectionsOfPreviousSections[index]}
                             subSections={sections[index].subSections}
                             index={index + 1}
-                            name={section.title}
+                            title={section.title}
                         />
                     )
                 })}

@@ -62,6 +62,7 @@
     "Description": "توضیح",
     "New Section": "بخش جدید",
     "Add Section": "اضافه کردن بخش",
+    "Edit Section": "ویرایش بخش",
     "sectionIncome": "دانشجویان بعد از تمام کردن این بخش چه چیزی یاد می گیرند؟",
     "learning objective": "هدف یادگیری را وارد کنید",
     "Content": "محتوا",
@@ -75,5 +76,8 @@
     "Note": "توجه",
     "No file selected": "فایلی انتخاب نشده است",
     "Select": "انتخاب",
-    "This field may not be blank.": "این بخش نمی تواند خالی باشد."
+    "This field may not be blank.": "این بخش نمی تواند خالی باشد.",
+    "Please Confirm": "لطفا تایید کنید",
+    "section delete message": "شما در شرف حذف یک مورد از برنامه درسی هستید. آیا مطمئن هستید که میخواهید ادامه دهید؟",
+    "ok": "تایید"
 }

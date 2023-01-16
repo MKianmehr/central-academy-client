@@ -1,9 +1,10 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useCallback, useContext, useRef, useState } from 'react'
 import { useTranslation } from 'next-i18next';
 import { SectionContext, CurriculumContext } from '../../../contexts';
 import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AlertDialog from '../AlertDialog';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import { CourseSection } from '../../../models/Props';
 import styles from './styles.module.scss';
@@ -12,28 +13,45 @@ import CourseSubSection from '../CourseSubSection'
 import SubSectionCreationContent from '../SubSectionCreationContent';
 import { useRouter } from 'next/router';
 import BeforeSection from './BeforeSection';
+import InputsForAddSection from './InputForAddSection';
 
 
-const SectionHeader = ({ index, name }: { index: number; name: string }) => {
-
+const SectionHeader = ({ index, title, handleEditSection }: { index: number; title: string; handleEditSection: () => void }) => {
     const { t } = useTranslation("common")
+    const { handleDeleteSection } = useContext(CurriculumContext)
+    const [isDialogEnable, setIsDialogEnable] = useState(false)
+
+    const onOpenDialog = () => {
+        setIsDialogEnable(!isDialogEnable)
+    }
+
+    const onConfirmDialog = () => {
+        handleDeleteSection({ sectionIndex: index - 1 })
+    }
 
     return (
         <>
             <span className={styles.title}>{t("Section")}: {index}</span>
             <StickyNote2OutlinedIcon fontSize='small' />
-            <span className={styles.name}>{name}</span>
+            <span className={styles.name}>{title}</span>
             <span className={styles.icons}>
                 <span>
-                    <IconButton className={styles.icon}>
+                    <IconButton onClick={handleEditSection} className={styles.icon}>
                         <EditIcon fontSize='small' />
                     </IconButton>
-                    <IconButton className={styles.icon}>
+                    <IconButton onClick={onOpenDialog} className={styles.icon}>
                         <DeleteIcon fontSize='small' />
+                        <AlertDialog
+                            notificationMessage={t("Please Confirm")}
+                            onConfirmDialog={onConfirmDialog}
+                            onOpenDialog={onOpenDialog}
+                            describtion={t("section delete message")}
+                            isOpen={isDialogEnable}
+                        />
                     </IconButton>
                 </span>
-                <IconButton>
-                    <MenuOutlinedIcon />
+                <IconButton >
+                    <MenuOutlinedIcon className={styles.menu} />
                 </IconButton>
             </span>
         </>
@@ -49,7 +67,7 @@ const subSectionOptions = [
     { fa: "تمرین", en: "Assignment" }
 ]
 
-const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPreviousSection }: CourseSection) => {
+const CourseSection = ({ index, title, subSections, numberOfSubSectionsOfPreviousSection }: CourseSection) => {
     const { t } = useTranslation("common")
     const router = useRouter()
     const isRtl = router.locale === "fa"
@@ -58,6 +76,7 @@ const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPrevious
     const ghostRef = useRef<HTMLDivElement>(null);
     const padding = isRtl ? { paddingRight: "45px" } : { paddingLeft: "45px" }
     const [isOpenAddCurriculum, setIsOpenAddCurriculum] = useState(false)
+    const [isEditSectionActive, setIsEditSectionActive] = useState(false)
     const addButtonPadding = isRtl ? { paddingRight: "25px" } : { paddingLeft: "25px" }
 
     const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>, index: number, name: string, type: string) => {
@@ -108,6 +127,10 @@ const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPrevious
     const onAddCurriculumClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         setIsOpenAddCurriculum(!isOpenAddCurriculum)
     }
+
+    const handleEditSection = useCallback(() => {
+        setIsEditSectionActive(!isEditSectionActive)
+    }, [isEditSectionActive])
     return (
         <SectionContext.Provider value={{ subSectionOptions, index: index - 1 }}>
 
@@ -115,22 +138,31 @@ const CourseSection = ({ index, name, subSections, numberOfSubSectionsOfPrevious
                 <BeforeSection />
                 <div className={styles.container}
                 >
-                    <div
-                        ref={draggableRef}
-                        onDragOver={(e) => {
-                            e.preventDefault()
-                            handleOnDragOver(e, index, name, "section")
-                        }}
-                        onDragStart={(e) => handleOnDragStart(e, index, name, "section")}
-                        draggable
-                    >
-                        <div className={[styles.header].join(" ")}>
-                            <SectionHeader index={index} name={name} />
+                    {!isEditSectionActive && (
+                        <div
+                            ref={draggableRef}
+                            onDragOver={(e) => {
+                                e.preventDefault()
+                                handleOnDragOver(e, index, title, "section")
+                            }}
+                            onDragStart={(e) => handleOnDragStart(e, index, title, "section")}
+                            draggable
+                        >
+                            <div className={[styles.header].join(" ")}>
+                                <SectionHeader handleEditSection={handleEditSection} index={index} title={title} />
+                            </div>
+                            <div ref={ghostRef} className={[styles.header, styles.ghost].join(" ")}>
+                                <SectionHeader handleEditSection={handleEditSection} index={index} title={title} />
+                            </div>
                         </div>
-                        <div ref={ghostRef} className={[styles.header, styles.ghost].join(" ")}>
-                            <SectionHeader index={index} name={name} />
-                        </div>
-                    </div>
+                    )}
+                    {isEditSectionActive && (
+                        <InputsForAddSection
+                            onClick={handleEditSection}
+                            title={title}
+                            goal=""
+                        />
+                    )}
                     <div style={padding}>
                         {subSections?.map((list, subSectionIndex) => {
                             return (

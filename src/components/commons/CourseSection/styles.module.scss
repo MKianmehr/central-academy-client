@@ -4,6 +4,7 @@
     border: 1px solid getColor(primary-text);
     position: relative;
     background-color: getColor(section);
+    color: getColor(primary-text);
     @include padding-horizontal(10px);
     padding-bottom: 15px;
     margin-bottom: 50px;
@@ -33,6 +34,10 @@
             opacity: 1;
         }
     }
+}
+
+.menu {
+    color: getColor(primary-text);
 }
 
 

@@ -87,8 +87,8 @@ const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSub
                                 <span> {content.type} {index}: </span>
                                 <span>{content.title}</span>
                                 <span className={styles.icons}>
-                                    <IconButton><EditIcon fontSize='small' /></IconButton>
-                                    <IconButton><DeleteIcon fontSize='small' /></IconButton>
+                                    <IconButton><EditIcon className={styles.editIcon} fontSize='small' /></IconButton>
+                                    <IconButton><DeleteIcon className={styles.editIcon} fontSize='small' /></IconButton>
                                 </span>
                             </div>
                             {content.type.toLowerCase() === "lecture" && (
@@ -104,11 +104,11 @@ const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSub
                         </div>
                         {!isContentOpen && (
                             <IconButton onClick={onResourseButtonClick}>
-                                {isResourseOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                                {isResourseOpen ? <KeyboardArrowUpIcon className={styles.editIcon} /> : <KeyboardArrowDownIcon className={styles.editIcon} />}
                             </IconButton>
                         )}
                         <span className={styles.icons}>
-                            <MenuIcon />
+                            <MenuIcon className={styles.editIcon} />
                         </span>
                     </div>
                     {/* subSection content and resourse */}

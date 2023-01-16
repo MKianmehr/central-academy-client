@@ -25,6 +25,10 @@
     }
 }
 
+.editIcon {
+    color: getColor(primary-text);
+}
+
 .left {
     flex: 1;
     @include align-center;

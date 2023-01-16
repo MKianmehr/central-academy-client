@@ -1,5 +1,10 @@
 import { createContext } from "react";
-import { DarkModeProviderProp, SubSectionContextProp, SectionContextProp } from '../models/Props'
+import {
+    DarkModeProviderProp,
+    SubSectionContextProp,
+    SectionContextProp,
+    CurriculumContextProp
+} from '../models/Props'
 
 export const OnLineContext = createContext<boolean>(true);
 export const DarkModeContext = createContext<DarkModeProviderProp>({
@@ -22,32 +27,13 @@ export const SectionContext = createContext<SectionContextProp>({
     index: 0
 })
 
-interface CurriculumContextProp {
-    onDragSection: ({ currentIndex, targetIndex }: {
-        currentIndex: number;
-        targetIndex: number;
-    }) => void;
-    onDragSubSection: ({ currentPosition, targetPosition }: {
-        currentPosition: {
-            sectionIndex: number;
-            currentIndex: number;
-        };
-        targetPosition: {
-            sectionIndex: number;
-            index: number;
-        };
-    }) => void;
-    sections: {
-        title: string;
-        subSections: {
-            title: string;
-            type: string;
-            _id: number;
-        }[];
-        _id: number;
-    }[];
-    handleAddSection: ({ title, goal, sectionIndex }: { title: string; goal: string; sectionIndex: number }) => void;
-
-}
-
-export const CurriculumContext = createContext<CurriculumContextProp>({ onDragSection: () => { }, onDragSubSection: () => { }, sections: [], handleAddSection: () => { } })
+export const CurriculumContext = createContext<CurriculumContextProp>(
+    {
+        onDragSection: () => { },
+        onDragSubSection: () => { },
+        sections: [],
+        handleAddSection: () => { return false },
+        handleEditSection: () => { return false },
+        handleDeleteSection: () => { return false },
+    }
+)

@@ -13,6 +13,8 @@
 
     & input {
         border: none;
+        background-color: getColor(primary);
+        color: getColor(primary-text);
         flex: 1;
         outline: none
     }

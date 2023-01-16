@@ -1,0 +1,34 @@
+@import '../../../styles/main.scss';
+
+.container {
+    color: getColor(primary-text);
+}
+
+.title {
+    font-weight: 700;
+    color: getColor(primary-text);
+}
+
+.confirm {
+    background-color: getColor(primary-text);
+    color: getColor(primary);
+    font-weight: 600;
+    border-radius: 0;
+    padding: 10px;
+    @include padding-horizontal(25px);
+
+    &:hover {
+        background-color: getColor(primary-text);
+    }
+}
+
+.cancel {
+    font-weight: 700;
+    color: getColor(primary-text);
+    padding: 10px;
+    @include padding-horizontal(25px);
+}
+
+.description {
+    color: getColor(primary-text);
+}
