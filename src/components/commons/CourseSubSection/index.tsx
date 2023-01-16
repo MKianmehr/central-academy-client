@@ -15,6 +15,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import styles from './styles.module.scss'
 import { Button, IconButton } from '@mui/material';
 import AlertDialog from '../AlertDialog';
+import text from '../../../utils/textEnOrFa';
+import { useRouter } from 'next/router';
 
 
 const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSubSectionProp) => {
@@ -24,6 +26,8 @@ const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSub
     const { subSectionOptions } = useContext(SectionContext)
     const [isContentOpen, setIsContentOpen] = useState(false)
     const [isResourseOpen, setIsResourseOpen] = useState(false)
+    const router = useRouter()
+    const isEng = router.locale === "en"
     // drag handlers
     const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>, index: number, id: number, type: string) => {
         e.dataTransfer.setData("subSectionIndex", `${index}`)
@@ -97,7 +101,7 @@ const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSub
                         <div className={styles.left}>
                             <div>
                                 <CheckCircleIcon fontSize='small' />
-                                <span> {content.type} {index}: </span>
+                                <span> {text(content.type, isEng)} {index}: </span>
                                 <span>{content.title}</span>
                                 <span className={styles.icons}>
                                     <IconButton><EditIcon className={styles.editIcon} fontSize='small' /></IconButton>
@@ -110,7 +114,7 @@ const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSub
                                         notificationMessage={t("Please Confirm")} />
                                 </span>
                             </div>
-                            {content.type.toLowerCase() === "lecture" && (
+                            {content.type.en.toLowerCase() === "lecture" && (
                                 !isContentOpen && (
                                     <div className={styles.addContentButton}>
                                         <Button onClick={onContentButtonClick}>

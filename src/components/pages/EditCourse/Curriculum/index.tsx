@@ -8,8 +8,8 @@ const initialSections = [
     {
         title: "Introduction",
         subSections: [
-            { title: "Security", type: "Lecture", _id: 1 },
-            { title: "Authentication", type: "Test", _id: 2 },
+            { title: "Security", type: { fa: "جلسه", en: "Lecture" }, _id: 1 },
+            { title: "Authentication", type: { fa: "تست", en: "Test" }, _id: 2 },
 
         ],
         _id: 1
@@ -17,10 +17,10 @@ const initialSections = [
     {
         title: "Front-end",
         subSections: [
-            { title: "Security2", type: "Lecture", _id: 3 },
-            { title: "Authentication2", type: "Lecture", _id: 4 },
-            { title: "Authentication3", type: "Lecture", _id: 5 },
-            { title: "Authentication4", type: "Lecture", _id: 6 }
+            { title: "Security2", type: { fa: "جلسه", en: "Lecture" }, _id: 3 },
+            { title: "Authentication2", type: { fa: "جلسه", en: "Lecture" }, _id: 4 },
+            { title: "Authentication3", type: { fa: "جلسه", en: "Lecture" }, _id: 5 },
+            { title: "Authentication4", type: { fa: "جلسه", en: "Lecture" }, _id: 6 }
 
         ],
         _id: 2
@@ -28,8 +28,8 @@ const initialSections = [
     {
         title: "Front-end2",
         subSections: [
-            { title: "Security2", type: "Lecture", _id: 7 },
-            { title: "Authentication5", type: "Lecture", _id: 8 },
+            { title: "Security2", type: { fa: "جلسه", en: "Lecture" }, _id: 7 },
+            { title: "Authentication5", type: { fa: "جلسه", en: "Lecture" }, _id: 8 },
 
         ],
         _id: 3

@@ -122,7 +122,10 @@ export interface CourseSection {
     numberOfSubSectionsOfPreviousSection: number;
     subSections: {
         title: string;
-        type: string;
+        type: {
+            fa: string;
+            en: string;
+        };
         _id: number;
     }[]
 }
@@ -130,7 +133,10 @@ export interface CourseSection {
 export interface CourseSubSectionProp {
     content: {
         title: string;
-        type: string;
+        type: {
+            en: string;
+            fa: string;
+        };
         _id: number;
     }
     index: number;
@@ -183,7 +189,10 @@ export interface CurriculumContextProp {
         title: string;
         subSections: {
             title: string;
-            type: string;
+            type: {
+                fa: string;
+                en: string;
+            };
             _id: number;
         }[];
         _id: number;
