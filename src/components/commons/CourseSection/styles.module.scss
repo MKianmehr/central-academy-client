@@ -7,6 +7,7 @@
     color: getColor(primary-text);
     @include padding-horizontal(10px);
     padding-bottom: 15px;
+    padding-top: 15px;
     margin-bottom: 50px;
 
     & .ghost {
@@ -18,59 +19,6 @@
         top: 0;
         left: 0;
     }
-}
-
-
-.header {
-    display: flex;
-    cursor: move;
-    @include align-center;
-    @include padding-vertical(5px);
-    gap: 8px;
-    width: 100%;
-
-    &:hover {
-        & .icons {
-            opacity: 1;
-        }
-    }
-}
-
-.menu {
-    color: getColor(primary-text);
-}
-
-
-.title {
-    font-weight: 550;
-    font-size: 1.1rem;
-}
-
-.name {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.icons {
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    opacity: 0;
-}
-
-.icon {
-    color: getColor(primary-text);
-}
-
-.onDrag {
-    border: 1px solid getColor(primary-text);
-}
-
-.lecture {
-    padding-left: 45px;
 }
 
 .addButton {

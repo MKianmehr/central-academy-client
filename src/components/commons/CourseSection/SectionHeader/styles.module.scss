@@ -1,0 +1,46 @@
+@import '../../../../styles/main.scss';
+
+
+.header {
+    display: flex;
+    cursor: move;
+    @include align-center;
+    @include padding-vertical(5px);
+    gap: 8px;
+    width: 100%;
+
+    &:hover {
+        & .icons {
+            opacity: 1;
+        }
+    }
+}
+
+.menu {
+    color: getColor(primary-text);
+}
+
+
+.title {
+    font-weight: 550;
+    font-size: 1.1rem;
+}
+
+.name {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.icons {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    opacity: 0;
+}
+
+.icon {
+    color: getColor(primary-text);
+}

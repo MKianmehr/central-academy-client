@@ -9,7 +9,7 @@ const initialSections = [
         title: "Introduction",
         subSections: [
             { title: "Security", type: { fa: "جلسه", en: "Lecture" }, _id: 1 },
-            { title: "Authentication", type: { fa: "تست", en: "Test" }, _id: 2 },
+            { title: "Authentication1", type: { fa: "تست", en: "Test" }, _id: 2 },
 
         ],
         _id: 1
@@ -28,7 +28,7 @@ const initialSections = [
     {
         title: "Front-end2",
         subSections: [
-            { title: "Security2", type: { fa: "جلسه", en: "Lecture" }, _id: 7 },
+            { title: "Security3", type: { fa: "جلسه", en: "Lecture" }, _id: 7 },
             { title: "Authentication5", type: { fa: "جلسه", en: "Lecture" }, _id: 8 },
 
         ],
@@ -50,9 +50,9 @@ const Curriculum = () => {
 
     const onDragSection = ({ currentIndex, targetIndex }: { currentIndex: number; targetIndex: number }) => {
         const allSections = [...sections]
-        const currentSection = allSections[currentIndex - 1]
-        allSections.splice(currentIndex - 1, 1)
-        allSections.splice(targetIndex - 1, 0, currentSection)
+        const currentSection = allSections[currentIndex]
+        allSections.splice(currentIndex, 1)
+        allSections.splice(targetIndex, 0, currentSection)
 
         setSections(allSections)
     }
@@ -66,8 +66,7 @@ const Curriculum = () => {
             index: number;
         };
     }) => {
-        const newSections = JSON.parse(JSON.stringify(sections))
-        const allSections = [...newSections]
+        const allSections = JSON.parse(JSON.stringify(sections))
         const currentSubSection = allSections[currentPosition.sectionIndex].subSections[currentPosition.currentIndex]
         allSections[currentPosition.sectionIndex].subSections.splice(currentPosition.currentIndex, 1)
         allSections[targetPosition.sectionIndex].subSections.splice(targetPosition.index, 0, currentSubSection)
@@ -135,17 +134,18 @@ const Curriculum = () => {
             <div className={styles.container}>
                 <h3 className={styles.header}>{t("Curriculum")}</h3>
                 <p className={styles.paragraph}>{t("curriculum-describe")}</p>
-                {sections.map((section, index) => {
-                    return (
-                        <CourseSection
-                            key={section._id}
-                            numberOfSubSectionsOfPreviousSection={numberOfSubSectionsOfPreviousSections[index]}
-                            subSections={sections[index].subSections}
-                            index={index + 1}
-                            title={section.title}
-                        />
-                    )
-                })}
+                <div className={styles.sectionContainer}>
+                    {sections.map((section, index) => {
+                        return (
+                            <CourseSection
+                                key={section._id}
+                                numberOfSubSectionsOfPreviousSection={numberOfSubSectionsOfPreviousSections[index]}
+                                index={index + 1}
+                                section={section}
+                            />
+                        )
+                    })}
+                </div>
             </div>
         </CurriculumContext.Provider>
     )

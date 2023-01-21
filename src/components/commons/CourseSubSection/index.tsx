@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import BeforeSubSection from './BeforeSubSection'
+import { useDrag, useDrop } from 'react-dnd'
 import SubSectionContent from './SubSectionContent'
 import SubSectionResourse from './SubSectionResourse'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -17,6 +18,8 @@ import { Button, IconButton } from '@mui/material';
 import AlertDialog from '../AlertDialog';
 import text from '../../../utils/textEnOrFa';
 import { useRouter } from 'next/router';
+import DragDropTypes from '../../../utils/DragDropTypes'
+import { DragDropSubSection } from '../../../models/Props'
 
 
 const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSubSectionProp) => {
@@ -28,32 +31,31 @@ const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSub
     const [isResourseOpen, setIsResourseOpen] = useState(false)
     const router = useRouter()
     const isEng = router.locale === "en"
-    // drag handlers
-    const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>, index: number, id: number, type: string) => {
-        e.dataTransfer.setData("subSectionIndex", `${index}`)
-        e.dataTransfer.setData("subSectionSectionIndex", `${sectionIndex}`)
-        e.dataTransfer.setData("subSectionId", `${id}`)
-        e.dataTransfer.setData("type", type)
-    }
 
-    const handleDragOver = (e: React.DragEvent<HTMLDivElement>, index: number, id: number, type: string) => {
-        const movingSubSectionType = e.dataTransfer.getData("type")
-        if (movingSubSectionType !== type) return
-        const movingSubSectionIndex = parseInt(e.dataTransfer.getData("subSectionIndex"))
-        const movingSubSectionId = parseInt(e.dataTransfer.getData("subSectionId"))
-        const movingSubSectionSectionIndex = parseInt(e.dataTransfer.getData("subSectionSectionIndex"))
-        if (id === movingSubSectionId) return
-        let isFind = false
-        for (let i = 0; i < sections[movingSubSectionSectionIndex].subSections.length; i++) {
+    const [_, drag] = useDrag(
+        () => ({
+            type: DragDropTypes.SubSection,
+            item: { index: realIndex, sectionIndex, type: DragDropTypes.SubSection, _id: content._id },
+        }),
+        [sections]
+    )
 
-            if (sections[movingSubSectionSectionIndex].subSections[i]._id === movingSubSectionId) {
-                isFind = true;
-            }
-        }
-        if (!isFind) {
-            return
-        }
-        onDragSubSection({ currentPosition: { sectionIndex: movingSubSectionSectionIndex, currentIndex: movingSubSectionIndex }, targetPosition: { sectionIndex, index } })
+    const [, drop] = useDrop(
+        () => ({
+            accept: [DragDropTypes.SubSection],
+            drop(_, monitor) {
+                const dragItem = monitor.getItem() as DragDropSubSection
+                handleOnHover(dragItem)
+            },
+        }),
+        [sections]
+    )
+
+    const handleOnHover = (dragItem: DragDropSubSection) => {
+        if (dragItem._id === content._id) return
+        if (!(sections[dragItem.sectionIndex]?.subSections[dragItem.index]?._id === dragItem._id)) return
+
+        onDragSubSection({ currentPosition: { sectionIndex: dragItem.sectionIndex, currentIndex: dragItem.index }, targetPosition: { sectionIndex: sectionIndex, index: realIndex } })
     }
     // drag handlers
 
@@ -83,6 +85,7 @@ const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSub
         <SubSectionContext.Provider value={{ subSectionOptions, onContentButtonClick, onResourseButtonClick }}>
             <div
                 className={styles.container}
+                ref={drop}
             >
                 {/* before subsection */}
                 <BeforeSubSection />
@@ -90,12 +93,7 @@ const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSub
 
                 {/* subsection */}
                 <div
-                    onDragOver={(e) => {
-                        e.preventDefault()
-                        handleDragOver(e, realIndex, content._id, "subSection")
-                    }}
-                    onDragStart={(e) => handleOnDragStart(e, realIndex, content._id, "subSection")}
-                    draggable
+                    ref={drag}
                 >
                     <div className={styles.subsection}>
                         <div className={styles.left}>

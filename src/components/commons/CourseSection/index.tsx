@@ -1,62 +1,25 @@
-import React, { useCallback, useContext, useRef, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
+import { useDrag, useDrop } from 'react-dnd'
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+import { CourseSectionProp, DragDropSubSection, DragDropSection } from '../../../models/Props';
+import DragDropTypes from '../../../utils/DragDropTypes'
+
+// Material-UI imports
+import { Button } from '@mui/material';
+
+// Context imports 
 import { SectionContext, CurriculumContext } from '../../../contexts';
-import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AlertDialog from '../AlertDialog';
-import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import { CourseSection } from '../../../models/Props';
-import styles from './styles.module.scss';
-import { Button, IconButton } from '@mui/material';
+
+// Components imports
+import SectionHeader from './SectionHeader';
 import CourseSubSection from '../CourseSubSection'
 import SubSectionCreationContent from '../SubSectionCreationContent';
-import { useRouter } from 'next/router';
 import BeforeSection from './BeforeSection';
 import InputsForAddSection from './InputForAddSection';
 
-
-const SectionHeader = ({ index, title, handleEditSection }: { index: number; title: string; handleEditSection: () => void }) => {
-    const { t } = useTranslation("common")
-    const { handleDeleteSection } = useContext(CurriculumContext)
-    const [isDialogEnable, setIsDialogEnable] = useState(false)
-
-    const onOpenDialog = () => {
-        setIsDialogEnable(!isDialogEnable)
-    }
-
-    const onConfirmDialog = () => {
-        handleDeleteSection({ sectionIndex: index - 1 })
-    }
-
-    return (
-        <>
-            <span className={styles.title}>{t("Section")}: {index}</span>
-            <StickyNote2OutlinedIcon fontSize='small' />
-            <span className={styles.name}>{title}</span>
-            <span className={styles.icons}>
-                <span>
-                    <IconButton onClick={handleEditSection} className={styles.icon}>
-                        <EditIcon fontSize='small' />
-                    </IconButton>
-                    <IconButton onClick={onOpenDialog} className={styles.icon}>
-                        <DeleteIcon fontSize='small' />
-                        <AlertDialog
-                            notificationMessage={t("Please Confirm")}
-                            onConfirmDialog={onConfirmDialog}
-                            onOpenDialog={onOpenDialog}
-                            describtion={t("section delete message")}
-                            isOpen={isDialogEnable}
-                        />
-                    </IconButton>
-                </span>
-                <IconButton >
-                    <MenuOutlinedIcon className={styles.menu} />
-                </IconButton>
-            </span>
-        </>
-    )
-}
+// Styles imports
+import styles from './styles.module.scss';
 
 
 const subSectionOptions = [
@@ -67,60 +30,52 @@ const subSectionOptions = [
     { fa: "تمرین", en: "Assignment" }
 ]
 
-const CourseSection = ({ index, title, subSections, numberOfSubSectionsOfPreviousSection }: CourseSection) => {
+const CourseSection = ({ index, numberOfSubSectionsOfPreviousSection, section }: CourseSectionProp) => {
     const { t } = useTranslation("common")
     const router = useRouter()
     const isRtl = router.locale === "fa"
-    const draggableRef = useRef<HTMLDivElement>(null);
     const { onDragSection, sections, onDragSubSection } = useContext(CurriculumContext)
-    const ghostRef = useRef<HTMLDivElement>(null);
     const padding = isRtl ? { paddingRight: "45px" } : { paddingLeft: "45px" }
     const [isOpenAddCurriculum, setIsOpenAddCurriculum] = useState(false)
     const [isEditSectionActive, setIsEditSectionActive] = useState(false)
     const addButtonPadding = isRtl ? { paddingRight: "25px" } : { paddingLeft: "25px" }
 
-    const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>, index: number, name: string, type: string) => {
-        const draggable = draggableRef.current;
-        const ghost = ghostRef.current
-        if (draggable && ghost) {
-            const rect = draggable.getBoundingClientRect();
-            // ghost.style.width = `${draggable.offsetWidth + 20}px`
-            e.dataTransfer.setDragImage(ghost, e.clientX - rect.x + 11.5, e.clientY - rect.y + 20);
-            e.dataTransfer.setData("sectionIndex", `${index}`)
-            e.dataTransfer.setData("sectionName", name)
-            e.dataTransfer.setData("type", type)
+    const [_, drag, dragPreview] = useDrag(
+        () => ({
+            type: DragDropTypes.Section,
+            item: { index: index - 1, _id: section._id },
+        }),
+        [sections]
+    )
+
+    const [, drop] = useDrop(
+        () => ({
+            accept: [DragDropTypes.Section, DragDropTypes.SubSection],
+            drop(item: DragDropSection | DragDropSubSection, monitor) {
+                handleOnDrop(item)
+            },
+            hover(item: DragDropSection | DragDropSubSection, monitor) {
+                handleOnHover(item)
+            }
+        }),
+        [sections],
+    )
+
+    const handleOnHover = (item: DragDropSection | DragDropSubSection) => {
+        if ('sectionIndex' in item) {
+            if (!(sections[index - 1].subSections.length === 0)) {
+                return
+            }
+            onDragSubSection({ currentPosition: { sectionIndex: item.sectionIndex, currentIndex: item.index }, targetPosition: { sectionIndex: index - 1, index: 0 } })
         }
     }
-
-    const handleOnDragOver = (e: React.DragEvent<HTMLDivElement>, sectionIndex: number, name: string, type: string) => {
-        const movingSectionType = e.dataTransfer.getData("type")
-        if (movingSectionType !== type) {
-
-            if (!(sections[sectionIndex - 1].subSections.length === 0)) {
-                return
-            }
-
-            const movingSubSectionIndex = parseInt(e.dataTransfer.getData("subSectionIndex"))
-            const movingSubSectionId = parseInt(e.dataTransfer.getData("subSectionId"))
-            const movingSubSectionSectionIndex = parseInt(e.dataTransfer.getData("subSectionSectionIndex"))
-            let isFind = false
-            for (let i = 0; i < sections[movingSubSectionSectionIndex].subSections.length; i++) {
-
-                if (sections[movingSubSectionSectionIndex].subSections[i]._id === movingSubSectionId) {
-                    isFind = true;
-                }
-            }
-            if (!isFind) {
-                return
-            }
-            onDragSubSection({ currentPosition: { sectionIndex: movingSubSectionSectionIndex, currentIndex: movingSubSectionIndex }, targetPosition: { sectionIndex: sectionIndex - 1, index: 0 } })
+    const handleOnDrop = (item: DragDropSection | DragDropSubSection) => {
+        if ('sectionIndex' in item) {
+            return
         }
         else {
-            const movingSectionIndex = parseInt(e.dataTransfer.getData("sectionIndex"))
-            const movingSectionName = e.dataTransfer.getData("sectionName")
-            if (name === movingSectionName) return
-            const targetSectionIndex = sectionIndex
-            onDragSection({ currentIndex: movingSectionIndex, targetIndex: targetSectionIndex })
+            if (item._id === section._id) return
+            onDragSection({ currentIndex: item.index, targetIndex: index - 1 })
         }
     }
 
@@ -140,31 +95,21 @@ const CourseSection = ({ index, title, subSections, numberOfSubSectionsOfPreviou
                 >
                     {!isEditSectionActive && (
                         <div
-                            ref={draggableRef}
-                            onDragOver={(e) => {
-                                e.preventDefault()
-                                handleOnDragOver(e, index, title, "section")
-                            }}
-                            onDragStart={(e) => handleOnDragStart(e, index, title, "section")}
-                            draggable
+                            ref={drop}
                         >
-                            <div className={[styles.header].join(" ")}>
-                                <SectionHeader handleEditSection={handleEditSection} index={index} title={title} />
-                            </div>
-                            <div ref={ghostRef} className={[styles.header, styles.ghost].join(" ")}>
-                                <SectionHeader handleEditSection={handleEditSection} index={index} title={title} />
-                            </div>
+                            <SectionHeader ref={drag} handleEditSection={handleEditSection} index={index} title={section.title} />
+                            <SectionHeader ref={dragPreview} handleEditSection={handleEditSection} index={index} title={section.title} className={styles.ghost} />
                         </div>
                     )}
                     {isEditSectionActive && (
                         <InputsForAddSection
                             onClick={handleEditSection}
-                            title={title}
+                            title={section.title}
                             goal=""
                         />
                     )}
                     <div style={padding}>
-                        {subSections?.map((list, subSectionIndex) => {
+                        {section.subSections?.map((list, subSectionIndex) => {
                             return (
                                 <CourseSubSection
                                     key={list._id}
