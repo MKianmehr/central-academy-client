@@ -1,13 +1,24 @@
-import React from 'react'
-import SearchIcon from '@mui/icons-material/Search';
-import styles from './styles.module.scss'
-import { IconButton } from '@mui/material';
+import React, { useCallback } from 'react'
+
+// Props Import
 import { SearchInputProp } from '../../../models/Props';
 
-const SearchInput = ({ value, onChange, placeHolder, className }: SearchInputProp) => {
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+// Mui Imports
+import SearchIcon from '@mui/icons-material/Search';
+import { IconButton } from '@mui/material';
+
+// Styles Import
+import styles from './styles.module.scss'
+
+const SearchInput = (
+    { value, onChange, placeHolder, className }:
+        SearchInputProp
+) => {
+
+    const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-    }
+    }, [])
+
     return (
         <form className={styles.container} onSubmit={onSubmit}>
             <IconButton type='submit'>

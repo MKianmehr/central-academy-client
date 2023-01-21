@@ -1,13 +1,23 @@
 import * as React from 'react';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import { SelectLabelsProp } from '../../../models/Props';
-import Select from '@mui/material/Select';
 import { useTranslation } from 'next-i18next';
-import styles from './styles.module.scss'
 import { useRouter } from 'next/router';
 
-export default function SelectLabels({ labels, height, minWidth, maxWidth, value, onChange }: SelectLabelsProp) {
+// Props Import
+import { SelectLabelsProp } from '../../../models/Props';
+
+// Mui Imports
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+// Styles Import
+import styles from './styles.module.scss'
+
+export default function SelectLabels(
+    { labels, height, minWidth, maxWidth, value, onChange }:
+        SelectLabelsProp
+) {
+
     const { t } = useTranslation("common")
     const router = useRouter()
     const locale = router.locale

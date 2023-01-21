@@ -217,3 +217,50 @@ export interface DragDropSection {
     index: number;
     _id: number;
 }
+
+export interface SectionHeaderProps {
+    index: number;
+    title: string;
+    handleEditSection: () => void;
+    className?: string;
+}
+
+export interface AddSectionProp {
+    onClick: () => void;
+    title?: string;
+    goal?: string;
+}
+
+export interface AddSubSectionContentTypeProp {
+    handleClickOnTypeIcon: (type: string) => void; typeOptions: {
+        video: {
+            fa: string;
+            en: string;
+        };
+        slide: {
+            fa: string;
+            en: string;
+        };
+        article: {
+            fa: string;
+            en: string;
+        }
+    }
+}
+
+export interface FileInputProp {
+    type: {
+        fa: string;
+        en: string;
+    };
+    description: string;
+}
+
+export interface RemainingInputProp {
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    maxLength: number;
+    placeHolder: string;
+    className?: string;
+    errorValue?: string;
+}

@@ -1,8 +1,14 @@
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'next-i18next';
+
+// Components Imports
 import CourseSection from '../../../commons/CourseSection'
-import styles from './styles.module.scss'
+
+// Contexts Import
 import { CurriculumContext } from '../../../../contexts';
+
+// Styles Import
+import styles from './styles.module.scss'
 
 const initialSections = [
     {
@@ -37,6 +43,7 @@ const initialSections = [
 ]
 
 const Curriculum = () => {
+
     const { t } = useTranslation("common")
     const [sections, setSections] = useState(initialSections)
 
@@ -48,7 +55,11 @@ const Curriculum = () => {
         return numberOfSubSectionsOfPreviousSections
     }, [sections])
 
-    const onDragSection = ({ currentIndex, targetIndex }: { currentIndex: number; targetIndex: number }) => {
+    const onDragSection = (
+        { currentIndex, targetIndex }:
+            { currentIndex: number; targetIndex: number }
+    ) => {
+
         const allSections = [...sections]
         const currentSection = allSections[currentIndex]
         allSections.splice(currentIndex, 1)
@@ -66,6 +77,7 @@ const Curriculum = () => {
             index: number;
         };
     }) => {
+
         const allSections = JSON.parse(JSON.stringify(sections))
         const currentSubSection = allSections[currentPosition.sectionIndex].subSections[currentPosition.currentIndex]
         allSections[currentPosition.sectionIndex].subSections.splice(currentPosition.currentIndex, 1)
@@ -73,7 +85,11 @@ const Curriculum = () => {
         setSections(allSections)
     }
 
-    const handleAddSection = ({ title, goal, sectionIndex }: { title: string; goal?: string; sectionIndex: number }) => {
+    const handleAddSection = (
+        { title, goal, sectionIndex }:
+            { title: string; goal?: string; sectionIndex: number }
+    ) => {
+
         const newSection = {
             title,
             goal,
@@ -89,7 +105,11 @@ const Curriculum = () => {
         // or return false
     }
 
-    const handleEditSection = ({ title, goal, sectionIndex }: { title: string; goal?: string; sectionIndex: number }) => {
+    const handleEditSection = (
+        { title, goal, sectionIndex }:
+            { title: string; goal?: string; sectionIndex: number }
+    ) => {
+
         const allSections = [...sections]
         const newSection = { ...allSections[sectionIndex], title, goal }
         allSections.splice(sectionIndex, 1)
@@ -100,7 +120,10 @@ const Curriculum = () => {
         // or return false
     }
 
-    const handleDeleteSection = ({ sectionIndex }: { sectionIndex: number }) => {
+    const handleDeleteSection = ({ sectionIndex }:
+        { sectionIndex: number }
+    ) => {
+
         const allSections = [...sections]
         allSections.splice(sectionIndex, 1)
         // request to server
@@ -109,7 +132,11 @@ const Curriculum = () => {
         // or return false
     }
 
-    const handleDeleteSubSection = ({ sectionIndex, index }: { sectionIndex: number; index: number }) => {
+    const handleDeleteSubSection = (
+        { sectionIndex, index }:
+            { sectionIndex: number; index: number }
+    ) => {
+
         const allSections = [...sections]
         allSections[sectionIndex].subSections.splice(index, 1)
         setSections(allSections)

@@ -1,17 +1,25 @@
 import React from 'react'
-import styles from './styles.module.scss';
-import Image from 'next/image';
-import Rating from '@mui/material/Rating';
-import Height16 from '../Height16'
-import { InstructorCourseCardProp } from '../../../models/Props';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 
+// Props Import
+import { InstructorCourseCardProp } from '../../../models/Props';
 
-const InstructorCourseCard = ({ title, src, rate, numberOfRate, numberOfStudent }: InstructorCourseCardProp) => {
+// Components Imports
+import Height16 from '../Height16'
+
+// Mui Imports
+import Rating from '@mui/material/Rating';
+
+// Styles Import
+import styles from './styles.module.scss';
+
+const InstructorCourseCard = (
+    { title, src, rate, numberOfRate, numberOfStudent }:
+        InstructorCourseCardProp
+) => {
     const { t } = useTranslation("common")
-    const router = useRouter()
     return (
         <Link href="/instructor/course/edit/curriculum" style={{ textDecorationLine: "none" }}>
             <div className={styles.container}>

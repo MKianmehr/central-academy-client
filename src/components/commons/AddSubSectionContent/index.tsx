@@ -1,16 +1,32 @@
-import React, { useContext, useState } from 'react'
-import AddIcon from '@mui/icons-material/Add';
+import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+
+// Props Imports
+import { SubContentTypeProp, AddSubSectionContentTypeProp } from '../../../models/Props';
+
+//Components Imports
+import VideoInput from '../VideoInput';
+
+// Mui Imports
+import AddIcon from '@mui/icons-material/Add';
+import { IconButton } from '@mui/material';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
-import { SubSectionContext } from '../../../../contexts';
-import VideoInput from '../../VideoInput';
-import { SubContentTypeProp } from '../../../../models/Props';
+
+// Utils Import
+import text from '../../../utils/textEnOrFa';
+
+// Contexts Imports
+import { SubSectionContext } from '../../../contexts';
+
+// Styles Import
 import styles from './styles.module.scss'
-import { IconButton } from '@mui/material';
-import { useRouter } from 'next/router';
-import text from '../../../../utils/textEnOrFa';
+
+
+
+
 
 const ContentTypeIcon = ({ icon, type, onClick }: SubContentTypeProp) => {
     const router = useRouter()
@@ -28,23 +44,15 @@ const ContentTypeIcon = ({ icon, type, onClick }: SubContentTypeProp) => {
     )
 }
 
-const ContentType = ({ handleClickOnTypeIcon, typeOptions }: {
-    handleClickOnTypeIcon: (type: string) => void; typeOptions: {
-        video: {
-            fa: string;
-            en: string;
-        };
-        slide: {
-            fa: string;
-            en: string;
-        };
-        article: {
-            fa: string;
-            en: string;
-        }
-    }
-}) => {
+
+
+
+const ContentType = (
+    { handleClickOnTypeIcon, typeOptions }:
+        AddSubSectionContentTypeProp
+) => {
     const { t } = useTranslation("common")
+
     return (
         <div>
             <p>{t("contentType-des")}</p>
@@ -66,14 +74,24 @@ const ArticleInput = () => {
     return <div>Article</div>
 }
 
-const SubSectionContent = () => {
-    const [isTypeOptionOpen, setIsTypeOptionOpen] = useState({ video: false, slide: false, article: false })
+const typeOptions = { video: { fa: "ویدیو", en: "Video" }, slide: { fa: "ویدیو و اسلاید", en: "Video & Slide Mashup" }, article: { fa: "مقاله", en: "Article" } }
+
+
+const AddSubSectionContent = () => {
+
     const { t } = useTranslation("common")
-    const typeOptions = { video: { fa: "ویدیو", en: "Video" }, slide: { fa: "ویدیو و اسلاید", en: "Video & Slide Mashup" }, article: { fa: "مقاله", en: "Article" } }
+
+    const [isTypeOptionOpen, setIsTypeOptionOpen] = useState({
+        video: false,
+        slide: false,
+        article: false
+    })
     const { onContentButtonClick } = useContext(SubSectionContext)
+
     const isTypesOpen = isTypeOptionOpen.video || isTypeOptionOpen.slide || isTypeOptionOpen.article
 
-    const handleClickOnTypeIcon = (type: string) => {
+    const handleClickOnTypeIcon = useCallback((type: string) => {
+
         if (type === typeOptions.video.en) {
             setIsTypeOptionOpen({ video: true, slide: false, article: false })
         } else if (type === typeOptions.slide.en) {
@@ -81,7 +99,9 @@ const SubSectionContent = () => {
         } else if (type === typeOptions.article.en) {
             setIsTypeOptionOpen({ video: false, slide: false, article: true })
         }
-    }
+    }, [])
+
+
     return (
         <div className={styles.container}>
             <div className={styles.top}>
@@ -116,4 +136,4 @@ const SubSectionContent = () => {
     )
 }
 
-export default SubSectionContent
+export default AddSubSectionContent

@@ -12,11 +12,11 @@ import { Button } from '@mui/material';
 import { SectionContext, CurriculumContext } from '../../../contexts';
 
 // Components imports
-import SectionHeader from './SectionHeader';
+import SectionHeader from '../SectionHeader';
 import CourseSubSection from '../CourseSubSection'
-import SubSectionCreationContent from '../SubSectionCreationContent';
-import BeforeSection from './BeforeSection';
-import InputsForAddSection from './InputForAddSection';
+import SubSectionCreationContent from '../AddSubSection';
+import BeforeSection from '../BeforeSection';
+import AddSection from '../AddSection';
 
 // Styles imports
 import styles from './styles.module.scss';
@@ -69,6 +69,7 @@ const CourseSection = ({ index, numberOfSubSectionsOfPreviousSection, section }:
             onDragSubSection({ currentPosition: { sectionIndex: item.sectionIndex, currentIndex: item.index }, targetPosition: { sectionIndex: index - 1, index: 0 } })
         }
     }
+
     const handleOnDrop = (item: DragDropSection | DragDropSubSection) => {
         if ('sectionIndex' in item) {
             return
@@ -79,18 +80,21 @@ const CourseSection = ({ index, numberOfSubSectionsOfPreviousSection, section }:
         }
     }
 
-    const onAddCurriculumClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const onAddCurriculumClick = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         setIsOpenAddCurriculum(!isOpenAddCurriculum)
-    }
+    }, [isOpenAddCurriculum])
 
     const handleEditSection = useCallback(() => {
         setIsEditSectionActive(!isEditSectionActive)
     }, [isEditSectionActive])
     return (
         <SectionContext.Provider value={{ subSectionOptions, index: index - 1 }}>
-
             <div>
+                {/* Before */}
                 <BeforeSection />
+                {/* Before */}
+
+                {/* Course Section */}
                 <div className={styles.container}
                 >
                     {!isEditSectionActive && (
@@ -102,12 +106,14 @@ const CourseSection = ({ index, numberOfSubSectionsOfPreviousSection, section }:
                         </div>
                     )}
                     {isEditSectionActive && (
-                        <InputsForAddSection
+                        <AddSection
                             onClick={handleEditSection}
                             title={section.title}
                             goal=""
                         />
                     )}
+
+                    {/* Course SubSection */}
                     <div style={padding}>
                         {section.subSections?.map((list, subSectionIndex) => {
                             return (
@@ -128,11 +134,15 @@ const CourseSection = ({ index, numberOfSubSectionsOfPreviousSection, section }:
                                 <SubSectionCreationContent />
                             </div>
                         )}
-                        {!isOpenAddCurriculum && <div className={styles.addButton}>
-                            <Button style={addButtonPadding} onClick={onAddCurriculumClick}>{t("Curriculum item")}</Button>
-                        </div>}
+                        {
+                            !isOpenAddCurriculum && <div className={styles.addButton}>
+                                <Button style={addButtonPadding} onClick={onAddCurriculumClick}>{t("Curriculum item")}</Button>
+                            </div>
+                        }
+                        {/* Course SubSection */}
                     </div>
                 </div>
+                {/* Course Section */}
             </div>
         </SectionContext.Provider>
     )

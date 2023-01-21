@@ -1,23 +1,20 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
+
+// Props Import
+import { RemainingInputProp } from '../../../models/Props';
+
+// Styles Import
 import styles from './styles.module.scss';
 
-interface RemainingInputProp {
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    maxLength: number;
-    placeHolder: string;
-    className?: string;
-    errorValue?: string;
-}
-
 const RemainingInput = ({ value, onChange, maxLength, placeHolder, className, errorValue }: RemainingInputProp) => {
+
     const [initialValue, setInitialValue] = useState(maxLength)
     const [remaing, setRemaing] = useState(initialValue)
 
-    const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChangeText = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setRemaing(initialValue - e.target.value.length)
         onChange(e)
-    }
+    }, [])
 
     return (
         <div className={styles.container}>

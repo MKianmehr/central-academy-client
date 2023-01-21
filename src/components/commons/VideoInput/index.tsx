@@ -1,10 +1,16 @@
 import React from 'react'
 import { useTranslation } from 'next-i18next';
-import styles from './styles.module.scss'
+
+// Components Import
 import FileInput from '../FileInput'
 
+// Styles Import
+import styles from './styles.module.scss'
+
 const VideoInput = () => {
+
     const { t } = useTranslation("common")
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>

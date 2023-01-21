@@ -1,6 +1,14 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
+import React, { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
+import { AccountMenuProp } from '../../../models/Props'
+
+// component imports
+import CheckButton from '../CheckButton';
+
+
+// mui imports
+import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -8,32 +16,35 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import CheckButton from '../CheckButton';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import LanguageIcon from '@mui/icons-material/Language';
 import Logout from '@mui/icons-material/Logout';
-import { useTranslation } from 'next-i18next';
-import { AccountMenuProp } from '../../../models/Props'
+
+// styles import
 import styles from './styles.module.scss'
 
 export default function AccountMenu({ toggleTheme, theme }: AccountMenuProp) {
-    const router = useRouter()
-    const { t } = useTranslation("common")
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+
+    const router = useRouter()
     const { pathname, asPath, query } = router;
 
-    const onToggleLanguageClick = () => {
+    const { t } = useTranslation("common")
+
+    const handleClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    }, [])
+    const handleClose = useCallback(() => {
+        setAnchorEl(null);
+    }, [])
+
+
+    const onToggleLanguageClick = useCallback(() => {
         router.push({ pathname, query }, router.asPath, { locale: (router.locale === "en") ? "fa" : "en" });
-    };
+    }, [router])
 
     return (
         <React.Fragment>

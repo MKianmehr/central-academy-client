@@ -1,5 +1,9 @@
 import React from 'react'
+
+// Props Import
 import { StepOneOptionCardProp } from '../../../models/Props'
+
+// Styles Import
 import styles from './styles.module.scss'
 
 const index = ({ icon, type, description, isActive, onClick, index }: StepOneOptionCardProp) => {

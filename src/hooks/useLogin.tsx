@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { UseLoginProp } from '../models/Props'
 
 const useLogin = ({ email, password }: UseLoginProp) => {

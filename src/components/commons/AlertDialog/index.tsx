@@ -1,11 +1,15 @@
-import * as React from 'react';
+import React, { useCallback } from 'react';
+import { useTranslation } from 'next-i18next';
+
+// mui imports
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import { useTranslation } from 'next-i18next';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+
+// styles import
 import styles from './styles.module.scss'
 
 export default function AlertDialog({
@@ -21,16 +25,17 @@ export default function AlertDialog({
     onOpenDialog: () => void;
     onConfirmDialog: () => void
 }) {
+
     const { t } = useTranslation("common")
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         onOpenDialog()
-    };
+    }, [onOpenDialog])
 
-    const onConfirmClick = () => {
+    const onConfirmClick = useCallback(() => {
         onConfirmDialog()
         handleClose()
-    }
+    }, [onConfirmDialog, handleClose])
 
     return (
         <Dialog

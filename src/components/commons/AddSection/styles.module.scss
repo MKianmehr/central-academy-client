@@ -1,19 +1,19 @@
-@import '../../../../styles/main.scss';
+@import '../../../styles/main.scss';
 
-.beforeContainer {
+.container {
     border: 1px solid getColor(primary-text);
     @include margin-vertical(35px);
     @include padding-horizontal(15px);
     @include padding-vertical(20px);
 }
 
-.before__title {
+.title {
     font-weight: 700;
     font-size: 1.1rem;
     color: getColor(primary-text);
 }
 
-.before__description {
+.description {
     font-weight: 700;
     letter-spacing: -0.02rem;
     font-size: 0.9rem;
@@ -22,7 +22,7 @@
     margin-bottom: 5px;
 }
 
-.before__buttonContainer {
+.buttonContainer {
     margin-top: 15px;
     display: flex;
     justify-content: flex-end;

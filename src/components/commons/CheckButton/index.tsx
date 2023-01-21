@@ -1,8 +1,12 @@
 import React from 'react'
 import { CheckButtonProp } from '../../../models/Props'
+
+// styles import
 import styles from './styles.module.scss'
 
-const CheckButton = ({ onIcon, offIcon, htmlFor, isOn, onChange }: CheckButtonProp) => {
+const CheckButton = (
+    { onIcon, offIcon, htmlFor, isOn, onChange }: CheckButtonProp
+) => {
     return (
         <div style={{ cursor: "pointer" }}>
             <input

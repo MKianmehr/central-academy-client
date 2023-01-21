@@ -1,23 +1,34 @@
 import React, { useState, useCallback } from 'react'
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
+
+// Hook Import
 import useLogin from '../../../hooks/useLogin'
+
+// Components Import
+import Input from '../../commons/Input'
+import Height16 from '../../commons/Height16'
+
+// Mui Import
 import Button from '@mui/material/Button';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import GoogleIcon from '@mui/icons-material/Google';
 import PersonIcon from '@mui/icons-material/Person';
-import Input from '../../commons/Input'
-import Height16 from '../../commons/Height16'
+
+// Styles Import
 import styles from './styles.module.scss'
 
 
 const Register = () => {
-    const { t } = useTranslation('common');
+
     const [name, setName] = useState<string>('')
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('')
+
+    const { t } = useTranslation('common');
+
     const { onSubmit } = useLogin({ email, password })
 
     const handleNameChange = useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {

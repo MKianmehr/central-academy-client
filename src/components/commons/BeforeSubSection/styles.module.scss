@@ -1,6 +1,6 @@
-@import '../../../../styles/main.scss';
+@import '../../../styles/main.scss';
 
-.before {
+.container {
     opacity: 0;
     transition: opacity 400ms linear, transform 400ms cubic-bezier(.2, 0, .38, .9);
 
@@ -9,7 +9,7 @@
     }
 }
 
-.before_active {
+.active {
     opacity: 1;
 }
 

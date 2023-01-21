@@ -1,6 +1,6 @@
-@import '../../../../styles/main.scss';
+@import '../../../styles/main.scss';
 
-.before {
+.container {
     position: relative;
     opacity: 0;
     color: getColor(primary-text);
@@ -15,7 +15,7 @@
     color: getColor(primary-text);
 }
 
-.before__active {
+.active {
     opacity: 1;
 
     .before__button {

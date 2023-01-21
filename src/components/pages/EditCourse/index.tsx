@@ -1,13 +1,19 @@
 import React from 'react'
-import { IconButton } from '@mui/material'
 import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+// Component Imports
+import Curriculum from './Curriculum'
+import MenuEditCourse from '../../commons/MenuEditCourse'
+
+// Mui Imports
+import { IconButton } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import Curriculum from './Curriculum'
-import MenuEditCourse from '../../commons/MenuEditCourse'
+
+// Styles Import
 import styles from './styles.module.scss'
 
 
@@ -37,8 +43,10 @@ const lists = [
 ]
 
 const EditCourse = () => {
-    const router = useRouter()
+
     const { t } = useTranslation("common")
+
+    const router = useRouter()
     const isEnglish = router.locale === "en"
     const step = router.query.step
 

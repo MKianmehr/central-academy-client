@@ -1,12 +1,32 @@
-import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState, Ref } from 'react'
+import React, {
+    forwardRef,
+    useCallback,
+    useEffect,
+    useImperativeHandle,
+    useMemo,
+    useState,
+    Ref
+} from 'react';
+
 import { useTranslation } from 'next-i18next';
+
+// Props Import
+import { StepperChildProp } from '../../../../models/Props';
+
+// Redux Imports
 import { useAppDispatch, useAppSelector } from '../../../../redux/hooks';
 import { setStepOne } from '../../../../redux/slices/createCourseStepSlice';
+
+// Components Import
+import StepOneOptionCard from '../../../commons/StepOneOptionCard'
+
+// Mui Imports
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import QuizIcon from '@mui/icons-material/Quiz';
-import StepOneOptionCard from '../../../commons/StepOneOptionCard'
+
+// Styles Import
 import styles from './styles.module.scss'
-import { StepperChildProp } from '../../../../models/Props';
+
 
 
 const options = [
@@ -15,10 +35,12 @@ const options = [
 ]
 
 const StepOne = forwardRef((_, ref: Ref<StepperChildProp>) => {
+
     const dispatch = useAppDispatch()
     const [mounted, setMounted] = useState(false)
     const state = useAppSelector((state) => state.createCourseSteps.state.stepOne)
     const { t } = useTranslation("common")
+
     const activeIndex = useMemo(() => {
         let active = 0
         options.forEach((option, index) => {

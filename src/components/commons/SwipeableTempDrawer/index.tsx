@@ -1,6 +1,13 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
+
+// Components Import
+import CheckButton from '../CheckButton';
+
+// Mui Imports
+import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
@@ -12,15 +19,18 @@ import ListItemText from '@mui/material/ListItemText';
 import WindowIcon from '@mui/icons-material/Window';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import CheckButton from '../CheckButton';
 import Avatar from '@mui/material/Avatar';
 import Logout from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import LanguageIcon from '@mui/icons-material/Language';
-import { useTranslation } from 'next-i18next';
+
+// Context Import
 import { DarkModeContext } from '../../../contexts';
+
+// Styles Import
 import styles from './styles.module.scss'
-import Link from 'next/link';
+
+
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 

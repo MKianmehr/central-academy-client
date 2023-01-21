@@ -1,14 +1,22 @@
 import * as React from 'react';
 import Link from 'next/link'
-import WindowIcon from '@mui/icons-material/Window';
 import { useTranslation } from 'next-i18next';
+
+// Mui Imports
+import WindowIcon from '@mui/icons-material/Window';
 import AccountMenu from '../AccountMenu/AccountMenu'
+
+// Contexts Import
 import { DarkModeContext } from '../../../contexts';
+
+// Styles Import
 import styles from './styles.module.scss'
 
 function NavBar() {
+
     const { theme, toggleTheme } = React.useContext(DarkModeContext)
     const { t } = useTranslation("common")
+
     return (
         <div className={styles.container}>
             <h6>

@@ -1,23 +1,36 @@
-import React, { useState } from 'react'
-import MenuIcon from '@mui/icons-material/Menu';
-import styles from './styles.module.scss'
-import { IconButton } from '@mui/material';
+import React, { useState, CSSProperties, useCallback } from 'react'
 import { useRouter } from 'next/router';
-import RouteIcon from '@mui/icons-material/Route';
-import text from '../../../utils/textEnOrFa';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import { EditCourseMenuProp } from '../../../models/Props';
 import Link from 'next/link';
 
+// Props Imports
+import { EditCourseMenuProp } from '../../../models/Props';
+
+// Mui Imports
+import MenuIcon from '@mui/icons-material/Menu';
+import { IconButton } from '@mui/material';
+import RouteIcon from '@mui/icons-material/Route';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+
+// Utils Import 
+import text from '../../../utils/textEnOrFa';
+
+// Styles Import
+import styles from './styles.module.scss'
+
 const MenuEditCourse = ({ lists }: { lists: EditCourseMenuProp }) => {
+
+    const [open, setOpen] = useState(false)
+
     const router = useRouter()
     const isEnglish = router.locale === "en"
+
     const paddingValue = "20px"
-    const padding = isEnglish ? { paddingLeft: paddingValue } : { paddingRight: paddingValue }
-    const [open, setOpen] = useState(false)
-    const onOpenButton = () => {
+    const padding: CSSProperties = isEnglish ?
+        { paddingLeft: paddingValue } : { paddingRight: paddingValue }
+
+    const onOpenButton = useCallback(() => {
         setOpen(!open)
-    }
+    }, [open])
 
     return (
         <div className={styles.container}>
@@ -50,10 +63,15 @@ const MenuEditCourse = ({ lists }: { lists: EditCourseMenuProp }) => {
     )
 }
 
-const Lists = ({ lists }: { lists: { link: string; text: { fa: string; en: string; } }[] }) => {
+const Lists = (
+    { lists }:
+        { lists: { link: string; text: { fa: string; en: string; } }[] }
+) => {
     const router = useRouter()
-    const borderValue = "unset"
     const isEnglish = router.locale === "en"
+
+    const borderValue = "unset"
+
     const currentRoute = router.pathname.replace("[step]", "") + router.query.step
 
     return (

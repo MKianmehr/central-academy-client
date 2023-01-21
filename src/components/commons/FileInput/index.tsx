@@ -1,13 +1,25 @@
 import React from 'react'
-import { useTranslation } from 'next-i18next';
-import styles from './styles.module.scss'
-import text from '../../../utils/textEnOrFa';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 
-const FileInput = ({ type, description }: { type: { fa: string; en: string; }; description: string }) => {
+// Props Import 
+import { FileInputProp } from '../../../models/Props';
+
+// Utils Imports
+import text from '../../../utils/textEnOrFa';
+
+// Styles Import
+import styles from './styles.module.scss'
+
+const FileInput = (
+    { type, description }:
+        FileInputProp
+) => {
+
     const { t } = useTranslation("common")
     const router = useRouter()
     const isEng = router.locale === "en"
+
     return (
         <>
             <div className={styles.inputContainer}>

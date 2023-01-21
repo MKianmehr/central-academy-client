@@ -1,21 +1,40 @@
-import React, { useState, useRef, useEffect, forwardRef, useCallback, useImperativeHandle, Ref } from 'react'
+import React, {
+    useState,
+    useRef,
+    useEffect,
+    forwardRef,
+    useCallback,
+    useImperativeHandle,
+    Ref
+} from 'react'
 import { useTranslation } from 'next-i18next';
+
+// Props Import
+import { StepperChildProp } from '../../../../models/Props';
+
+// Hook Import
 import usePreventBreakLine from '../../../../hooks/usePreventBreakLine';
+
+// Redux Imports
 import { useAppDispatch, useAppSelector } from '../../../../redux/hooks';
 import { setStepTwo } from '../../../../redux/slices/createCourseStepSlice';
-import { StepperChildProp } from '../../../../models/Props';
+
+//Styles Import
 import styles from './styles.module.scss'
 
 
 const StepTwo = forwardRef((_, ref: Ref<StepperChildProp>) => {
+
+    const initialValue = 60
+    const [remaining, setRemaining] = useState(initialValue)
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [mounted, setMounted] = useState(false)
     const dispatch = useAppDispatch()
     const state = useAppSelector(state => state.createCourseSteps.state.stepTwo)
-    const { t } = useTranslation("common")
     const [text, setText] = useState(state ? state : "")
-    const initialValue = 60
-    const [remaining, setRemaining] = useState(initialValue)
+
+    const { t } = useTranslation("common")
+
     usePreventBreakLine(textareaRef)
 
     useEffect(() => {

@@ -1,11 +1,16 @@
 import React from 'react'
 import { useTranslation } from 'next-i18next';
-import styles from './styles.module.scss'
+
+// Components Imports
 import LinkButton from '../LinkButton';
-import Link from 'next/link'
+
+// Styles Import
+import styles from './styles.module.scss'
 
 const NoCourseCard = () => {
+
     const { t } = useTranslation("common")
+
     return (
         <div className={styles.container}>
             <div className={styles.card}>

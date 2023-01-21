@@ -1,18 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { CurriculumContext, SectionContext } from '../../../../contexts'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'next-i18next';
-import RemainingInput from '../../RemaingInput'
+import { AddSectionProp } from '../../../models/Props';
+
+// component imports
+import RemainingInput from '../RemaingInput'
+
+// Mui imports
 import { Button } from '@mui/material'
+
+// context imports
+import { CurriculumContext, SectionContext } from '../../../contexts'
+
+// styles import
 import styles from './styles.module.scss'
 
-const InputsForAddSection = ({ onClick, title, goal }: { onClick: () => void; title?: string; goal?: string }) => {
-    const { handleAddSection, handleEditSection } = useContext(CurriculumContext)
-    const { t } = useTranslation("common")
-    const { index } = useContext(SectionContext)
+const AddSection = ({ onClick, title, goal }: AddSectionProp) => {
+
     const [localTitle, setLocalTitle] = useState(title ? title : "")
     const [titleError, setTitleError] = useState(false)
     const [localGoal, setLocalGoal] = useState(goal ? goal : "")
     const [mounted, setMounted] = useState(false)
+
+    const { t } = useTranslation("common")
+
+    const { handleAddSection, handleEditSection } = useContext(CurriculumContext)
+    const { index } = useContext(SectionContext)
 
     useEffect(() => {
         if (mounted) {
@@ -26,16 +38,18 @@ const InputsForAddSection = ({ onClick, title, goal }: { onClick: () => void; ti
         }
     }, [])
 
-    const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setTitleError(false)
         setLocalTitle(e.target.value)
-    }
+    }, [])
 
-    const onGoalTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    const onGoalTextChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setLocalGoal(e.target.value)
-    }
+    }, [])
 
-    const onConfirmButtonClick = () => {
+
+    const onConfirmButtonClick = useCallback(() => {
         if (!localTitle) {
             setTitleError(true)
             return
@@ -46,9 +60,10 @@ const InputsForAddSection = ({ onClick, title, goal }: { onClick: () => void; ti
         } else {
             // say somthing went wrong
         }
-    }
+    }, [localTitle, localGoal, index, onClick, handleAddSection])
 
-    const onEditSectionButtonClick = () => {
+
+    const onEditSectionButtonClick = useCallback(() => {
         if (!localTitle) {
             setTitleError(true)
             return
@@ -59,10 +74,12 @@ const InputsForAddSection = ({ onClick, title, goal }: { onClick: () => void; ti
         } else {
             // say somthing went wrong
         }
-    }
+    }, [localTitle, localGoal, index, onClick, handleEditSection])
+
+
     return (
-        <div className={styles.beforeContainer}>
-            <h5 className={styles.before__title}>{title ? t("Edit Section") : t("New Section")}:</h5>
+        <div className={styles.container}>
+            <h5 className={styles.title}>{title ? t("Edit Section") : t("New Section")}:</h5>
             <RemainingInput
                 value={localTitle}
                 onChange={onTitleChange}
@@ -70,7 +87,7 @@ const InputsForAddSection = ({ onClick, title, goal }: { onClick: () => void; ti
                 placeHolder={`${t('Enter a title')}`}
                 errorValue={titleError ? `${t("This field may not be blank.")}` : ""}
             />
-            <p className={styles.before__description}>
+            <p className={styles.description}>
                 {t("sectionIncome")}
             </p>
             <RemainingInput
@@ -79,7 +96,7 @@ const InputsForAddSection = ({ onClick, title, goal }: { onClick: () => void; ti
                 maxLength={200}
                 placeHolder={`${t("learning objective")}`}
             />
-            <div className={styles.before__buttonContainer}>
+            <div className={styles.buttonContainer}>
                 <Button onClick={onClick} className={styles.cancel}>{t("Cancel")}</Button>
                 <Button onClick={title ? onEditSectionButtonClick : onConfirmButtonClick} className={styles.confirm}>{title ? t("Edit Section") : t("Add Section")}</Button>
             </div>
@@ -88,4 +105,4 @@ const InputsForAddSection = ({ onClick, title, goal }: { onClick: () => void; ti
 }
 
 
-export default InputsForAddSection
+export default AddSection

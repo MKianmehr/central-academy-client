@@ -6,14 +6,22 @@ import React, {
     useImperativeHandle,
     useState
 } from 'react'
+import { useRouter } from 'next/router';
+
+// Props Import
 import { StepperChildProp } from '../../../../models/Props'
+
+// Mui Imports
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import { useRouter } from 'next/router';
+
+// Redux Import
 import { useAppDispatch, useAppSelector } from '../../../../redux/hooks';
 import { setStepFour } from '../../../../redux/slices/createCourseStepSlice';
+
+// Styles Import
 import styles from './styles.module.scss'
 
 const values = [
@@ -27,11 +35,13 @@ type valueType = { fa: string; en: string }
 
 const StepFour = forwardRef((_, ref: Ref<StepperChildProp>) => {
 
-    const router = useRouter()
     const dispatch = useAppDispatch()
     const state = useAppSelector(state => state.createCourseSteps.state.stepFour)
     const [mounted, setMounted] = useState(false)
+
+    const router = useRouter()
     const isEng = router.locale === "en"
+
     const [value, setValue] = useState<valueType>(state);
 
 
@@ -63,6 +73,8 @@ const StepFour = forwardRef((_, ref: Ref<StepperChildProp>) => {
         title: "question step four",
         isOkay: "course-create-step4-it's okay"
     }))
+
+
     return (
         <div className={styles.container}>
             <FormControl className={styles.formcontrol}>

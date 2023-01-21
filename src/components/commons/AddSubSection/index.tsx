@@ -1,26 +1,37 @@
-import React, { useContext, useState } from 'react'
-import Quiz from './Quiz'
-import LCA from './LCA'
-import { SectionContext } from '../../../contexts';
-import AddIcon from '@mui/icons-material/Add';
-import text from '../../../utils/textEnOrFa';
-import styles from './styles.module.scss'
+import React, { useCallback, useContext, useState } from 'react'
 import { useRouter } from 'next/router';
 
-const SubSectionCreationContent = () => {
-    const { subSectionOptions } = useContext(SectionContext)
+// components imports
+import Quiz from './Quiz'
+import LCA from './LCA'
+
+// Mui Imports
+import AddIcon from '@mui/icons-material/Add';
+
+// Context imports
+import { SectionContext } from '../../../contexts';
+
+// Utils Imports
+import text from '../../../utils/textEnOrFa';
+
+// Styles Import
+import styles from './styles.module.scss'
+
+const AddSubSection = () => {
+
     const [subSectionOption, setSubSectionOption] = useState<React.ReactElement>(<></>)
     const [enableSubSectionCreation, setShowSubSectionCreation] = useState(false)
-    const router = useRouter()
 
+    const { subSectionOptions } = useContext(SectionContext)
+
+    const router = useRouter()
     const isEnglish = router.locale === "en"
 
 
-    const handleCloseSubSectionOption = () => {
+    const handleCloseSubSectionOption = useCallback(() => {
         setShowSubSectionCreation(false)
-    }
-
-    const onClickSubSectionOption = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, buttonName: { fa: string; en: string }) => {
+    }, [])
+    const onClickSubSectionOption = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>, buttonName: { fa: string; en: string }) => {
         if (buttonName.en === "Quiz") {
             setSubSectionOption(<Quiz name={text(buttonName, isEnglish)} handleCloseSubSectionOption={handleCloseSubSectionOption} />)
             setShowSubSectionCreation(true)
@@ -28,11 +39,16 @@ const SubSectionCreationContent = () => {
             setSubSectionOption(<LCA name={text(buttonName, isEnglish)} handleCloseSubSectionOption={handleCloseSubSectionOption} />)
             setShowSubSectionCreation(true)
         }
-    }
+    }, [isEnglish])
 
     return (
-        <div className={[styles.beforeContent, enableSubSectionCreation && styles.enableSubSectionCreation].join(" ")}>
+        <div
+            className={
+                [styles.container, enableSubSectionCreation && styles.enableSubSectionCreation]
+                    .join(" ")}
+        >
             {enableSubSectionCreation && subSectionOption}
+
             {!enableSubSectionCreation && subSectionOptions.map((option) => {
                 return (
                     <button
@@ -49,4 +65,4 @@ const SubSectionCreationContent = () => {
     )
 }
 
-export default SubSectionCreationContent
+export default AddSubSection

@@ -1,21 +1,40 @@
-import React, { Ref, forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react'
-import { useTranslation } from 'next-i18next';
+import React, {
+    Ref,
+    forwardRef,
+    useCallback,
+    useEffect,
+    useImperativeHandle,
+    useState
+} from 'react'
 import { useRouter } from 'next/router';
-import { SelectChangeEvent } from '@mui/material/Select';
-import SelectLabels from '../../../commons/Select';
-import { StepperChildProp } from '../../../../models/Props';
-import styles from './styles.module.scss'
+
+// Redux Imports
+
 import { useAppDispatch, useAppSelector } from '../../../../redux/hooks';
 import { setStepThree } from '../../../../redux/slices/createCourseStepSlice';
 
+// Props Import
+import { StepperChildProp } from '../../../../models/Props';
+
+// Components Imports
+import SelectLabels from '../../../commons/Select';
+
+// Mui Imports
+import { SelectChangeEvent } from '@mui/material/Select';
+
+// Styles Import
+import styles from './styles.module.scss'
+
+const labels = [{ fa: "یک دسته بندی را انتخاب کنید", en: "Choose a category" }, { fa: "آی تی و نرم افزار", en: "It & software" }]
+
 
 const StepThree = forwardRef((_, ref: Ref<StepperChildProp>) => {
-    const labels = [{ fa: "یک دسته بندی را انتخاب کنید", en: "Choose a category" }, { fa: "آی تی و نرم افزار", en: "It & software" }]
-    const { t } = useTranslation("common")
+
     const [mounted, setMounted] = useState(false)
     const dispatch = useAppDispatch()
     const state = useAppSelector(state => state.createCourseSteps.state.stepThree)
     const [value, setValue] = useState(state.en ? state : labels[0]);
+
     const router = useRouter()
     const isEng = router.locale === "en"
 

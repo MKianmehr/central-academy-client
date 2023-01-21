@@ -1,13 +1,18 @@
 import * as React from 'react';
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+
+// Props Import
+import { MiniDrawerProp } from '../../../models/Props';
+
+// Mui Imports
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
-import { useTranslation } from 'next-i18next';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import CreateIcon from '@mui/icons-material/Create';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
@@ -15,10 +20,11 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import ListItemText from '@mui/material/ListItemText';
-import { MiniDrawerProp } from '../../../models/Props';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+
+// Styles Imports
+import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import styles from './styles.module.scss'
+
 
 const drawerWidth = 240;
 

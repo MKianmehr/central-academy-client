@@ -1,36 +1,56 @@
-import React, { useContext, useState } from 'react'
-import BeforeSubSection from './BeforeSubSection'
+import React, { useCallback, useContext, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
-import SubSectionContent from './SubSectionContent'
-import SubSectionResourse from './SubSectionResourse'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useTranslation } from 'next-i18next';
-import { CourseSubSectionProp } from '../../../models/Props';
-import { SubSectionContext, SectionContext, CurriculumContext } from '../../../contexts';
+import { useRouter } from 'next/router';
+
+// Props Imports
+import { CourseSubSectionProp, DragDropSubSection } from '../../../models/Props';
+
+// Component Imports
+import BeforeSubSection from '../BeforeSubSection'
+import AddSubSectionContent from '../AddSubSectionContent'
+import SubSectionResourse from '../AddSubSectionResourse'
+import AlertDialog from '../AlertDialog';
+
+// Mui Imports
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MenuIcon from '@mui/icons-material/Menu';
-import styles from './styles.module.scss'
 import { Button, IconButton } from '@mui/material';
-import AlertDialog from '../AlertDialog';
+
+// Utils Imports
 import text from '../../../utils/textEnOrFa';
-import { useRouter } from 'next/router';
 import DragDropTypes from '../../../utils/DragDropTypes'
-import { DragDropSubSection } from '../../../models/Props'
+
+// Context Imports
+import { SubSectionContext, SectionContext, CurriculumContext } from '../../../contexts';
+
+// Styles Imports
+import styles from './styles.module.scss'
 
 
-const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSubSectionProp) => {
-    const { onDragSubSection, sections, handleDeleteSubSection } = useContext(CurriculumContext)
+
+const CourseSubSection = (
+    { index, content, realIndex, sectionIndex }:
+        CourseSubSectionProp
+) => {
     const [isOpenDialog, setIsOpenDialog] = useState(false)
-    const { t } = useTranslation("common")
-    const { subSectionOptions } = useContext(SectionContext)
     const [isContentOpen, setIsContentOpen] = useState(false)
     const [isResourseOpen, setIsResourseOpen] = useState(false)
+
     const router = useRouter()
     const isEng = router.locale === "en"
+
+    const { t } = useTranslation("common")
+
+    const { onDragSubSection, sections, handleDeleteSubSection } = useContext(CurriculumContext)
+    const { subSectionOptions } = useContext(SectionContext)
+
+
 
     const [_, drag] = useDrag(
         () => ({
@@ -57,30 +77,29 @@ const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSub
 
         onDragSubSection({ currentPosition: { sectionIndex: dragItem.sectionIndex, currentIndex: dragItem.index }, targetPosition: { sectionIndex: sectionIndex, index: realIndex } })
     }
-    // drag handlers
 
-    // ui handlers
-    const onContentButtonClick = () => {
+
+    const onContentButtonClick = useCallback(() => {
         setIsContentOpen(!isContentOpen)
         setIsResourseOpen(false)
-    }
+    }, [isContentOpen])
 
-    const onResourseButtonClick = () => {
+    const onResourseButtonClick = useCallback(() => {
         setIsResourseOpen(!isResourseOpen)
         setIsContentOpen(false)
-    }
+    }, [isResourseOpen])
 
-    const onOpenDialog = () => {
+    const onOpenDialog = useCallback(() => {
         setIsOpenDialog(!isOpenDialog)
-    }
+    }, [isOpenDialog])
 
-    const onConfirmDialog = () => {
+    const onConfirmDeleteDialog = useCallback(() => {
         const res = handleDeleteSubSection({ sectionIndex, index: realIndex })
         if (res) {
             onOpenDialog()
         }
-    }
-    // ui handlers
+    }, [sectionIndex, realIndex, onOpenDialog])
+
     return (
         <SubSectionContext.Provider value={{ subSectionOptions, onContentButtonClick, onResourseButtonClick }}>
             <div
@@ -105,7 +124,7 @@ const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSub
                                     <IconButton><EditIcon className={styles.editIcon} fontSize='small' /></IconButton>
                                     <IconButton onClick={onOpenDialog}><DeleteIcon className={styles.editIcon} fontSize='small' /></IconButton>
                                     <AlertDialog
-                                        onConfirmDialog={onConfirmDialog}
+                                        onConfirmDialog={onConfirmDeleteDialog}
                                         onOpenDialog={onOpenDialog}
                                         isOpen={isOpenDialog}
                                         describtion={t("section delete message")}
@@ -132,10 +151,12 @@ const CourseSubSection = ({ index, content, realIndex, sectionIndex }: CourseSub
                             <MenuIcon className={styles.editIcon} />
                         </span>
                     </div>
+
                     {/* subSection content and resourse */}
-                    {isContentOpen && <SubSectionContent />}
+                    {isContentOpen && <AddSubSectionContent />}
                     {isResourseOpen && <SubSectionResourse />}
                     {/* subSection content and resourse */}
+
                 </div>
                 {/* subsection */}
             </div>

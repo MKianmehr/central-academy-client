@@ -1,6 +1,10 @@
 import React, { forwardRef } from 'react'
-import styles from './styles.module.scss'
+
+// Import Props
 import { InputProp } from '../../../models/Props'
+
+// Import Styles
+import styles from './styles.module.scss'
 
 const Input = forwardRef<HTMLInputElement, InputProp>(
     ({ icon, placeholder, type = 'text', value, onChange, error, name }, ref) => {
