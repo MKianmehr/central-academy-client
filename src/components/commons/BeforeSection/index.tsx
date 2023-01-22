@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { useRouter } from 'next/router';
 
 // components imports
@@ -6,6 +6,9 @@ import AddSection from '../AddSection';
 
 // mui imports
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+
+// Context Imports
+import { SectionContext } from '../../../contexts';
 
 // styles import
 import styles from './styles.module.scss'
@@ -17,6 +20,8 @@ const AddBeforeSection = () => {
     const [active, setActive] = useState(false)
     const router = useRouter()
     const isRTL = router.locale === "fa"
+
+    const { index } = useContext(SectionContext)
 
     const onClick = useCallback(() => {
         setActive(!active)
@@ -32,7 +37,7 @@ const AddBeforeSection = () => {
             <button onClick={onClick} className={[styles.before__button, isRTL && styles.square_rtl].join(" ")}>
                 <AddOutlinedIcon className={[styles.multi].join(" ")} />
             </button>
-            {active && <AddSection onClick={onClick} />}
+            {active && <AddSection index={index} onClick={onClick} />}
         </div>
     )
 }

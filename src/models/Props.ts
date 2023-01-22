@@ -230,6 +230,7 @@ export interface AddSectionProp {
     onClick: () => void;
     title?: string;
     goal?: string;
+    index: number;
 }
 
 export interface AddSubSectionContentTypeProp {

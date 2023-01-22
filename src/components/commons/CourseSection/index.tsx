@@ -111,6 +111,7 @@ const CourseSection = ({ index, numberOfSubSectionsOfPreviousSection, section }:
                             onClick={handleEditSection}
                             title={section.title}
                             goal=""
+                            index={index - 1}
                         />
                     )}
 

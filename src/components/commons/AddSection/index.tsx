@@ -9,12 +9,12 @@ import RemainingInput from '../RemaingInput'
 import { Button } from '@mui/material'
 
 // context imports
-import { CurriculumContext, SectionContext } from '../../../contexts'
+import { CurriculumContext } from '../../../contexts'
 
 // styles import
 import styles from './styles.module.scss'
 
-const AddSection = ({ onClick, title, goal }: AddSectionProp) => {
+const AddSection = ({ onClick, title, goal, index }: AddSectionProp) => {
 
     const [localTitle, setLocalTitle] = useState(title ? title : "")
     const [titleError, setTitleError] = useState(false)
@@ -24,7 +24,6 @@ const AddSection = ({ onClick, title, goal }: AddSectionProp) => {
     const { t } = useTranslation("common")
 
     const { handleAddSection, handleEditSection } = useContext(CurriculumContext)
-    const { index } = useContext(SectionContext)
 
     useEffect(() => {
         if (mounted) {

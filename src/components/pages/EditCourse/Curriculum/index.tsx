@@ -205,7 +205,7 @@ const Curriculum = () => {
                         </Button>
                     )}
                     {isOpenAddSection && (
-                        <AddSection onClick={onClickOpenAddSection} />
+                        <AddSection index={sections.length} onClick={onClickOpenAddSection} />
                     )}
                 </div>
             </div>
