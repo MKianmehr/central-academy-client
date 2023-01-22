@@ -1,8 +1,14 @@
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 
 // Components Imports
 import CourseSection from '../../../commons/CourseSection'
+import AddSection from '../../../commons/AddSection';
+
+//Mui Imports
+import AddIcon from '@mui/icons-material/Add';
+import { Button, IconButton } from '@mui/material';
 
 // Contexts Import
 import { CurriculumContext } from '../../../../contexts';
@@ -45,7 +51,11 @@ const initialSections = [
 const Curriculum = () => {
 
     const { t } = useTranslation("common")
+    const [isOpenAddSection, setIsOpenAddSection] = useState(false)
     const [sections, setSections] = useState(initialSections)
+
+    const router = useRouter()
+    const isRTL = router.locale === "fa"
 
     const numberOfSubSectionsOfPreviousSections = useMemo(() => {
         let numberOfSubSectionsOfPreviousSections: number[] = [0]
@@ -147,6 +157,10 @@ const Curriculum = () => {
         return false
     }
 
+    const onClickOpenAddSection = useCallback(() => {
+        setIsOpenAddSection(!isOpenAddSection)
+    }, [isOpenAddSection])
+
     return (
         <CurriculumContext.Provider value={{
             onDragSection,
@@ -172,6 +186,29 @@ const Curriculum = () => {
                             />
                         )
                     })}
+                </div>
+                <div className={styles.addSectionButtonAndAddSection}>
+                    <span className={[isRTL ? styles.multi_rtl : styles.multi, isOpenAddSection && (isRTL ? styles.multi_active_rtl : styles.multi_active)].join(" ")}>
+                        <IconButton onClick={onClickOpenAddSection}>
+                            <AddIcon fontSize='large' />
+                        </IconButton>
+                    </span>
+                    {!isOpenAddSection && (
+                        <Button
+                            className={styles.addSectionButton}
+                            onClick={onClickOpenAddSection}
+                        >
+                            <span>
+                                Section
+                            </span>
+
+                        </Button>
+                    )}
+                    {isOpenAddSection && (
+                        <div className={styles.addSection}>
+                            <AddSection onClick={onClickOpenAddSection} />
+                        </div>
+                    )}
                 </div>
             </div>
         </CurriculumContext.Provider>

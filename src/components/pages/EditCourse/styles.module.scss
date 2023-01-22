@@ -42,6 +42,7 @@
 .content {
     box-shadow: 0 2px 4px getColor(color-08), 0 4px 12px getColor(color-16);
     @include margin-horizontal(10px);
+    margin-bottom: 50px;
 
     @include large-screens($breakpoint-lm) {
         margin-top: 55px;
