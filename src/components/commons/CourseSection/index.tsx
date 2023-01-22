@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useContext, useState, CSSProperties } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -7,6 +7,7 @@ import DragDropTypes from '../../../utils/DragDropTypes'
 
 // Material-UI imports
 import { Button } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 // Context imports 
 import { SectionContext, CurriculumContext } from '../../../contexts';
@@ -14,12 +15,13 @@ import { SectionContext, CurriculumContext } from '../../../contexts';
 // Components imports
 import SectionHeader from '../SectionHeader';
 import CourseSubSection from '../CourseSubSection'
-import SubSectionCreationContent from '../AddSubSection';
+import AddSubSection from '../AddSubSection';
 import BeforeSection from '../BeforeSection';
 import AddSection from '../AddSection';
 
 // Styles imports
 import styles from './styles.module.scss';
+import BeforeSubSection from '../BeforeSubSection';
 
 
 const subSectionOptions = [
@@ -35,10 +37,9 @@ const CourseSection = ({ index, numberOfSubSectionsOfPreviousSection, section }:
     const router = useRouter()
     const isRtl = router.locale === "fa"
     const { onDragSection, sections, onDragSubSection } = useContext(CurriculumContext)
-    const padding = isRtl ? { paddingRight: "45px" } : { paddingLeft: "45px" }
     const [isOpenAddCurriculum, setIsOpenAddCurriculum] = useState(false)
     const [isEditSectionActive, setIsEditSectionActive] = useState(false)
-    const addButtonPadding = isRtl ? { paddingRight: "25px" } : { paddingLeft: "25px" }
+    const addButtonPadding: CSSProperties = isRtl ? { paddingRight: "25px" } : { paddingLeft: "25px" }
 
     const [_, drag, dragPreview] = useDrag(
         () => ({
@@ -122,26 +123,33 @@ const CourseSection = ({ index, numberOfSubSectionsOfPreviousSection, section }:
                     >
                         {section.subSections?.map((list, subSectionIndex) => {
                             return (
-                                <CourseSubSection
-                                    key={list._id}
-                                    index={subSectionIndex + numberOfSubSectionsOfPreviousSection + 1}
-                                    realIndex={subSectionIndex}
-                                    sectionIndex={index - 1}
-                                    content={list}
-                                />)
+                                <div key={list._id}>
+                                    <BeforeSubSection />
+                                    <CourseSubSection
+                                        index={subSectionIndex + numberOfSubSectionsOfPreviousSection + 1}
+                                        realIndex={subSectionIndex}
+                                        sectionIndex={index - 1}
+                                        content={list}
+                                    />
+                                </div>
+                            )
                         })}
                         <button
                             onClick={onAddCurriculumClick}
                             className={[isRtl ? styles.mult_rtl : styles.mult, isOpenAddCurriculum && (isRtl ? styles.mult_active_rtl : styles.mult_active)].join(" ")}
-                        ></button>
+                        >
+                            <AddIcon fontSize="large" />
+                        </button>
                         {isOpenAddCurriculum && (
                             <div className={styles.SubSectionCreationContent}>
-                                <SubSectionCreationContent />
+                                <AddSubSection />
                             </div>
                         )}
                         {
                             !isOpenAddCurriculum && <div className={styles.addButton}>
-                                <Button style={addButtonPadding} onClick={onAddCurriculumClick}>{t("Curriculum item")}</Button>
+                                <Button style={addButtonPadding} onClick={onAddCurriculumClick}>
+                                    {t("Curriculum item")}
+                                </Button>
                             </div>
                         }
                         {/* Course SubSection */}

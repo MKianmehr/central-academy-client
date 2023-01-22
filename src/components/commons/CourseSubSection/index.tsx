@@ -120,10 +120,6 @@ const CourseSubSection = (
                 className={styles.container}
                 ref={drop}
             >
-                {/* before subsection */}
-                <BeforeSubSection />
-                {/* before subsection */}
-
                 {/* subsection */}
                 <div
                     ref={drag}

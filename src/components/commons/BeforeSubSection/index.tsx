@@ -1,8 +1,11 @@
 import React, { useCallback, useState } from 'react'
 import { useRouter } from 'next/router';
 
-// import contexts
+// Components Import
 import AddSubSection from '../AddSubSection';
+
+// Mui Imports
+import AddIcon from '@mui/icons-material/Add';
 
 // import styles
 import styles from './styles.module.scss';
@@ -27,8 +30,10 @@ const BeforeSubSection = () => {
             }
         >
             <button onClick={handleHoverButton} className={styles.hoverButton}>
-                <span className={[isRtl ? styles.square_rtl : styles.square, hoverButtonActive && styles.square_active].join(" ")}></span>
-                <span className={[isRtl ? styles.mult_rtl : styles.mult, hoverButtonActive && (isRtl ? styles.mult_active_rtl : styles.mult_active)].join(" ")}></span>
+                <span className={[isRtl ? styles.square_rtl : styles.square, hoverButtonActive && (isRtl ? styles.square_active_rtl : styles.square_active)].join(" ")}></span>
+                <div className={[isRtl ? styles.mult_rtl : styles.mult, hoverButtonActive && (isRtl ? styles.mult_active_rtl : styles.mult_active)].join(" ")}>
+                    <AddIcon fontSize="large" />
+                </div>
             </button>
             {hoverButtonActive && <AddSubSection />}
         </div>

@@ -23,8 +23,6 @@
 }
 
 .addButton {
-    margin-top: 20px;
-
     & button {
         background-color: getColor(primary);
         border: 1px solid getColor(primary-text);
@@ -43,54 +41,33 @@
 
 
 .mult {
-    @include multiply_sign;
-    bottom: 0;
-    transform: translate(0px, -23px);
-    transition: unset;
+    background-color: transparent;
+    border: none;
+    position: relative;
+    top: 37px;
+    left: -2px;
+    z-index: 1;
+    transition: transform 400ms cubic-bezier(.2, 0, .38, .9);
 }
 
-;
-
 .mult_rtl {
-    @include multiply_sign;
-    bottom: 0;
-    transform: translate(0px, -23px);
-    transition: unset;
+    background-color: transparent;
+    border: none;
+    position: relative;
+    top: 37px;
+    left: 5px;
+    z-index: 1;
+    transition: transform 400ms cubic-bezier(.2, 0, .38, .9);
 }
 
 .mult_active {
-    @include multiply_sign_active;
-    transform: translate(0px, 0px);
-    transition: unset;
-
-    &::after {
-        right: 20px;
-        top: -140px;
-        transform: rotate(45deg);
-    }
-
-    &::before {
-        right: 20px;
-        top: -140px;
-        transform: rotate(-45deg);
-    }
+    left: -17px;
+    transform: rotate(45deg);
 }
 
 .mult_active_rtl {
-    transform: translate(0px, 0px);
-    transition: unset;
-
-    @include multiply_sign_active {
-        &::after {
-            right: -10px;
-            top: -105px;
-        }
-
-        &::before {
-            right: -10px;
-            top: -105px;
-        }
-    }
+    left: 17px;
+    transform: rotate(45deg);
 }
 
 .paddingRight {

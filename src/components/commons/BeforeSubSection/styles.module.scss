@@ -14,22 +14,45 @@
 }
 
 .hoverButton {
-    position: relative;
     background-color: transparent;
+    transform: translate(0px, -17px);
     border: none;
     width: 20px;
     height: 20px;
-
 }
 
 .square {
-    @include square_sign;
+    @include square_sign {
+        top: unset;
+        right: unset;
+        left: -17px;
+
+        @include large-screens($breakpoint-sm) {
+            left: -62px;
+        }
+
+    }
+
+    &::before {
+        background-color: getColor(primary);
+    }
 }
 
 .square_rtl {
     @include square_sign {
-        left: 43px;
+        top: unset;
+        left: unset;
+        right: -17px;
         transform: rotate(180deg);
+
+        @include large-screens($breakpoint-sm) {
+            right: -62px;
+        }
+
+    }
+
+    &::before {
+        background-color: getColor(primary);
     }
 }
 
@@ -38,68 +61,69 @@
     background-color: transparent;
 
     &::before {
-        right: 20px;
+        left: -6px;
         background-color: getColor(primary);
-    }
+        transform: translate(2px, 12px) rotate(45deg);
 
+        @include large-screens($breakpoint-sm) {
+            transform: translate(2px, 12px) rotate(45deg);
+        }
+    }
+}
+
+.square_active_rtl {
+    border: none;
+    background-color: transparent;
+
+    &::before {
+        left: unset;
+        background-color: getColor(primary);
+        transform: translate(-33px, -12px) rotate(45deg);
+
+        @include large-screens($breakpoint-sm) {
+            transform: translate(-33px, -12px) rotate(45deg);
+        }
+    }
 }
 
 .mult {
-    @include multiply_sign {
-        transform: translate(-20px, 4px);
+    transform: translate(-5px, -3px);
+    position: absolute;
+    left: -5px;
 
-        &::after {
-            top: -10px;
-            right: 45px;
-        }
-
-        &::before {
-            right: 45px;
-            top: -10px;
-        }
+    @include large-screens($breakpoint-sm) {
+        left: -48px;
     }
 }
 
 .mult_rtl {
-    @include multiply_sign {
-        transform: translate(-20px, 4px);
+    transform: translate(15px, -3px);
+    position: absolute;
+    right: 5px;
 
-        &::after {
-            top: -10px;
-            right: -63px;
-        }
-
-        &::before {
-            right: -63px;
-            top: -10px;
-        }
+    @include large-screens($breakpoint-sm) {
+        right: -40px;
     }
 }
 
 .mult_active {
-    @include multiply_sign_active {
-        &::after {
-            right: 13px;
-            top: -7px;
-        }
+    transform: translate(-21px, 8px) rotate(45deg);
+    position: absolute;
+    left: 5px;
 
-        &::before {
-            right: 13px;
-            top: -7px;
-        }
+    @include large-screens($breakpoint-sm) {
+        transform: translate(-57px, 9px) rotate(45deg);
+        left: 39px;
     }
 }
 
 .mult_active_rtl {
-    @include multiply_sign_active {
-        &::after {
-            right: -10px;
-            top: -7px;
-        }
+    transform: translate(21px, 9px) rotate(45deg);
+    position: absolute;
+    right: 5px;
 
-        &::before {
-            right: -10px;
-            top: -7px;
-        }
+    @include large-screens($breakpoint-sm) {
+        transform: translate(60px, 10px) rotate(45deg);
+        right: 43px;
     }
 }
