@@ -91,3 +91,16 @@
         }
     }
 }
+
+.paddingRight {
+    @include large-screens($breakpoint-sm) {
+        padding-right: 45px;
+
+    }
+}
+
+.paddingLeft {
+    @include large-screens($breakpoint-sm) {
+        padding-left: 45px;
+    }
+}

@@ -114,7 +114,12 @@ const CourseSection = ({ index, numberOfSubSectionsOfPreviousSection, section }:
                     )}
 
                     {/* Course SubSection */}
-                    <div style={padding}>
+                    <div
+                        className={[
+                            styles.subSectionContainer,
+                            isRtl ? styles.paddingRight : styles.paddingLeft]
+                            .join(" ")}
+                    >
                         {section.subSections?.map((list, subSectionIndex) => {
                             return (
                                 <CourseSubSection

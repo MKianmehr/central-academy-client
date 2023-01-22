@@ -101,7 +101,14 @@ const CourseSubSection = (
     }, [sectionIndex, realIndex, onOpenDialog])
 
     return (
-        <SubSectionContext.Provider value={{ subSectionOptions, onContentButtonClick, onResourseButtonClick }}>
+        <SubSectionContext.Provider value={
+            {
+                subSectionOptions,
+                onContentButtonClick,
+                onResourseButtonClick
+            }
+        }
+        >
             <div
                 className={styles.container}
                 ref={drop}
@@ -114,42 +121,58 @@ const CourseSubSection = (
                 <div
                     ref={drag}
                 >
-                    <div className={styles.subsection}>
+                    <div className={styles.subSection}>
                         <div className={styles.left}>
-                            <div>
-                                <CheckCircleIcon fontSize='small' />
-                                <span> {text(content.type, isEng)} {index}: </span>
-                                <span>{content.title}</span>
-                                <span className={styles.icons}>
-                                    <IconButton><EditIcon className={styles.editIcon} fontSize='small' /></IconButton>
-                                    <IconButton onClick={onOpenDialog}><DeleteIcon className={styles.editIcon} fontSize='small' /></IconButton>
+                            <div className={styles.textAndIcons}>
+                                <div className={styles.typeAndtitle}>
+                                    <div>
+                                        <CheckCircleIcon fontSize='small' />
+                                        {text(content.type, isEng)} {index}:
+                                    </div>
+                                    <div>
+                                        {content.title}
+                                    </div>
+                                </div>
+                                <div className={[styles.editAndDeleteIcons, styles.hoverableIcons].join(" ")}>
+                                    <div>
+                                        <IconButton><EditIcon className={styles.editIcon} fontSize='small' /></IconButton>
+                                    </div>
+                                    <div>
+                                        <IconButton onClick={onOpenDialog}><DeleteIcon className={styles.editIcon} fontSize='small' /></IconButton>
+                                    </div>
                                     <AlertDialog
                                         onConfirmDialog={onConfirmDeleteDialog}
                                         onOpenDialog={onOpenDialog}
                                         isOpen={isOpenDialog}
                                         describtion={t("section delete message")}
                                         notificationMessage={t("Please Confirm")} />
-                                </span>
+                                </div>
                             </div>
                             {content.type.en.toLowerCase() === "lecture" && (
-                                !isContentOpen && (
-                                    <div className={styles.addContentButton}>
+                                <div>
+                                    <div className={styles.addButton}>
                                         <Button onClick={onContentButtonClick}>
                                             <AddIcon />
                                             {t("Content")}
                                         </Button>
                                     </div>
-                                )
+                                </div>
                             )}
                         </div>
-                        {!isContentOpen && (
-                            <IconButton onClick={onResourseButtonClick}>
-                                {isResourseOpen ? <KeyboardArrowUpIcon className={styles.editIcon} /> : <KeyboardArrowDownIcon className={styles.editIcon} />}
-                            </IconButton>
-                        )}
-                        <span className={styles.icons}>
-                            <MenuIcon className={styles.editIcon} />
-                        </span>
+                        <div className={styles.arrowAndMenuIcon}>
+                            {!isContentOpen && (
+                                <div className={[styles.hoverableIcons].join(" ")}>
+                                    <IconButton onClick={onResourseButtonClick}>
+                                        {isResourseOpen ? <KeyboardArrowUpIcon className={styles.editIcon} /> : <KeyboardArrowDownIcon className={styles.editIcon} />}
+                                    </IconButton>
+                                </div>
+                            )}
+                            <div className={[styles.hoverableIcons].join(" ")}>
+                                <IconButton>
+                                    <MenuIcon />
+                                </IconButton>
+                            </div>
+                        </div>
                     </div>
 
                     {/* subSection content and resourse */}
@@ -165,3 +188,4 @@ const CourseSubSection = (
 }
 
 export default CourseSubSection
+

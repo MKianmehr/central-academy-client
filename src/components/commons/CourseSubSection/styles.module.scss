@@ -5,38 +5,59 @@
     flex-direction: column;
 }
 
-.icons {
-    opacity: 0;
-}
-
-.subsection {
+.subSection {
+    display: flex;
+    word-break: break-all;
     background-color: getColor(primary);
     border: 1px solid getColor(primary-text);
-    padding: 10px;
+    padding: 5px;
     cursor: move;
-    @include align-center;
-    justify-content: space-between;
-    gap: 5px;
 
-    &:hover {
-        .icons {
-            opacity: 1;
+
+    @include large-screens($breakpoint-sm) {
+        padding: 10px;
+
+        &:hover {
+            .hoverableIcons {
+                opacity: 1;
+            }
         }
     }
 }
 
-.editIcon {
-    color: getColor(primary-text);
-}
-
 .left {
     flex: 1;
-    @include align-center;
-    justify-content: space-between;
+    display: flex;
     flex-wrap: wrap;
 }
 
-.addContentButton {
+.textAndIcons {
+    flex: 1;
+    display: flex;
+}
+
+.typeAndtitle {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.editAndDeleteIcons {
+    display: flex;
+}
+
+.arrowAndMenuIcon {
+    display: flex;
+}
+
+.hoverableIcons {
+
+    @include large-screens($breakpoint-sm) {
+        opacity: 0;
+    }
+}
+
+.addButton {
     border: 1px solid getColor(primary-text);
 
     & button {
