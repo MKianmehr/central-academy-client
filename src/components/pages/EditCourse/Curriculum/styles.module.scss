@@ -43,7 +43,7 @@
 
 .multi_active {
     position: absolute;
-    top: -5px;
+    top: -25px;
     left: -25px;
     z-index: 5;
     transform: rotate(45deg);
@@ -51,7 +51,7 @@
 
 .multi_active_rtl {
     position: absolute;
-    top: -5px;
+    top: -25px;
     right: -25px;
     z-index: 5;
     transform: rotate(45deg);
@@ -65,10 +65,4 @@
     font-weight: bold;
     @include padding-horizontal(24px);
     @include padding-vertical(5px);
-}
-
-.addSection {
-    position: absolute;
-    width: 100%;
-    top: 0;
 }

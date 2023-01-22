@@ -205,9 +205,7 @@ const Curriculum = () => {
                         </Button>
                     )}
                     {isOpenAddSection && (
-                        <div className={styles.addSection}>
-                            <AddSection onClick={onClickOpenAddSection} />
-                        </div>
+                        <AddSection onClick={onClickOpenAddSection} />
                     )}
                 </div>
             </div>
