@@ -9,8 +9,6 @@ import { SubContentTypeProp, AddSubSectionContentTypeProp } from '../../../model
 import VideoInput from '../VideoInput';
 
 // Mui Imports
-import AddIcon from '@mui/icons-material/Add';
-import { IconButton } from '@mui/material';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
@@ -79,6 +77,7 @@ const typeOptions = { video: { fa: "ویدیو", en: "Video" }, slide: { fa: "و
 
 const AddSubSectionContent = () => {
 
+    const { OnClickContentType } = useContext(SubSectionContext)
     const { t } = useTranslation("common")
 
     const [isTypeOptionOpen, setIsTypeOptionOpen] = useState({
@@ -86,17 +85,19 @@ const AddSubSectionContent = () => {
         slide: false,
         article: false
     })
-    const { onContentButtonClick } = useContext(SubSectionContext)
 
     const isTypesOpen = isTypeOptionOpen.video || isTypeOptionOpen.slide || isTypeOptionOpen.article
 
     const handleClickOnTypeIcon = useCallback((type: string) => {
 
         if (type === typeOptions.video.en) {
+            OnClickContentType(t("Add Video"))
             setIsTypeOptionOpen({ video: true, slide: false, article: false })
         } else if (type === typeOptions.slide.en) {
+            OnClickContentType(t("Add Article"))
             setIsTypeOptionOpen({ video: false, slide: true, article: false })
         } else if (type === typeOptions.article.en) {
+            OnClickContentType(t("Add Video & Slide Mashup"))
             setIsTypeOptionOpen({ video: false, slide: false, article: true })
         }
     }, [])
@@ -104,19 +105,6 @@ const AddSubSectionContent = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.top}>
-                <span>
-                    {!isTypesOpen && t("Select content type")}
-                    {isTypeOptionOpen.video && t("Add Video")}
-                    {isTypeOptionOpen.article && t("Add Article")}
-                    {isTypeOptionOpen.slide && t("Add Video & Slide Mashup")}
-                </span>
-                <div>
-                    <IconButton onClick={onContentButtonClick} className={styles.closeIcon}>
-                        <AddIcon />
-                    </IconButton>
-                </div>
-            </div>
             <div className={styles.content}>
                 {!(isTypesOpen) && (
                     <ContentType handleClickOnTypeIcon={handleClickOnTypeIcon} typeOptions={typeOptions} />

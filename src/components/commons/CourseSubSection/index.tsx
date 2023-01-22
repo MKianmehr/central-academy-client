@@ -38,14 +38,15 @@ const CourseSubSection = (
     { index, content, realIndex, sectionIndex }:
         CourseSubSectionProp
 ) => {
+    const { t } = useTranslation("common")
+
     const [isOpenDialog, setIsOpenDialog] = useState(false)
     const [isContentOpen, setIsContentOpen] = useState(false)
     const [isResourseOpen, setIsResourseOpen] = useState(false)
+    const [contentTitle, setContentTitle] = useState(`${t("Select content type")}`)
 
     const router = useRouter()
     const isEng = router.locale === "en"
-
-    const { t } = useTranslation("common")
 
     const { onDragSubSection, sections, handleDeleteSubSection } = useContext(CurriculumContext)
     const { subSectionOptions } = useContext(SectionContext)
@@ -82,6 +83,7 @@ const CourseSubSection = (
     const onContentButtonClick = useCallback(() => {
         setIsContentOpen(!isContentOpen)
         setIsResourseOpen(false)
+        setContentTitle(`${t("Select content type")}`)
     }, [isContentOpen])
 
     const onResourseButtonClick = useCallback(() => {
@@ -100,12 +102,17 @@ const CourseSubSection = (
         }
     }, [sectionIndex, realIndex, onOpenDialog])
 
+    const handleContentTitleByOnClickContentType = useCallback((title: string) => {
+        setContentTitle(title)
+    }, [])
+
     return (
         <SubSectionContext.Provider value={
             {
                 subSectionOptions,
                 onContentButtonClick,
-                onResourseButtonClick
+                onResourseButtonClick,
+                OnClickContentType: handleContentTitleByOnClickContentType
             }
         }
         >
@@ -149,14 +156,16 @@ const CourseSubSection = (
                                 </div>
                             </div>
                             {content.type.en.toLowerCase() === "lecture" && (
-                                <div>
-                                    <div className={styles.addButton}>
-                                        <Button onClick={onContentButtonClick}>
-                                            <AddIcon />
-                                            {t("Content")}
-                                        </Button>
+                                !isContentOpen && (
+                                    <div>
+                                        <div className={styles.addButton}>
+                                            <Button onClick={onContentButtonClick}>
+                                                <AddIcon />
+                                                {t("Content")}
+                                            </Button>
+                                        </div>
                                     </div>
-                                </div>
+                                )
                             )}
                         </div>
                         <div className={styles.arrowAndMenuIcon}>
@@ -165,6 +174,20 @@ const CourseSubSection = (
                                     <IconButton onClick={onResourseButtonClick}>
                                         {isResourseOpen ? <KeyboardArrowUpIcon className={styles.editIcon} /> : <KeyboardArrowDownIcon className={styles.editIcon} />}
                                     </IconButton>
+                                </div>
+                            )}
+                            {isContentOpen && (
+                                <div className={styles.contentOpenTopContainer}>
+                                    <div className={styles.contentTitle}>
+                                        <span>
+                                            {isContentOpen && contentTitle}
+                                        </span>
+                                        <div>
+                                            <IconButton onClick={onContentButtonClick} className={styles.closeIcon}>
+                                                <AddIcon />
+                                            </IconButton>
+                                        </div>
+                                    </div>
                                 </div>
                             )}
                             <div className={[styles.hoverableIcons].join(" ")}>

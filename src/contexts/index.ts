@@ -17,7 +17,8 @@ export const SubSectionContext = createContext<SubSectionContextProp>(
     {
         onContentButtonClick: () => { },
         onResourseButtonClick: () => { },
-        subSectionOptions: [{ fa: "", en: "" }]
+        subSectionOptions: [{ fa: "", en: "" }],
+        OnClickContentType: () => { }
     }
 )
 

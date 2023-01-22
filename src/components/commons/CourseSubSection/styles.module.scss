@@ -36,12 +36,16 @@
 .textAndIcons {
     flex: 1;
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .typeAndtitle {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    max-height: 100px;
+    overflow: hidden;
 }
 
 .editAndDeleteIcons {
@@ -65,4 +69,24 @@
     & button {
         color: getColor(primary-text);
     }
+}
+
+.contentOpenTopContainer {
+    display: flex;
+    align-items: flex-end;
+    background-color: getColor(primary);
+    position: relative;
+    top: 6px;
+
+    @include large-screens($breakpoint-sm) {
+        top: 11px;
+    }
+}
+
+.contentTitle {
+    display: flex;
+    align-items: center;
+    border: 1px solid getColor(primary-text);
+    border-bottom: unset;
+    @include padding-horizontal(5px);
 }

@@ -163,6 +163,7 @@ export interface SubSectionContextProp {
         fa: string;
         en: string;
     }[];
+    OnClickContentType: (title: string) => void;
 }
 
 export interface SectionContextProp {
