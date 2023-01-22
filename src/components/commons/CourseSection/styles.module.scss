@@ -9,6 +9,7 @@
     padding-bottom: 15px;
     padding-top: 15px;
     margin-bottom: 50px;
+    min-width: 250px;
 
     & .ghost {
         @include padding-vertical(25px);

@@ -3,6 +3,7 @@
 .container {
     display: flex;
     flex-direction: column;
+    min-width: 200px;
 }
 
 .subSection {
@@ -89,4 +90,5 @@
     border: 1px solid getColor(primary-text);
     border-bottom: unset;
     @include padding-horizontal(5px);
+    word-break: keep-all;
 }

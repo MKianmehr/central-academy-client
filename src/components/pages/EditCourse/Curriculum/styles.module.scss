@@ -3,6 +3,7 @@
 .container {
     @include padding-horizontal(15px);
     background-color: getColor(primary);
+    overflow: scroll;
 }
 
 .header {
