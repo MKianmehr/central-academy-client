@@ -8,6 +8,8 @@
 .subSection {
     display: flex;
     word-break: break-all;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
     background-color: getColor(primary);
     border: 1px solid getColor(primary-text);
     padding: 5px;
