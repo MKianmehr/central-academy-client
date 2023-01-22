@@ -18,10 +18,10 @@ import CourseSubSection from '../CourseSubSection'
 import AddSubSection from '../AddSubSection';
 import BeforeSection from '../BeforeSection';
 import AddSection from '../AddSection';
+import BeforeSubSection from '../BeforeSubSection';
 
 // Styles imports
 import styles from './styles.module.scss';
-import BeforeSubSection from '../BeforeSubSection';
 
 
 const subSectionOptions = [
