@@ -71,4 +71,7 @@ const SectionHeader = forwardRef<HTMLDivElement, SectionHeaderProps>(
         )
     }
 )
+
+SectionHeader.displayName = "SectionHeader"
+
 export default SectionHeader

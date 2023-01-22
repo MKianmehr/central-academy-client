@@ -45,11 +45,6 @@ const Courses = () => {
         setSearchText(e.target.value)
     }, [])
 
-
-    if (loading) {
-        return <NoCourseCard />
-    }
-
     const handleChange = useCallback((event: SelectChangeEvent) => {
         labels.forEach((label, index) => {
             if (event.target.value === (isEng ? label.en : label.fa)) {
@@ -57,6 +52,10 @@ const Courses = () => {
             }
         });
     }, [isEng, labels])
+
+    if (loading) {
+        return <NoCourseCard />
+    }
 
     return (
         <MiniDrawer>
