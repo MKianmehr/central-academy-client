@@ -94,10 +94,10 @@ const AddSubSectionContent = () => {
             OnClickContentType(t("Add Video"))
             setIsTypeOptionOpen({ video: true, slide: false, article: false })
         } else if (type === typeOptions.slide.en) {
-            OnClickContentType(t("Add Article"))
+            OnClickContentType(t("Add Video & Slide Mashup"))
             setIsTypeOptionOpen({ video: false, slide: true, article: false })
         } else if (type === typeOptions.article.en) {
-            OnClickContentType(t("Add Video & Slide Mashup"))
+            OnClickContentType(t("Add Article"))
             setIsTypeOptionOpen({ video: false, slide: false, article: true })
         }
     }, [])
