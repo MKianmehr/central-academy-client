@@ -79,5 +79,13 @@
     "This field may not be blank.": "This field may not be blank.",
     "Please Confirm": "Please Confirm",
     "section delete message": "You are about to remove a curriculum item. Are you sure you want to continue?",
-    "ok": "OK"
+    "ok": "OK",
+    "edit": "Edit",
+    "coding-exercise": "Coding Exercise",
+    "quiz": "Quiz",
+    "lecture": "Lecture",
+    "practice": "Practice",
+    "assignment": "Assignment",
+    "preview mode": "Preview Mode",
+    "edit mode": "Edit Mode"
 }

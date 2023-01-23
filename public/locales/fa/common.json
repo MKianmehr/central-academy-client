@@ -79,5 +79,13 @@
     "This field may not be blank.": "این بخش نمی تواند خالی باشد.",
     "Please Confirm": "لطفا تایید کنید",
     "section delete message": "شما در شرف حذف یک مورد از برنامه درسی هستید. آیا مطمئن هستید که میخواهید ادامه دهید؟",
-    "ok": "تایید"
+    "ok": "تایید",
+    "edit": "ویرایش",
+    "coding-exercise": "تمرین کدنویسی",
+    "quiz": "کوییز",
+    "lecture": "درس",
+    "practice": "تمرین",
+    "assignment": "مشق",
+    "preview mode": "حالت پیش نمایش",
+    "edit mode": "حالت ویرایش"
 }

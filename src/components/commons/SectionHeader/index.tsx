@@ -20,10 +20,10 @@ import styles from './styles.module.scss'
 
 
 const SectionHeader = forwardRef<HTMLDivElement, SectionHeaderProps>(
-    ({ index, title, handleEditSection, className }, ref) => {
+    ({ index, title, handleEditSection, className, indexToShow }, ref) => {
 
         const { t } = useTranslation("common")
-        const { handleDeleteSection } = useContext(CurriculumContext)
+        const { handleDeleteCurriculumItem } = useContext(CurriculumContext)
         const [isDialogEnable, setIsDialogEnable] = useState(false)
 
         const onOpenDialog = useCallback(() => {
@@ -31,8 +31,8 @@ const SectionHeader = forwardRef<HTMLDivElement, SectionHeaderProps>(
         }, [isDialogEnable])
 
         const onConfirmDialog = useCallback(() => {
-            handleDeleteSection({ sectionIndex: index - 1 })
-        }, [handleDeleteSection, index])
+            handleDeleteCurriculumItem({ index })
+        }, [handleDeleteCurriculumItem, index])
 
         return (
             <div
@@ -44,7 +44,7 @@ const SectionHeader = forwardRef<HTMLDivElement, SectionHeaderProps>(
                     ].join(" ")
                 }
             >
-                <span className={styles.title}>{t("Section")}: {index}</span>
+                <span className={styles.title}>{t("Section")}: {indexToShow + 1}</span>
                 <StickyNote2OutlinedIcon fontSize='small' />
                 <span className={styles.name}>{title}</span>
                 <span className={styles.icons}>

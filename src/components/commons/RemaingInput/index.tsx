@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 // Props Import
 import { RemainingInputProp } from '../../../models/Props';
@@ -11,10 +11,14 @@ const RemainingInput = ({ value, onChange, maxLength, placeHolder, className, er
     const [initialValue, setInitialValue] = useState(maxLength)
     const [remaing, setRemaing] = useState(initialValue)
 
+    useEffect(() => {
+        setRemaing(initialValue - value.length)
+    }, [])
+
     const onChangeText = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setRemaing(initialValue - e.target.value.length)
         onChange(e)
-    }, [])
+    }, [value])
 
     return (
         <div className={styles.container}>

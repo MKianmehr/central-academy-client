@@ -118,32 +118,14 @@ export type EditCourseMenuProp = {
 
 export interface CourseSectionProp {
     index: number;
-    numberOfSubSectionsOfPreviousSection: number;
-    section: {
-        title: string;
-        subSections: {
-            title: string;
-            type: {
-                fa: string;
-                en: string;
-            };
-            _id: number;
-        }[];
-        _id: number;
-    }
+    indexToShow: number;
+    section?: CurriculumItem;
+    subSections?: CurriculumItem[];
 }
 
 export interface CourseSubSectionProp {
-    content: {
-        title: string;
-        type: {
-            en: string;
-            fa: string;
-        };
-        _id: number;
-    }
+    content: CurriculumItem;
     index: number;
-    realIndex: number;
     sectionIndex: number;
 }
 
@@ -159,18 +141,12 @@ export interface SubContentTypeProp {
 export interface SubSectionContextProp {
     onContentButtonClick: () => void;
     onResourseButtonClick: () => void;
-    subSectionOptions: {
-        fa: string;
-        en: string;
-    }[];
+    subSectionOptions: string[];
     OnClickContentType: (title: string) => void;
 }
 
 export interface SectionContextProp {
-    subSectionOptions: {
-        fa: string;
-        en: string;
-    }[];
+    subSectionOptions: string[];
     index: number;
 }
 
@@ -179,48 +155,35 @@ export interface CurriculumContextProp {
         currentIndex: number;
         targetIndex: number;
     }) => void;
-    onDragSubSection: ({ currentPosition, targetPosition }: {
-        currentPosition: {
-            sectionIndex: number;
-            currentIndex: number;
-        };
-        targetPosition: {
-            sectionIndex: number;
-            index: number;
-        };
+    onDragSubSection: ({ currentIndex, targetIndex }: {
+        currentIndex: number;
+        targetIndex: number;
+        SubToSub: boolean;
+        targetSectionIndex: number;
+        currentSectionIndex: number;
     }) => void;
-    sections: {
-        title: string;
-        subSections: {
-            title: string;
-            type: {
-                fa: string;
-                en: string;
-            };
-            _id: number;
-        }[];
-        _id: number;
-    }[];
-    handleAddSection: ({ title, goal, sectionIndex }: { title: string; goal: string; sectionIndex: number }) => boolean;
-    handleEditSection: ({ title, goal, sectionIndex }: { title: string; goal: string; sectionIndex: number }) => boolean;
-    handleDeleteSection: ({ sectionIndex }: { sectionIndex: number }) => boolean;
-    handleDeleteSubSection: ({ sectionIndex, index }: { sectionIndex: number; index: number }) => boolean;
+    curriculumItems: CurriculumItem[];
+    handleAddCurriculumItem: ({ data, index }: { data: AddCurriculumItem; index: number }) => boolean;
+    handleEditCurriculumItem: ({ data, index }: { data: CurriculumItem; index: number }) => boolean;
+    handleDeleteCurriculumItem: ({ index }: { index: number }) => boolean;
 }
 
 export interface DragDropSubSection {
+    currentSectionIndex: number;
     index: number;
-    sectionIndex: number;
     type: string;
     _id: number;
 }
 
 export interface DragDropSection {
     index: number;
+    type: string;
     _id: number;
 }
 
 export interface SectionHeaderProps {
     index: number;
+    indexToShow: number;
     title: string;
     handleEditSection: () => void;
     className?: string;
@@ -265,4 +228,59 @@ export interface RemainingInputProp {
     placeHolder: string;
     className?: string;
     errorValue?: string;
+}
+
+interface Asset {
+    _class: string;
+    _id: number;
+    asset_type: string;
+    title: string;
+    created: string;
+    status: number;
+    body: string;
+    thumbnail_url: string;
+    source_url: string;
+    content_summary: string;
+    processing_errors: any[];
+    time_estimation: number;
+}
+
+
+
+export interface CurriculumItem {
+    _class?: string;
+    _id?: number;
+    title: string;
+    description?: string;
+    object_index?: number;
+    type?: string;
+    is_published?: boolean;
+    is_draft?: boolean;
+    duration?: number;
+    pass_percent?: number;
+    num_assessments?: number;
+    requires_draft?: boolean;
+    is_randomized?: boolean;
+    is_downloadable?: boolean;
+    is_free?: boolean;
+    asset?: Asset;
+    supplementary_assets?: Asset[];
+}
+
+export interface AddCurriculumItem extends CurriculumItem {
+    _class: string;
+}
+
+export interface SimpleQuiz {
+    type: string;
+    index: number;
+    handleCloseSubSectionOption: () => void;
+    content?: CurriculumItem;
+}
+
+export interface LCAProp {
+    type: string;
+    handleCloseSubSectionOption: () => void;
+    content?: CurriculumItem;
+    index: number;
 }

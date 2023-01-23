@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState, CSSProperties } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { CourseSectionProp, DragDropSubSection, DragDropSection } from '../../../models/Props';
+import { CourseSectionProp, DragDropSection, DragDropSubSection } from '../../../models/Props';
 import DragDropTypes from '../../../utils/DragDropTypes'
 
 // Material-UI imports
@@ -24,61 +24,43 @@ import BeforeSubSection from '../BeforeSubSection';
 import styles from './styles.module.scss';
 
 
-const subSectionOptions = [
-    { fa: "دوره", en: "Lecture" },
-    { fa: "کوییز", en: "Quiz" },
-    { fa: "تمرین با کد", en: "Coding Exercise" },
-    { fa: "تست تمرینی", en: "Practice Test" },
-    { fa: "تمرین", en: "Assignment" }
-]
+const subSectionOptions = ["lecture", "quiz", "coding-exercise", "practice", "assignment"]
 
-const CourseSection = ({ index, numberOfSubSectionsOfPreviousSection, section }: CourseSectionProp) => {
+const CourseSection = ({ index, section, subSections, indexToShow }: CourseSectionProp) => {
     const { t } = useTranslation("common")
     const router = useRouter()
     const isRtl = router.locale === "fa"
-    const { onDragSection, sections, onDragSubSection } = useContext(CurriculumContext)
+    const { onDragSection, curriculumItems, onDragSubSection } = useContext(CurriculumContext)
     const [isOpenAddCurriculum, setIsOpenAddCurriculum] = useState(false)
     const [isEditSectionActive, setIsEditSectionActive] = useState(false)
+    const [lastSubSectionOfThisSectionIndex, setLastSubSectionOfThisSectionIndex] = useState(0)
     const addButtonPadding: CSSProperties = isRtl ? { paddingRight: "25px" } : { paddingLeft: "25px" }
 
     const [_, drag, dragPreview] = useDrag(
         () => ({
             type: DragDropTypes.Section,
-            item: { index: index - 1, _id: section._id },
+            item: { index: index, _id: section?._id, type: DragDropTypes.Section },
         }),
-        [sections]
+        [curriculumItems]
     )
 
     const [, drop] = useDrop(
         () => ({
             accept: [DragDropTypes.Section, DragDropTypes.SubSection],
-            drop(item: DragDropSection | DragDropSubSection, monitor) {
+            drop(item: DragDropSection, monitor) {
                 handleOnDrop(item)
-            },
-            hover(item: DragDropSection | DragDropSubSection, monitor) {
-                handleOnHover(item)
             }
         }),
-        [sections],
+        [curriculumItems],
     )
 
-    const handleOnHover = (item: DragDropSection | DragDropSubSection) => {
-        if ('sectionIndex' in item) {
-            if (!(sections[index - 1].subSections.length === 0)) {
-                return
-            }
-            onDragSubSection({ currentPosition: { sectionIndex: item.sectionIndex, currentIndex: item.index }, targetPosition: { sectionIndex: index - 1, index: 0 } })
-        }
-    }
-
     const handleOnDrop = (item: DragDropSection | DragDropSubSection) => {
-        if ('sectionIndex' in item) {
+        if (item._id === section?._id) return
+        if (item.type === DragDropTypes.SubSection && "currentSectionIndex" in item) {
+            onDragSubSection({ currentIndex: item.index, targetIndex: index, SubToSub: false, targetSectionIndex: index, currentSectionIndex: item.currentSectionIndex })
             return
         }
-        else {
-            if (item._id === section._id) return
-            onDragSection({ currentIndex: item.index, targetIndex: index - 1 })
-        }
+        onDragSection({ currentIndex: item.index, targetIndex: index })
     }
 
     const onAddCurriculumClick = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -88,8 +70,29 @@ const CourseSection = ({ index, numberOfSubSectionsOfPreviousSection, section }:
     const handleEditSection = useCallback(() => {
         setIsEditSectionActive(!isEditSectionActive)
     }, [isEditSectionActive])
+
+    const subSection = useCallback((startIndex: number) => {
+        let children = []
+        let i = startIndex;
+        while (i < curriculumItems.length && curriculumItems[i]._class !== "chapter") {
+            children.push(
+                <div key={curriculumItems[i]._id}>
+                    <BeforeSubSection index={i} />
+                    <CourseSubSection
+                        index={i}
+                        sectionIndex={index}
+                        content={curriculumItems[i]}
+                    />
+                </div>
+            )
+            i++
+        }
+        return { children, lastIndex: i }
+    }, [curriculumItems, index])
+
+
     return (
-        <SectionContext.Provider value={{ subSectionOptions, index: index - 1 }}>
+        <SectionContext.Provider value={{ subSectionOptions, index }}>
             <div>
                 {/* Before */}
                 <BeforeSection />
@@ -98,23 +101,35 @@ const CourseSection = ({ index, numberOfSubSectionsOfPreviousSection, section }:
                 {/* Course Section */}
                 <div className={styles.container}
                 >
-                    {!isEditSectionActive && (
+                    {section && !isEditSectionActive && (
                         <div
                             ref={drop}
                         >
-                            <SectionHeader ref={drag} handleEditSection={handleEditSection} index={index} title={section.title} />
-                            <SectionHeader ref={dragPreview} handleEditSection={handleEditSection} index={index} title={section.title} className={styles.ghost} />
+                            <SectionHeader
+                                ref={drag}
+                                handleEditSection={handleEditSection}
+                                index={index}
+                                indexToShow={indexToShow}
+                                title={section?.title}
+                            />
+                            <SectionHeader
+                                ref={dragPreview}
+                                handleEditSection={handleEditSection}
+                                index={index}
+                                indexToShow={indexToShow}
+                                title={section?.title}
+                                className={styles.ghost}
+                            />
                         </div>
                     )}
-                    {isEditSectionActive && (
+                    {section && isEditSectionActive && (
                         <AddSection
                             onClick={handleEditSection}
-                            title={section.title}
-                            goal=""
-                            index={index - 1}
+                            title={section?.title}
+                            goal={section.description}
+                            index={index}
                         />
                     )}
-
                     {/* Course SubSection */}
                     <div
                         className={[
@@ -122,15 +137,15 @@ const CourseSection = ({ index, numberOfSubSectionsOfPreviousSection, section }:
                             isRtl ? styles.paddingRight : styles.paddingLeft]
                             .join(" ")}
                     >
-                        {section.subSections?.map((list, subSectionIndex) => {
+                        {section && subSection(index + 1).children}
+                        {!section && subSections?.map((_, i) => {
                             return (
-                                <div key={list._id}>
-                                    <BeforeSubSection />
+                                <div key={curriculumItems[i]._id}>
+                                    <BeforeSubSection index={i} />
                                     <CourseSubSection
-                                        index={subSectionIndex + numberOfSubSectionsOfPreviousSection + 1}
-                                        realIndex={subSectionIndex}
-                                        sectionIndex={index - 1}
-                                        content={list}
+                                        index={i}
+                                        sectionIndex={index}
+                                        content={curriculumItems[i]}
                                     />
                                 </div>
                             )
@@ -143,7 +158,7 @@ const CourseSection = ({ index, numberOfSubSectionsOfPreviousSection, section }:
                         </button>
                         {isOpenAddCurriculum && (
                             <div className={styles.SubSectionCreationContent}>
-                                <AddSubSection />
+                                <AddSubSection index={index} />
                             </div>
                         )}
                         {

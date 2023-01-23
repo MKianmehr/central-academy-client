@@ -11,6 +11,9 @@ import { Button } from '@mui/material'
 // context imports
 import { CurriculumContext } from '../../../contexts'
 
+// Utils Import
+import ClassOptions from '../../../utils/curriculumClasses';
+
 // styles import
 import styles from './styles.module.scss'
 
@@ -23,7 +26,7 @@ const AddSection = ({ onClick, title, goal, index }: AddSectionProp) => {
 
     const { t } = useTranslation("common")
 
-    const { handleAddSection, handleEditSection } = useContext(CurriculumContext)
+    const { handleAddCurriculumItem, handleEditCurriculumItem } = useContext(CurriculumContext)
 
     useEffect(() => {
         if (mounted) {
@@ -53,13 +56,19 @@ const AddSection = ({ onClick, title, goal, index }: AddSectionProp) => {
             setTitleError(true)
             return
         }
-        const res = handleAddSection({ title: localTitle, goal: localGoal, sectionIndex: index })
+        const res = handleAddCurriculumItem({
+            index, data: {
+                title: localTitle,
+                description: localGoal,
+                _class: ClassOptions.Chapter
+            }
+        })
         if (res) {
             onClick()
         } else {
             // say somthing went wrong
         }
-    }, [localTitle, localGoal, index, onClick, handleAddSection])
+    }, [localTitle, localGoal, index, onClick, handleAddCurriculumItem])
 
 
     const onEditSectionButtonClick = useCallback(() => {
@@ -67,13 +76,16 @@ const AddSection = ({ onClick, title, goal, index }: AddSectionProp) => {
             setTitleError(true)
             return
         }
-        const res = handleEditSection({ title: localTitle, goal: localGoal, sectionIndex: index })
+        const res = handleEditCurriculumItem({
+            data: { title: localTitle, description: localGoal }
+            , index
+        })
         if (res) {
             onClick()
         } else {
             // say somthing went wrong
         }
-    }, [localTitle, localGoal, index, onClick, handleEditSection])
+    }, [localTitle, localGoal, index, onClick, handleEditCurriculumItem])
 
 
     return (

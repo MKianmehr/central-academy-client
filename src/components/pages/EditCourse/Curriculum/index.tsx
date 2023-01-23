@@ -2,6 +2,9 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 
+// Props Import 
+import { AddCurriculumItem, CurriculumItem } from '../../../../models/Props';
+
 // Components Imports
 import CourseSection from '../../../commons/CourseSection'
 import AddSection from '../../../commons/AddSection';
@@ -13,149 +16,275 @@ import { Button, IconButton } from '@mui/material';
 // Contexts Import
 import { CurriculumContext } from '../../../../contexts';
 
+// Utils Imports
+
+import ClassOptions from '../../../../utils/curriculumClasses';
+
 // Styles Import
 import styles from './styles.module.scss'
 
-const initialSections = [
-    {
-        title: "Introduction",
-        subSections: [
-            { title: "Security", type: { fa: "جلسه", en: "Lecture" }, _id: 1 },
-            { title: "Authentication1", type: { fa: "تست", en: "Test" }, _id: 2 },
 
-        ],
-        _id: 1
-    },
-    {
-        title: "Front-end",
-        subSections: [
-            { title: "Security2", type: { fa: "جلسه", en: "Lecture" }, _id: 3 },
-            { title: "Authentication2", type: { fa: "جلسه", en: "Lecture" }, _id: 4 },
-            { title: "Authentication3", type: { fa: "جلسه", en: "Lecture" }, _id: 5 },
-            { title: "Authentication4", type: { fa: "جلسه", en: "Lecture" }, _id: 6 }
-
-        ],
-        _id: 2
-    },
-    {
-        title: "Front-end2",
-        subSections: [
-            { title: "Security3", type: { fa: "جلسه", en: "Lecture" }, _id: 7 },
-            { title: "Authentication5", type: { fa: "جلسه", en: "Lecture" }, _id: 8 },
-
-        ],
-        _id: 3
-    }
-]
+const response = {
+    count: 5,
+    next: "",
+    previous: "",
+    results: [
+        {
+            _class: "chapter",
+            _id: 451,
+            title: "Chapter o",
+            description: "",
+            object_index: 1,
+        },
+        {
+            _class: "quiz",
+            _id: 154321,
+            title: "Quiz fe",
+            type: "quiz",
+            description: "",
+            is_published: true,
+            object_index: 1,
+            is_draft: false,
+            duration: 0,
+            pass_percent: 70,
+            num_assessments: 0, // number of questions
+            requires_draft: false,
+            is_randomized: false
+        },
+        {
+            _class: "chapter",
+            _id: 3211,
+            title: "Chapter Two",
+            description: "",
+            object_index: 1,
+        },
+        {
+            _class: "quiz",
+            _id: 5672,
+            title: "Quiz fe",
+            type: "quiz",
+            description: "",
+            is_published: true,
+            object_index: 1,
+            is_draft: false,
+            duration: 0,
+            pass_percent: 70,
+            num_assessments: 0, // number of questions
+            requires_draft: false,
+            is_randomized: false
+        },
+        {
+            _class: "chapter",
+            _id: 17098760,
+            title: "Chapter One",
+            description: "",
+            object_index: 1,
+        },
+        {
+            _class: "quiz",
+            _id: 12154,
+            title: "quiz code exe",
+            type: "coding-exercise",
+            description: "",
+            is_published: false,
+            object_index: 0,
+            is_draft: false,
+            duration: 0,
+            pass_percent: 70,
+            num_assessments: 1,
+            requires_draft: false,
+            is_randomized: false
+        },
+        {
+            _class: "practice", // it is assessment
+            _id: 876544,
+            title: "practice",
+            is_published: false,
+            object_index: 0 // default if is publishid we check real number
+        },
+        {
+            _class: "lecture",
+            _id: 98765435675,
+            title: "lect",
+            description: "",
+            is_published: true,
+            is_downloadable: false,
+            is_free: true,
+            asset: {  // or null
+                _class: "asset",
+                _id: 987656786,
+                asset_type: "Video",
+                title: "video name",
+                created: "2023.01.13",
+                status: 1,
+                body: "",
+                thumbnail_url: "http://",
+                source_url: "",
+                content_summary: "00.50",
+                processing_errors: [],
+                time_estimation: 50
+            },
+            object_index: 1,
+            supplementary_assets: [
+                {
+                    _class: "asset",
+                    _id: 78765898765,
+                    asset_type: "File",
+                    title: "doc.pdf",
+                    created: "2023",
+                    status: 1,
+                    body: "",
+                    thumbnail_url: "htt",
+                    source_url: "",
+                    content_summary: "310kb",
+                    processing_errors: [],
+                    time_estimation: 0,
+                }
+            ]
+        },
+        {
+            _class: "lecture",
+            _id: 695968,
+            title: "dx",
+            description: "",
+            is_published: true,
+            is_downloadable: true,
+            is_free: false,
+            asset: {
+                _class: "asset",
+                _id: 894939,
+                asset_type: "Article",
+                title: "",
+                created: "2023.01.13",
+                status: 1,
+                body: "",
+                thumbnail_url: "http://",
+                source_url: "",
+                content_summary: "00.50",
+                processing_errors: [],
+                time_estimation: 50
+            },
+            object_index: 4,
+            supplementary_assets: []
+        }
+    ]
+}
 
 const Curriculum = () => {
 
     const { t } = useTranslation("common")
     const [isOpenAddSection, setIsOpenAddSection] = useState(false)
-    const [sections, setSections] = useState(initialSections)
+    const [curriculumItems, setCurriculumItems] = useState<CurriculumItem[]>(response.results)
+
+    const SubSectionsBeforeTheFirstSection = useMemo(
+        () => {
+            return curriculumItems
+                .slice(0, curriculumItems.findIndex((curriculumItem) => curriculumItem._class === ClassOptions.Chapter))
+        },
+        [curriculumItems]
+    )
+
+    const Sections = useMemo(() => {
+        const sections = []
+        for (let i = 0; i < curriculumItems.length; i++) {
+            if (curriculumItems[i]._class === ClassOptions.Chapter) {
+                sections.push({ curriculumItem: curriculumItems[i], index: i })
+            }
+        }
+        return sections
+    }, [curriculumItems])
 
     const router = useRouter()
     const isRTL = router.locale === "fa"
 
-    const numberOfSubSectionsOfPreviousSections = useMemo(() => {
-        let numberOfSubSectionsOfPreviousSections: number[] = [0]
-        for (let i = 1; i < sections.length; i++) {
-            numberOfSubSectionsOfPreviousSections.push(sections[i - 1].subSections.length + numberOfSubSectionsOfPreviousSections[i - 1])
-        }
-        return numberOfSubSectionsOfPreviousSections
-    }, [sections])
 
-    const onDragSection = (
+    const onDragSection = useCallback((
         { currentIndex, targetIndex }:
             { currentIndex: number; targetIndex: number }
     ) => {
 
-        const allSections = [...sections]
-        const currentSection = allSections[currentIndex]
-        allSections.splice(currentIndex, 1)
-        allSections.splice(targetIndex, 0, currentSection)
+        const min = Math.min(currentIndex, targetIndex)
+        const max = Math.max(currentIndex, targetIndex)
+        let i = max;
+        const allCurriculumItems = [...curriculumItems]
 
-        setSections(allSections)
-    }
-    const onDragSubSection = ({ currentPosition, targetPosition }: {
-        currentPosition: {
-            sectionIndex: number;
-            currentIndex: number;
-        };
-        targetPosition: {
-            sectionIndex: number;
-            index: number;
-        };
-    }) => {
-
-        const allSections = JSON.parse(JSON.stringify(sections))
-        const currentSubSection = allSections[currentPosition.sectionIndex].subSections[currentPosition.currentIndex]
-        allSections[currentPosition.sectionIndex].subSections.splice(currentPosition.currentIndex, 1)
-        allSections[targetPosition.sectionIndex].subSections.splice(targetPosition.index, 0, currentSubSection)
-        setSections(allSections)
-    }
-
-    const handleAddSection = (
-        { title, goal, sectionIndex }:
-            { title: string; goal?: string; sectionIndex: number }
-    ) => {
-
-        const newSection = {
-            title,
-            goal,
-            subSections: [
-            ],
-            _id: 4
+        do {
+            i++
         }
-        const allSections = [...sections]
-        allSections.splice(sectionIndex, 0, newSection)
-        // request to server if okay setSections
-        setSections(allSections)
+        while (i < curriculumItems.length && allCurriculumItems[i]._class !== ClassOptions.Chapter)
+
+        const NumberOfElementsToMove = i - max
+        const removedItems = allCurriculumItems.splice(max, NumberOfElementsToMove)
+        allCurriculumItems.splice(min, 0, ...removedItems)
+        setCurriculumItems(allCurriculumItems)
+
+    }, [curriculumItems])
+
+
+    const onDragSubSection = useCallback((
+        { currentIndex, targetIndex, SubToSub, targetSectionIndex, currentSectionIndex }:
+            { currentIndex: number; targetIndex: number; SubToSub: boolean; targetSectionIndex: number; currentSectionIndex: number }
+    ) => {
+
+        const allCurriculumItems = [...curriculumItems]
+        if (currentIndex > targetIndex && !SubToSub) {
+            const [currentSubSection] = allCurriculumItems.splice(currentIndex, 1)
+            allCurriculumItems.splice(targetIndex + 1, 0, currentSubSection)
+            setCurriculumItems(allCurriculumItems)
+            return
+        }
+        else if (SubToSub && targetSectionIndex !== currentSectionIndex && currentIndex < targetIndex) {
+            const [currentSubSection] = allCurriculumItems.splice(currentIndex, 1)
+            allCurriculumItems.splice(targetIndex - 1, 0, currentSubSection)
+            setCurriculumItems(allCurriculumItems)
+        } else {
+            const [currentSubSection] = allCurriculumItems.splice(currentIndex, 1)
+            allCurriculumItems.splice(targetIndex, 0, currentSubSection)
+            setCurriculumItems(allCurriculumItems)
+        }
+    }, [curriculumItems])
+
+    const handleAddCurriculumItem = (
+        { data, index }:
+            { data: AddCurriculumItem, index: number }
+    ) => {
+        const allCurriculumItems = [...curriculumItems]
+        allCurriculumItems.splice(index, 0, { ...data, _id: Math.floor(Math.random() * 10000) + 1 })
+        setCurriculumItems(allCurriculumItems)
         return true
         // or return false
     }
 
-    const handleEditSection = (
-        { title, goal, sectionIndex }:
-            { title: string; goal?: string; sectionIndex: number }
+    const handleEditCurriculumItem = (
+        { data, index }:
+            { data: CurriculumItem; index: number }
     ) => {
+        const allCurriculumItems = [...curriculumItems]
 
-        const allSections = [...sections]
-        const newSection = { ...allSections[sectionIndex], title, goal }
-        allSections.splice(sectionIndex, 1)
-        allSections.splice(sectionIndex, 0, newSection)
-        // request to server
-        setSections(allSections)
+        const [currentItem] = allCurriculumItems.splice(index, 1)
+
+        const newItem: CurriculumItem = {
+            ...currentItem, ...data
+        }
+
+        allCurriculumItems.splice(index, 0, newItem)
+        // // request to server
+        setCurriculumItems(allCurriculumItems)
         return true
         // or return false
     }
 
-    const handleDeleteSection = ({ sectionIndex }:
-        { sectionIndex: number }
+    const handleDeleteCurriculumItem = ({ index }:
+        { index: number }
     ) => {
 
-        const allSections = [...sections]
-        allSections.splice(sectionIndex, 1)
-        // request to server
-        setSections(allSections)
+        const allCurriculumItems = [...curriculumItems]
+        allCurriculumItems.splice(index, 1)
+        setCurriculumItems(allCurriculumItems)
         return true
         // or return false
     }
 
-    const handleDeleteSubSection = (
-        { sectionIndex, index }:
-            { sectionIndex: number; index: number }
-    ) => {
-
-        const allSections = [...sections]
-        allSections[sectionIndex].subSections.splice(index, 1)
-        setSections(allSections)
-        return true
-    }
-
-    const handleAddSubSection = () => {
-        return false
-    }
 
     const onClickOpenAddSection = useCallback(() => {
         setIsOpenAddSection(!isOpenAddSection)
@@ -165,27 +294,40 @@ const Curriculum = () => {
         <CurriculumContext.Provider value={{
             onDragSection,
             onDragSubSection,
-            sections,
-            handleAddSection,
-            handleEditSection,
-            handleDeleteSection,
-            handleDeleteSubSection
+            curriculumItems,
+            handleAddCurriculumItem,
+            handleEditCurriculumItem,
+            handleDeleteCurriculumItem,
         }}
         >
             <div className={styles.container}>
                 <h3 className={styles.header}>{t("Curriculum")}</h3>
                 <p className={styles.paragraph}>{t("curriculum-describe")}</p>
                 <div className={styles.sectionContainer}>
-                    {sections.map((section, index) => {
+
+                    {/* SubSections before The first Section */}
+                    {SubSectionsBeforeTheFirstSection.length > 0 && (
+                        <CourseSection
+                            index={0}
+                            indexToShow={0}
+                            subSections={SubSectionsBeforeTheFirstSection}
+                        />
+                    )}
+                    {/* SubSections before The first Section */}
+
+                    {/* Sections with their children */}
+                    {Sections.map((section, index) => {
                         return (
                             <CourseSection
-                                key={section._id}
-                                numberOfSubSectionsOfPreviousSection={numberOfSubSectionsOfPreviousSections[index]}
-                                index={index + 1}
-                                section={section}
+                                key={section.curriculumItem._id}
+                                index={section.index}
+                                section={section.curriculumItem}
+                                indexToShow={index}
                             />
                         )
                     })}
+                    {/* Sections with their children */}
+
                 </div>
                 <div className={styles.addSectionButtonAndAddSection}>
                     <span className={[isRTL ? styles.multi_rtl : styles.multi, isOpenAddSection && (isRTL ? styles.multi_active_rtl : styles.multi_active)].join(" ")}>
@@ -198,14 +340,11 @@ const Curriculum = () => {
                             className={styles.addSectionButton}
                             onClick={onClickOpenAddSection}
                         >
-                            <span>
-                                Section
-                            </span>
-
+                            {t("Section")}
                         </Button>
                     )}
                     {isOpenAddSection && (
-                        <AddSection index={sections.length} onClick={onClickOpenAddSection} />
+                        <AddSection index={curriculumItems.length} onClick={onClickOpenAddSection} />
                     )}
                 </div>
             </div>

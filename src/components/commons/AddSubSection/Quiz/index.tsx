@@ -1,18 +1,36 @@
-import React, { useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import RemainingInput from '../../RemaingInput';
-import styles from './styles.module.scss';
 import { useTranslation } from 'next-i18next';
-import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
 
-const Quiz = ({ name, handleCloseSubSectionOption }: { name: string; handleCloseSubSectionOption: () => void }) => {
+// Props Imports
+import { SimpleQuiz } from '../../../../models/Props';
+
+
+// Components Import
+import RemainingInput from '../../RemaingInput';
+
+// Mui Imports
+import { Button } from '@mui/material';
+
+// Context Import
+import { CurriculumContext } from '../../../../contexts';
+
+// Styles Import
+import styles from './styles.module.scss';
+
+const Quiz = ({ type, index, handleCloseSubSectionOption, content }: SimpleQuiz) => {
+
     const router = useRouter()
     const isEnglish = router.locale === "en"
-    const [text, setText] = useState<string>("")
-    const [description, setDescription] = useState<string>("")
+
+    const [text, setText] = useState<string>(content ? content.title : "")
+    const [description, setDescription] = useState<string>(content ? (content.description || "") : "")
     const [preview, setPreview] = useState(false)
+
     const { t } = useTranslation("common")
+
+    const { handleEditCurriculumItem } = useContext(CurriculumContext)
 
     const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value)
@@ -29,9 +47,24 @@ const Quiz = ({ name, handleCloseSubSectionOption }: { name: string; handleClose
     const onChangeTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(e.target.value)
     }
+
+    const onClickConfirm = useCallback(() => {
+
+        if (content && index) {
+            const res = handleEditCurriculumItem({
+                index, data: {
+                    title: text,
+                    description
+                }
+            })
+            if (res) {
+                handleCloseSubSectionOption()
+            }
+        } else { }
+    }, [text, index, content, handleEditCurriculumItem, description])
     return (
         <div className={styles.container}>
-            <h6>{isEnglish ? `${t("new")} ${name}` : `${name} ${t("new")}`}:</h6>
+            <h6>{t(type)}</h6>
             <RemainingInput
                 value={text}
                 onChange={onChangeTitle}
@@ -55,8 +88,8 @@ const Quiz = ({ name, handleCloseSubSectionOption }: { name: string; handleClose
             }
             <div className={styles.buttons}>
                 <Button onClick={onCancelClick} className={styles.cancel}>{t("Cancel")}</Button>
-                {description && <Button onClick={onPreviewClick} className={styles.preview}>{preview ? "Edit Mode" : "Preview Mode"}</Button>}
-                <Button className={styles.confirm}>{t("add")} {name}</Button>
+                {description && <Button onClick={onPreviewClick} className={styles.preview}>{preview ? t("edit mode") : t("preview mode")}</Button>}
+                <Button onClick={onClickConfirm} className={styles.confirm}>{t(content ? "edit" : "add")} {t(type)}</Button>
             </div>
         </div>
     )

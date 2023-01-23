@@ -11,12 +11,13 @@ import AddIcon from '@mui/icons-material/Add';
 import styles from './styles.module.scss';
 
 
-const BeforeSubSection = () => {
+const BeforeSubSection = ({ index }: { index: number }) => {
 
     const [hoverButtonActive, setHoverButtonActive] = useState(false)
 
     const router = useRouter()
     const isRtl = router.locale === "fa"
+
 
     const handleHoverButton = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         setHoverButtonActive(!hoverButtonActive)
@@ -35,7 +36,7 @@ const BeforeSubSection = () => {
                     <AddIcon fontSize="large" />
                 </div>
             </button>
-            {hoverButtonActive && <AddSubSection />}
+            {hoverButtonActive && <AddSubSection index={index} />}
         </div>
     )
 }

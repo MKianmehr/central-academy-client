@@ -17,13 +17,13 @@ export const SubSectionContext = createContext<SubSectionContextProp>(
     {
         onContentButtonClick: () => { },
         onResourseButtonClick: () => { },
-        subSectionOptions: [{ fa: "", en: "" }],
+        subSectionOptions: [],
         OnClickContentType: () => { }
     }
 )
 
 export const SectionContext = createContext<SectionContextProp>({
-    subSectionOptions: [{ fa: "", en: "" }],
+    subSectionOptions: [],
     index: 0
 })
 
@@ -31,10 +31,9 @@ export const CurriculumContext = createContext<CurriculumContextProp>(
     {
         onDragSection: () => { },
         onDragSubSection: () => { },
-        sections: [],
-        handleAddSection: () => { return false },
-        handleEditSection: () => { return false },
-        handleDeleteSection: () => { return false },
-        handleDeleteSubSection: () => { return false }
+        curriculumItems: [],
+        handleAddCurriculumItem: () => { return false },
+        handleEditCurriculumItem: () => { return false },
+        handleDeleteCurriculumItem: () => { return false },
     }
 )
