@@ -19,7 +19,7 @@ const BeforeSubSection = ({ index }: { index: number }) => {
     const isRtl = router.locale === "fa"
 
 
-    const handleHoverButton = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleHoverButton = useCallback(() => {
         setHoverButtonActive(!hoverButtonActive)
     }, [hoverButtonActive])
 
@@ -36,7 +36,7 @@ const BeforeSubSection = ({ index }: { index: number }) => {
                     <AddIcon fontSize="large" />
                 </div>
             </button>
-            {hoverButtonActive && <AddSubSection index={index} />}
+            {hoverButtonActive && <AddSubSection closeBeforeSubSection={handleHoverButton} index={index} />}
         </div>
     )
 }

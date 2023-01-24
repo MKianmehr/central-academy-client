@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 
 // Props Imports
 import { SimpleQuiz } from '../../../../models/Props';
@@ -19,21 +18,20 @@ import { CurriculumContext } from '../../../../contexts';
 // Styles Import
 import styles from './styles.module.scss';
 
-const Quiz = ({ type, index, handleCloseSubSectionOption, content }: SimpleQuiz) => {
-
-    const router = useRouter()
-    const isEnglish = router.locale === "en"
+const Quiz = ({ type, index, handleCloseSubSectionOption, content, closeBeforeSubSection }: SimpleQuiz) => {
 
     const [text, setText] = useState<string>(content ? content.title : "")
+    const [textError, setTextError] = useState("")
     const [description, setDescription] = useState<string>(content ? (content.description || "") : "")
     const [preview, setPreview] = useState(false)
 
     const { t } = useTranslation("common")
 
-    const { handleEditCurriculumItem } = useContext(CurriculumContext)
+    const { handleEditCurriculumItem, handleAddCurriculumItem } = useContext(CurriculumContext)
 
     const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value)
+        setTextError("")
     }
 
     const onCancelClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -50,17 +48,35 @@ const Quiz = ({ type, index, handleCloseSubSectionOption, content }: SimpleQuiz)
 
     const onClickConfirm = useCallback(() => {
 
-        if (content && index) {
-            const res = handleEditCurriculumItem({
-                index, data: {
-                    title: text,
-                    description
+        if (text) {
+            if (content && index) {
+                const res = handleEditCurriculumItem({
+                    index, data: {
+                        title: text,
+                        description
+                    }
+                })
+                if (res) {
+                    handleCloseSubSectionOption()
+                    closeBeforeSubSection()
                 }
-            })
-            if (res) {
-                handleCloseSubSectionOption()
+            } else {
+                const res = handleAddCurriculumItem({
+                    index: index
+                    , data: {
+                        title: text,
+                        description,
+                        _class: type,
+                    }
+                })
+                if (res) {
+                    handleCloseSubSectionOption()
+                    closeBeforeSubSection()
+                }
             }
-        } else { }
+        } else {
+            setTextError(`${t("This field may not be blank.")}`)
+        }
     }, [text, index, content, handleEditCurriculumItem, description])
     return (
         <div className={styles.container}>
@@ -70,6 +86,7 @@ const Quiz = ({ type, index, handleCloseSubSectionOption, content }: SimpleQuiz)
                 onChange={onChangeTitle}
                 maxLength={60}
                 placeHolder={`${t("Enter a title")}`}
+                errorValue={textError}
             />
             {preview ? (
                 <div className={styles.markdown}>

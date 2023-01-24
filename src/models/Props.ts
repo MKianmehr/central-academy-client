@@ -276,6 +276,7 @@ export interface SimpleQuiz {
     index: number;
     handleCloseSubSectionOption: () => void;
     content?: CurriculumItem;
+    closeBeforeSubSection: () => void;
 }
 
 export interface LCAProp {
@@ -283,4 +284,5 @@ export interface LCAProp {
     handleCloseSubSectionOption: () => void;
     content?: CurriculumItem;
     index: number;
+    closeBeforeSubSection: () => void;
 }

@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 
 // Props Import
 import { LCAProp } from '../../../../models/Props';
@@ -20,12 +19,10 @@ import styles from './styles.module.scss';
 // Lecture Coding Exercise and assignment are the same (LCA)
 
 const LCA = (
-    { type, handleCloseSubSectionOption, content, index }: LCAProp
+    { type, handleCloseSubSectionOption, content, index, closeBeforeSubSection }: LCAProp
 
 ) => {
     const { t } = useTranslation("common")
-    const router = useRouter()
-    const isEnglish = router.locale === "en"
 
     const [text, setText] = useState<string>(content ? content.title : "")
     const [textError, setTextError] = useState("")
@@ -50,7 +47,10 @@ const LCA = (
                         title: text
                     }
                 })
-                res && handleCloseSubSectionOption()
+                if (res) {
+                    handleCloseSubSectionOption()
+                    closeBeforeSubSection()
+                }
             } else {
                 const res = handleAddCurriculumItem({
                     index: index
@@ -59,7 +59,10 @@ const LCA = (
                         _class: type
                     }
                 })
-                res && handleCloseSubSectionOption()
+                if (res) {
+                    handleCloseSubSectionOption()
+                    closeBeforeSubSection()
+                }
             }
         } else {
             setTextError(`${t("This field may not be blank.")}`)

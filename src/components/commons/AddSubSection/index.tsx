@@ -13,13 +13,12 @@ import AddIcon from '@mui/icons-material/Add';
 import { SectionContext } from '../../../contexts';
 
 // Utils Imports
-import text from '../../../utils/textEnOrFa';
 import ClassOptions from '../../../utils/curriculumClasses';
 
 // Styles Import
 import styles from './styles.module.scss'
 
-const AddSubSection = ({ index }: { index: number }) => {
+const AddSubSection = ({ index, closeBeforeSubSection }: { index: number; closeBeforeSubSection: () => void }) => {
 
     const [subSectionOption, setSubSectionOption] = useState<React.ReactElement>(<></>)
     const [enableSubSectionCreation, setShowSubSectionCreation] = useState(false)
@@ -37,10 +36,20 @@ const AddSubSection = ({ index }: { index: number }) => {
     }, [])
     const onClickSubSectionOption = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>, buttonName: string) => {
         if (buttonName === "quiz") {
-            setSubSectionOption(<Quiz index={index} type={ClassOptions.Quiz} handleCloseSubSectionOption={handleCloseSubSectionOption} />)
+            setSubSectionOption(<Quiz
+                index={index}
+                type={ClassOptions.Quiz}
+                handleCloseSubSectionOption={handleCloseSubSectionOption}
+                closeBeforeSubSection={closeBeforeSubSection}
+            />)
             setShowSubSectionCreation(true)
         } else {
-            setSubSectionOption(<LCA index={index} type={buttonName} handleCloseSubSectionOption={handleCloseSubSectionOption} />)
+            setSubSectionOption(<LCA
+                closeBeforeSubSection={closeBeforeSubSection}
+                index={index}
+                type={buttonName}
+                handleCloseSubSectionOption={handleCloseSubSectionOption}
+            />)
             setShowSubSectionCreation(true)
         }
     }, [isEnglish])

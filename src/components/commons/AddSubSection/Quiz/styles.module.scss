@@ -23,6 +23,7 @@
 .confirm {
     background-color: getColor(primary-text);
     border: none;
+    border-radius: 0;
     color: getColor(primary);
     padding: 3px;
     @include padding-horizontal(5px);
@@ -44,6 +45,7 @@
 
 .preview {
     border: 1px solid getColor(border-color);
+    border-radius: 0;
 }
 
 .markdown {

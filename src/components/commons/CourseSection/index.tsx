@@ -63,7 +63,7 @@ const CourseSection = ({ index, section, subSections, indexToShow }: CourseSecti
         onDragSection({ currentIndex: item.index, targetIndex: index })
     }
 
-    const onAddCurriculumClick = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const onAddCurriculumClick = useCallback(() => {
         setIsOpenAddCurriculum(!isOpenAddCurriculum)
     }, [isOpenAddCurriculum])
 
@@ -158,7 +158,7 @@ const CourseSection = ({ index, section, subSections, indexToShow }: CourseSecti
                         </button>
                         {isOpenAddCurriculum && (
                             <div className={styles.SubSectionCreationContent}>
-                                <AddSubSection index={index} />
+                                <AddSubSection closeBeforeSubSection={onAddCurriculumClick} index={index} />
                             </div>
                         )}
                         {
