@@ -54,11 +54,17 @@ const CourseSubSection = (
     const { subSectionOptions } = useContext(SectionContext)
 
     const indexToShow = useMemo(() => {
-        const type = content._class
-        console.log("classsss", type)
+        const _class = content._class
+        const type = content.type
         let num = 1
         for (let i = 0; i < index; i++) {
-            if (curriculumItems[i]._class === type) num++
+            if (curriculumItems[i]._class === _class) {
+                if (_class === ClassOptions.Quiz && type === QuizOptions.CodingExercise) {
+                    if (curriculumItems[i].type === type) num++
+                } else {
+                    num++
+                }
+            }
         }
         return num
     }, [curriculumItems])
@@ -138,13 +144,14 @@ const CourseSubSection = (
 
         if (content._class === ClassOptions.Lecture) {
             setIsEditOpen(true)
-            setEditContent(<LCA content={content} index={index} type={content._class} handleCloseSubSectionOption={() => setIsEditOpen(false)} />)
+            setEditContent(<LCA content={content} index={index} _class={content._class} handleCloseSubSectionOption={() => setIsEditOpen(false)} />)
         } else if (content._class === ClassOptions.Quiz && content.type === QuizOptions.Simple) {
             setIsEditOpen(true)
-            setEditContent(<Quiz content={content} index={index} type={content._class} handleCloseSubSectionOption={() => setIsEditOpen(false)} />)
+            setEditContent(<Quiz content={content} index={index} _class={content._class} type={content.type} handleCloseSubSectionOption={() => setIsEditOpen(false)} />)
         } else {
             // redirect to their specific pages
         }
+
     }, [content, index])
 
     return (

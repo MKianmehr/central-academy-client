@@ -13,7 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { SectionContext } from '../../../contexts';
 
 // Utils Imports
-import ClassOptions from '../../../utils/curriculumClasses';
+import ClassOptions, { QuizOptions } from '../../../utils/curriculumClasses';
 
 // Styles Import
 import styles from './styles.module.scss'
@@ -35,9 +35,10 @@ const AddSubSection = ({ index, closeBeforeSubSection }: { index: number; closeB
         setShowSubSectionCreation(false)
     }, [])
     const onClickSubSectionOption = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>, buttonName: string) => {
-        if (buttonName === "quiz") {
+        if (buttonName === ClassOptions.Quiz) {
             setSubSectionOption(<Quiz
                 index={index}
+                _class={ClassOptions.Quiz}
                 type={ClassOptions.Quiz}
                 handleCloseSubSectionOption={handleCloseSubSectionOption}
                 closeBeforeSubSection={closeBeforeSubSection}
@@ -47,7 +48,8 @@ const AddSubSection = ({ index, closeBeforeSubSection }: { index: number; closeB
             setSubSectionOption(<LCA
                 closeBeforeSubSection={closeBeforeSubSection}
                 index={index}
-                type={buttonName}
+                _class={(buttonName === QuizOptions.CodingExercise) ? ClassOptions.Quiz : buttonName}
+                type={(buttonName === QuizOptions.CodingExercise) ? buttonName : undefined}
                 handleCloseSubSectionOption={handleCloseSubSectionOption}
             />)
             setShowSubSectionCreation(true)

@@ -18,7 +18,7 @@ import { CurriculumContext } from '../../../../contexts';
 // Styles Import
 import styles from './styles.module.scss';
 
-const Quiz = ({ type, index, handleCloseSubSectionOption, content, closeBeforeSubSection }: SimpleQuiz) => {
+const Quiz = ({ type, _class, index, handleCloseSubSectionOption, content, closeBeforeSubSection }: SimpleQuiz) => {
 
     const [text, setText] = useState<string>(content ? content.title : "")
     const [textError, setTextError] = useState("")
@@ -67,7 +67,8 @@ const Quiz = ({ type, index, handleCloseSubSectionOption, content, closeBeforeSu
                     , data: {
                         title: text,
                         description,
-                        _class: type,
+                        _class,
+                        type,
                     }
                 })
                 if (res) {
@@ -81,7 +82,7 @@ const Quiz = ({ type, index, handleCloseSubSectionOption, content, closeBeforeSu
     }, [text, index, content, handleEditCurriculumItem, description])
     return (
         <div className={styles.container}>
-            <h6>{t(type)}</h6>
+            <h6>{t(type ? type : _class)}</h6>
             <RemainingInput
                 value={text}
                 onChange={onChangeTitle}
@@ -107,7 +108,7 @@ const Quiz = ({ type, index, handleCloseSubSectionOption, content, closeBeforeSu
             <div className={styles.buttons}>
                 <Button onClick={onCancelClick} className={styles.cancel}>{t("Cancel")}</Button>
                 {description && <Button onClick={onPreviewClick} className={styles.preview}>{preview ? t("edit mode") : t("preview mode")}</Button>}
-                <Button onClick={onClickConfirm} className={styles.confirm}>{t(content ? "edit" : "add")} {t(type)}</Button>
+                <Button onClick={onClickConfirm} className={styles.confirm}>{t(content ? "edit" : "add")} {t(type ? type : _class)}</Button>
             </div>
         </div>
     )

@@ -272,7 +272,8 @@ export interface AddCurriculumItem extends CurriculumItem {
 }
 
 export interface SimpleQuiz {
-    type: string;
+    _class: string;
+    type?: string;
     index: number;
     handleCloseSubSectionOption: () => void;
     content?: CurriculumItem;
@@ -280,7 +281,8 @@ export interface SimpleQuiz {
 }
 
 export interface LCAProp {
-    type: string;
+    _class: string;
+    type?: string;
     handleCloseSubSectionOption: () => void;
     content?: CurriculumItem;
     index: number;

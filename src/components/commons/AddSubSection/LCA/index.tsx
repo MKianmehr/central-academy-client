@@ -19,7 +19,7 @@ import styles from './styles.module.scss';
 // Lecture Coding Exercise and assignment are the same (LCA)
 
 const LCA = (
-    { type, handleCloseSubSectionOption, content, index, closeBeforeSubSection }: LCAProp
+    { _class, type, handleCloseSubSectionOption, content, index, closeBeforeSubSection }: LCAProp
 
 ) => {
     const { t } = useTranslation("common")
@@ -58,7 +58,8 @@ const LCA = (
                     index: index
                     , data: {
                         title: text,
-                        _class: type
+                        _class,
+                        type
                     }
                 })
                 if (res) {
@@ -73,7 +74,7 @@ const LCA = (
     }, [text, index, content, handleEditCurriculumItem])
     return (
         <div className={styles.container}>
-            <h6>{t(type)}</h6>
+            <h6>{t(type ? type : _class)}</h6>
             <RemainingInput
                 value={text}
                 onChange={onChangeText}
@@ -83,7 +84,7 @@ const LCA = (
             />
             <div className={styles.buttons}>
                 <Button onClick={onCancelClick} className={styles.cancel}>{t("Cancel")}</Button>
-                <Button onClick={onClickConfirm} className={styles.confirm}>{t(content ? "edit" : "add")} {t(type)}</Button>
+                <Button onClick={onClickConfirm} className={styles.confirm}>{t(content ? "edit" : "add")} {t(type ? type : _class)}</Button>
             </div>
         </div>
     )
