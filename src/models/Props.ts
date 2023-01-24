@@ -124,17 +124,19 @@ export interface CourseSectionProp {
 }
 
 export interface CourseSubSectionProp {
-    content: CurriculumItem;
+    content: CourseSubSectionContent;
     index: number;
     sectionIndex: number;
 }
 
+interface CourseSubSectionContent extends CurriculumItem {
+    _class: string;
+    _id: number;
+}
+
 export interface SubContentTypeProp {
     icon: React.ReactNode;
-    type: {
-        fa: string;
-        en: string;
-    };
+    type: string;
     onClick: (type: string) => void
 }
 
@@ -143,6 +145,7 @@ export interface SubSectionContextProp {
     onResourseButtonClick: () => void;
     subSectionOptions: string[];
     OnClickContentType: (title: string) => void;
+    _class: string;
 }
 
 export interface SectionContextProp {
@@ -198,18 +201,11 @@ export interface AddSectionProp {
 
 export interface AddSubSectionContentTypeProp {
     handleClickOnTypeIcon: (type: string) => void; typeOptions: {
-        video: {
-            fa: string;
-            en: string;
-        };
-        slide: {
-            fa: string;
-            en: string;
-        };
-        article: {
-            fa: string;
-            en: string;
-        }
+        video: string;
+        slide: string;
+        article: string;
+        questions: string;
+
     }
 }
 

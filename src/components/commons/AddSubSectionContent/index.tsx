@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 
 // Props Imports
 import { SubContentTypeProp, AddSubSectionContentTypeProp } from '../../../models/Props';
@@ -12,9 +11,10 @@ import VideoInput from '../VideoInput';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 // Utils Import
-import text from '../../../utils/textEnOrFa';
+import ClassOptions from '../../../utils/curriculumClasses';
 
 // Contexts Imports
 import { SubSectionContext } from '../../../contexts';
@@ -27,17 +27,16 @@ import styles from './styles.module.scss'
 
 
 const ContentTypeIcon = ({ icon, type, onClick }: SubContentTypeProp) => {
-    const router = useRouter()
-    const isEng = router.locale === "en"
+    const { t } = useTranslation("common")
     return (
-        <button className={styles.typeContainer} onClick={() => onClick(type.en)}>
+        <button className={styles.typeContainer} onClick={() => onClick(type)}>
             <span className={styles.icon_one}>
                 <span>{icon}</span>
             </span>
             <span className={styles.icon_two}>
                 <span>{icon}</span>
             </span>
-            <span className={styles.type}>{text(type, isEng)}</span>
+            <span className={styles.type}>{t(type)}</span>
         </button>
     )
 }
@@ -51,13 +50,22 @@ const ContentType = (
 ) => {
     const { t } = useTranslation("common")
 
+    const { _class } = useContext(SubSectionContext)
+
     return (
         <div>
-            <p>{t("contentType-des")}</p>
+            {!(_class === ClassOptions.Quiz) && (<p>{t("contentType-des")}</p>)}
             <div className={styles.contentTypeOptions}>
-                <ContentTypeIcon onClick={handleClickOnTypeIcon} icon={<PlayCircleIcon />} type={typeOptions.video} />
-                <ContentTypeIcon onClick={handleClickOnTypeIcon} icon={<OndemandVideoIcon />} type={typeOptions.slide} />
-                <ContentTypeIcon onClick={handleClickOnTypeIcon} icon={<DescriptionOutlinedIcon />} type={typeOptions.article} />
+                {(_class !== ClassOptions.Quiz) ? (
+                    <>
+                        <ContentTypeIcon onClick={handleClickOnTypeIcon} icon={<PlayCircleIcon />} type={typeOptions.video} />
+                        <ContentTypeIcon onClick={handleClickOnTypeIcon} icon={<OndemandVideoIcon />} type={typeOptions.slide} />
+                        <ContentTypeIcon onClick={handleClickOnTypeIcon} icon={<DescriptionOutlinedIcon />} type={typeOptions.article} />
+                    </>
+                ) : (
+                    <ContentTypeIcon onClick={handleClickOnTypeIcon} icon={<HelpOutlineIcon />} type={typeOptions.questions} />
+                )
+                }
             </div>
         </div>
     )
@@ -72,7 +80,11 @@ const ArticleInput = () => {
     return <div>Article</div>
 }
 
-const typeOptions = { video: { fa: "ویدیو", en: "Video" }, slide: { fa: "ویدیو و اسلاید", en: "Video & Slide Mashup" }, article: { fa: "مقاله", en: "Article" } }
+const MultipleChoiceQuestionsInput = () => {
+    return <div>Multi Questions</div>
+}
+
+const typeOptions = { video: "Video", slide: "Video & Slide Mashup", article: "Article", questions: "Multiple Choice" }
 
 
 const AddSubSectionContent = () => {
@@ -83,22 +95,26 @@ const AddSubSectionContent = () => {
     const [isTypeOptionOpen, setIsTypeOptionOpen] = useState({
         video: false,
         slide: false,
-        article: false
+        article: false,
+        questions: false,
     })
 
-    const isTypesOpen = isTypeOptionOpen.video || isTypeOptionOpen.slide || isTypeOptionOpen.article
+    const isTypesOpen = isTypeOptionOpen.video || isTypeOptionOpen.slide || isTypeOptionOpen.article || isTypeOptionOpen.questions
 
     const handleClickOnTypeIcon = useCallback((type: string) => {
 
-        if (type === typeOptions.video.en) {
+        if (type === typeOptions.video) {
             OnClickContentType(t("Add Video"))
-            setIsTypeOptionOpen({ video: true, slide: false, article: false })
-        } else if (type === typeOptions.slide.en) {
+            setIsTypeOptionOpen({ video: true, slide: false, article: false, questions: false })
+        } else if (type === typeOptions.slide) {
             OnClickContentType(t("Add Video & Slide Mashup"))
-            setIsTypeOptionOpen({ video: false, slide: true, article: false })
-        } else if (type === typeOptions.article.en) {
+            setIsTypeOptionOpen({ video: false, slide: true, article: false, questions: false })
+        } else if (type === typeOptions.article) {
             OnClickContentType(t("Add Article"))
-            setIsTypeOptionOpen({ video: false, slide: false, article: true })
+            setIsTypeOptionOpen({ video: false, slide: false, article: true, questions: false })
+        } else if (type === typeOptions.questions) {
+            OnClickContentType(t("Add Multiple Choice"))
+            setIsTypeOptionOpen({ video: false, slide: false, article: false, questions: true })
         }
     }, [])
 
@@ -117,6 +133,10 @@ const AddSubSectionContent = () => {
                 )}
                 {isTypeOptionOpen.article && (
                     <ArticleInput />
+                )
+                }
+                {isTypeOptionOpen.questions && (
+                    <MultipleChoiceQuestionsInput />
                 )
                 }
             </div>

@@ -18,7 +18,8 @@ export const SubSectionContext = createContext<SubSectionContextProp>(
         onContentButtonClick: () => { },
         onResourseButtonClick: () => { },
         subSectionOptions: [],
-        OnClickContentType: () => { }
+        OnClickContentType: () => { },
+        _class: "",
     }
 )
 

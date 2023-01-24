@@ -70,6 +70,7 @@
     "Add Video": "انتخاب ویدیو",
     "Add Article": "انتخاب مقاله",
     "Add Video & Slide Mashup": "انتخاب ویدیو و اسلاید",
+    "Add Multiple Choice": "اضافه کردن سوال",
     "Upload Video": "آپلود ویدیو",
     "contentType-des": "نوع اصلی محتوا را انتخاب کنید. فایل ها و لینک ها را می توان به عنوان منبع اضافه کرد.",
     "video input condition": "همه فایل ها باید حداقل 720p و کمتر از 4.0 گیگابایت باشند.",
@@ -87,5 +88,11 @@
     "practice": "تمرین",
     "assignment": "مشق",
     "preview mode": "حالت پیش نمایش",
-    "edit mode": "حالت ویرایش"
+    "edit mode": "حالت ویرایش",
+    "Questions": "سوال ها",
+    "Select question type": "انتخاب نوع سوال",
+    "Video": "ویدیو",
+    "Article": "مقاله",
+    "Video & Slide Mashup": "ویدیو و اسلاید",
+    "Multiple Choice": "چند گزینه ای"
 }

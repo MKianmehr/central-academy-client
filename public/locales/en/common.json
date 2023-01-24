@@ -70,6 +70,7 @@
     "Add Video": "Add Video",
     "Add Article": "Add Article",
     "Add Video & Slide Mashup": "Add Video & Slide Mashup",
+    "Add Multiple Choice": "Add Multiple Choice",
     "Upload Video": "Upload Video",
     "contentType-des": "Select the main type of content. Files and links can be added as resources.",
     "video input condition": "All files should be at least 720p and less than 4.0 GB.",
@@ -87,5 +88,11 @@
     "practice": "Practice",
     "assignment": "Assignment",
     "preview mode": "Preview Mode",
-    "edit mode": "Edit Mode"
+    "edit mode": "Edit Mode",
+    "Questions": "Questions",
+    "Select question type": "Select question type",
+    "Video": "Video",
+    "Article": "Article",
+    "Video & Slide Mashup": "Video & Slide Mashup",
+    "Multiple Choice": "Multiple Choice"
 }

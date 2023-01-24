@@ -48,7 +48,7 @@ const CourseSubSection = (
     const [isResourseOpen, setIsResourseOpen] = useState(false)
     const [isEditOpen, setIsEditOpen] = useState(false)
     const [editContent, setEditContent] = useState<React.ReactNode>()
-    const [contentTitle, setContentTitle] = useState(`${t("Select content type")}`)
+    const [contentTitle, setContentTitle] = useState(`${t((content._class === ClassOptions.Lecture) ? "Select content type" : "Select question type")}`)
 
     const { onDragSubSection, curriculumItems, handleDeleteCurriculumItem } = useContext(CurriculumContext)
     const { subSectionOptions } = useContext(SectionContext)
@@ -112,7 +112,7 @@ const CourseSubSection = (
     const onContentButtonClick = useCallback(() => {
         setIsContentOpen(!isContentOpen)
         setIsResourseOpen(false)
-        setContentTitle(`${t("Select content type")}`)
+        setContentTitle(`${t((content._class === ClassOptions.Lecture) ? "Select content type" : "Select question type")}`)
     }, [isContentOpen])
 
 
@@ -160,7 +160,8 @@ const CourseSubSection = (
                 subSectionOptions,
                 onContentButtonClick,
                 onResourseButtonClick,
-                OnClickContentType: handleContentTitleByOnClickContentType
+                OnClickContentType: handleContentTitleByOnClickContentType,
+                _class: content._class,
             }
         }
         >
@@ -203,22 +204,23 @@ const CourseSubSection = (
                                             notificationMessage={t("Please Confirm")} />
                                     </div>
                                 </div>
-                                {content._class?.toLowerCase() === ClassOptions.Lecture && (
-                                    !isContentOpen && (
-                                        <div>
-                                            <div className={styles.addButton}>
-                                                <Button onClick={onContentButtonClick}>
-                                                    <AddIcon />
-                                                    {t("Content")}
-                                                </Button>
+                                {((content._class.toLowerCase() === ClassOptions.Lecture) ||
+                                    (content._class.toLowerCase() === ClassOptions.Quiz && content.type === QuizOptions.Simple)) && (
+                                        !isContentOpen && (
+                                            <div>
+                                                <div className={styles.addButton}>
+                                                    <Button onClick={onContentButtonClick}>
+                                                        <AddIcon />
+                                                        {t(content._class.toLowerCase() === ClassOptions.Lecture ? "Content" : "Questions")}
+                                                    </Button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    )
-                                )}
+                                        )
+                                    )}
                             </div>
                             <div className={styles.arrowAndMenuIcon}>
-                                {!isContentOpen && (
-                                    <div className={[styles.hoverableIcons].join(" ")}>
+                                {content._class === ClassOptions.Lecture && !isContentOpen && (
+                                    <div>
                                         <IconButton onClick={onResourseButtonClick}>
                                             {isResourseOpen ? <KeyboardArrowUpIcon className={styles.editIcon} /> : <KeyboardArrowDownIcon className={styles.editIcon} />}
                                         </IconButton>
