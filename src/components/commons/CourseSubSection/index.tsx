@@ -55,6 +55,7 @@ const CourseSubSection = (
 
     const indexToShow = useMemo(() => {
         const type = content._class
+        console.log("classsss", type)
         let num = 1
         for (let i = 0; i < index; i++) {
             if (curriculumItems[i]._class === type) num++

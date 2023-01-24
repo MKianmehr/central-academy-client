@@ -40,6 +40,9 @@ const LCA = (
     }
 
     const onClickConfirm = useCallback(() => {
+
+        // closeBeforeSubSection is use just for when we create a subsection not editing
+
         if (text) {
             if (content && index) {
                 const res = handleEditCurriculumItem({
@@ -49,9 +52,8 @@ const LCA = (
                 })
                 if (res) {
                     handleCloseSubSectionOption()
-                    closeBeforeSubSection()
                 }
-            } else {
+            } else if (closeBeforeSubSection) {
                 const res = handleAddCurriculumItem({
                     index: index
                     , data: {
