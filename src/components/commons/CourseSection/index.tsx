@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState, CSSProperties } from 'react'
+import React, { useCallback, useContext, useState, CSSProperties, useRef, useEffect } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -33,8 +33,16 @@ const CourseSection = ({ index, section, subSections, indexToShow }: CourseSecti
     const { onDragSection, curriculumItems, onDragSubSection } = useContext(CurriculumContext)
     const [isOpenAddCurriculum, setIsOpenAddCurriculum] = useState(false)
     const [isEditSectionActive, setIsEditSectionActive] = useState(false)
-    const [lastSubSectionOfThisSectionIndex, setLastSubSectionOfThisSectionIndex] = useState(0)
+    const [lastSubSectionIndexOfThisSection, setLastSubSectionIndexOfThisSection] = useState(0)
     const addButtonPadding: CSSProperties = isRtl ? { paddingRight: "25px" } : { paddingLeft: "25px" }
+
+    const subSectionContainerRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        if (subSectionContainerRef.current) {
+            setLastSubSectionIndexOfThisSection(subSectionContainerRef.current.childNodes.length + index + 1)
+        }
+    }, [subSectionContainerRef.current?.childNodes.length, index, isOpenAddCurriculum])
 
     const [_, drag, dragPreview] = useDrag(
         () => ({
@@ -137,19 +145,23 @@ const CourseSection = ({ index, section, subSections, indexToShow }: CourseSecti
                             isRtl ? styles.paddingRight : styles.paddingLeft]
                             .join(" ")}
                     >
-                        {section && subSection(index + 1).children}
-                        {!section && subSections?.map((_, i) => {
-                            return (
-                                <div key={curriculumItems[i]._id}>
-                                    <BeforeSubSection index={i} />
-                                    <CourseSubSection
-                                        index={i}
-                                        sectionIndex={index}
-                                        content={curriculumItems[i]}
-                                    />
-                                </div>
-                            )
-                        })}
+                        <span
+                            ref={subSectionContainerRef}
+                        >
+                            {section && subSection(index + 1).children}
+                            {!section && subSections?.map((_, i) => {
+                                return (
+                                    <div key={curriculumItems[i]._id}>
+                                        <BeforeSubSection index={i} />
+                                        <CourseSubSection
+                                            index={i}
+                                            sectionIndex={index}
+                                            content={curriculumItems[i]}
+                                        />
+                                    </div>
+                                )
+                            })}
+                        </span>
                         <button
                             onClick={onAddCurriculumClick}
                             className={[isRtl ? styles.mult_rtl : styles.mult, isOpenAddCurriculum && (isRtl ? styles.mult_active_rtl : styles.mult_active)].join(" ")}
@@ -158,7 +170,7 @@ const CourseSection = ({ index, section, subSections, indexToShow }: CourseSecti
                         </button>
                         {isOpenAddCurriculum && (
                             <div className={styles.SubSectionCreationContent}>
-                                <AddSubSection closeBeforeSubSection={onAddCurriculumClick} index={index} />
+                                <AddSubSection closeBeforeSubSection={onAddCurriculumClick} index={lastSubSectionIndexOfThisSection} />
                             </div>
                         )}
                         {

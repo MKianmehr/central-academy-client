@@ -204,14 +204,14 @@ const CourseSubSection = (
                                             notificationMessage={t("Please Confirm")} />
                                     </div>
                                 </div>
-                                {((content._class.toLowerCase() === ClassOptions.Lecture) ||
-                                    (content._class.toLowerCase() === ClassOptions.Quiz && content.type === QuizOptions.Simple)) && (
+                                {((content._class?.toLowerCase() === ClassOptions.Lecture) ||
+                                    (content._class?.toLowerCase() === ClassOptions.Quiz && content.type === QuizOptions.Simple)) && (
                                         !isContentOpen && (
                                             <div>
                                                 <div className={styles.addButton}>
                                                     <Button onClick={onContentButtonClick}>
                                                         <AddIcon />
-                                                        {t(content._class.toLowerCase() === ClassOptions.Lecture ? "Content" : "Questions")}
+                                                        {t(content._class?.toLowerCase() === ClassOptions.Lecture ? "Content" : "Questions")}
                                                     </Button>
                                                 </div>
                                             </div>

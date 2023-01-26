@@ -124,14 +124,9 @@ export interface CourseSectionProp {
 }
 
 export interface CourseSubSectionProp {
-    content: CourseSubSectionContent;
+    content: CurriculumItem;
     index: number;
     sectionIndex: number;
-}
-
-interface CourseSubSectionContent extends CurriculumItem {
-    _class: string;
-    _id: number;
 }
 
 export interface SubContentTypeProp {
@@ -145,7 +140,7 @@ export interface SubSectionContextProp {
     onResourseButtonClick: () => void;
     subSectionOptions: string[];
     OnClickContentType: (title: string) => void;
-    _class: string;
+    _class?: string;
 }
 
 export interface SectionContextProp {
