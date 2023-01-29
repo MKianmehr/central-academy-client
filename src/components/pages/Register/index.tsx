@@ -66,7 +66,7 @@ const Register = () => {
         } else if (!(password === confirmPassword)) {
             setConfirmPasswordError(`${t("password-not-match")}`)
         } else {
-            const res = await signUp(email, password, loading)
+            await signUp(email, password, loading)
         }
     }, [email, password, confirmPassword])
 
