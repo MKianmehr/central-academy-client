@@ -301,5 +301,5 @@ export interface UserAndToken {
 
 export interface UserService {
     signUp: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
-    signIn: (email: string, password: string) => Promise<void>;
+    signIn: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
 }

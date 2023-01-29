@@ -101,5 +101,6 @@
     "successfully-register": "Your registration was successful",
     "email in use": "The email address you entered is already in use. Please try a different one or sign in to your existing account.",
     "full-name": "Full name",
-    "successfully-login": "Successfully logged in"
+    "successfully-login": "Successfully logged in",
+    "ckeck login credentials": "Please check your login credentials"
 }

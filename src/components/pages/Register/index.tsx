@@ -53,6 +53,7 @@ const Register = () => {
 
     const onSubmitForm = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        if (isLoading) return
 
         setEmailError("")
         setPasswordError("")
@@ -68,7 +69,7 @@ const Register = () => {
         } else {
             await signUp(email, password, loading)
         }
-    }, [email, password, confirmPassword])
+    }, [email, password, confirmPassword, isLoading])
 
 
     return (

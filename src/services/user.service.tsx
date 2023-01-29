@@ -57,31 +57,36 @@ const UserService = (): UserService => {
             }
         }, [])
 
-    const signIn = useCallback(async (email: string, password: string): Promise<void> => {
-        onLoad(true)
-        try {
-            const { data }: { data: UserAndToken } = await axios.post('/api/auth/signin', {
-                email,
-                password
-            })
+    const signIn = useCallback(
+        async (email: string, password: string, loading: (loading: boolean) => void):
+            Promise<void> => {
+            onLoad(true)
+            loading(true)
+            try {
+                const { data }: { data: UserAndToken } = await axios.post('/api/auth/signin', {
+                    email,
+                    password
+                })
 
-            dispatch(login(data))
-            repo.saveToken(data.accessToken)
-            toast.success(t("successfully-login"))
-            onLoad(false)
-            router.replace('/')
-        } catch (e) {
-            onLoad(false)
-            if (axios.isAxiosError(e)) {
-                e as AxiosError
-                if (e.response?.status === 409) {
-                    toast.error(t("email in use"))
+                dispatch(login(data))
+                repo.saveToken(data.accessToken)
+                toast.success(t("successfully-login"))
+                onLoad(false)
+                router.replace('/')
+            } catch (e) {
+                onLoad(false)
+                loading(false)
+                if (axios.isAxiosError(e)) {
+                    console.log(e.response?.data.message)
+                    e as AxiosError
+                    if (e.response?.status === 401) {
+                        toast.error(t("ckeck login credentials"))
+                    }
+                } else {
+                    toast.error('Sth went wrong try again later')
                 }
-            } else {
-                toast.error('Sth went wrong try again later')
             }
-        }
-    }, [])
+        }, [])
     return { signUp, signIn }
 }
 
