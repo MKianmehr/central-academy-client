@@ -293,13 +293,8 @@ export interface User {
     role: Role[],
     stripe_account_id: string;
 }
-export interface UserAndToken {
-    accessToken: string;
-    user: User
-}
 
-
-export interface UserService {
+export interface UserServiceInterface {
     signUp: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
     signIn: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
 }

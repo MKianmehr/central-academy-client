@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { UserAndToken } from "../../models/Props";
+import { User } from "../../models/Props";
 
-const initialState: UserAndToken | object = {}
+const initialState: User | object = {}
 
 export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        login: (state, action: PayloadAction<UserAndToken>) => {
+        login: (state, action: PayloadAction<User>) => {
             state = action.payload
         },
     }

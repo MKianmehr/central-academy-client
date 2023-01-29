@@ -4,9 +4,6 @@ import { useTranslation } from 'next-i18next';
 import axios, { AxiosError } from 'axios'
 import { useRouter } from 'next/router';
 
-// Repository Import
-import { UserRepository } from './user.repository';
-
 // Redux Imports
 import { useAppDispatch } from '../redux/hooks';
 import { login } from '../redux/slices/userSlice';
@@ -15,17 +12,15 @@ import { login } from '../redux/slices/userSlice';
 import { GlobalContext } from '../contexts';
 
 // Props Import
-import { UserAndToken, UserService } from '../models/Props'
+import { User, UserServiceInterface } from '../models/Props'
 
 
-const UserService = (): UserService => {
+const UserService = (): UserServiceInterface => {
 
     const { t } = useTranslation('common');
     const { onLoad } = useContext(GlobalContext)
     const dispatch = useAppDispatch()
     const router = useRouter()
-    const repo = useMemo(() => new UserRepository(), [])
-
 
     const signUp = useCallback(
         async (email: string, password: string, loading:
@@ -33,13 +28,12 @@ const UserService = (): UserService => {
             onLoad(true)
             loading(true)
             try {
-                const { data }: { data: UserAndToken } = await axios.post('/api/auth/signup', {
+                const { data }: { data: User } = await axios.post('/api/auth/signup', {
                     email,
                     password
                 })
 
                 dispatch(login(data))
-                repo.saveToken(data.accessToken)
                 toast.success(t("successfully-register"))
                 onLoad(false)
                 router.replace('/')
@@ -63,13 +57,12 @@ const UserService = (): UserService => {
             onLoad(true)
             loading(true)
             try {
-                const { data }: { data: UserAndToken } = await axios.post('/api/auth/signin', {
+                const { data }: { data: User } = await axios.post('/api/auth/signin', {
                     email,
                     password
                 })
 
                 dispatch(login(data))
-                repo.saveToken(data.accessToken)
                 toast.success(t("successfully-login"))
                 onLoad(false)
                 router.replace('/')
