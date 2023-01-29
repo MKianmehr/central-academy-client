@@ -94,5 +94,12 @@
     "Video": "Video",
     "Article": "Article",
     "Video & Slide Mashup": "Video & Slide Mashup",
-    "Multiple Choice": "Multiple Choice"
+    "Multiple Choice": "Multiple Choice",
+    "incorrect-email-error": "Please provide a valid email",
+    "password-not-match": "password is not match",
+    "pass-length-error": "Minimum password length is 6",
+    "successfully-register": "Your registration was successful",
+    "email in use": "The email address you entered is already in use. Please try a different one or sign in to your existing account.",
+    "full-name": "Full name",
+    "successfully-login": "Successfully logged in"
 }

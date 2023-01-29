@@ -38,3 +38,5 @@ export const CurriculumContext = createContext<CurriculumContextProp>(
         handleDeleteCurriculumItem: () => { return false },
     }
 )
+
+export const GlobalContext = createContext<{ loading: boolean; onLoad: (loading: boolean) => void }>({ loading: false, onLoad: () => { } })

@@ -1,4 +1,6 @@
 import { appWithTranslation } from 'next-i18next';
+
+// Components import
 import GlobalProvider from '../Providers/GlobalProvider';
 import Navbar from '../components/commons/Navbar';
 import SwipeableTempDrawer from '../components/commons/SwipeableTempDrawer'

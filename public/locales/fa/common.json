@@ -94,5 +94,12 @@
     "Video": "ویدیو",
     "Article": "مقاله",
     "Video & Slide Mashup": "ویدیو و اسلاید",
-    "Multiple Choice": "چند گزینه ای"
+    "Multiple Choice": "چند گزینه ای",
+    "incorrect-email-error": "لطفا ایمیل را بدرستی وارد کنید",
+    "password-not-match": "پسورد یکسان نیست",
+    "pass-length-error": "حداقل طول پسورد 6 میباشد",
+    "successfully-register": "ثبت نام شما با موفقیت انجام شد",
+    "email in use": "آدرس ایمیلی که وارد کردید قبلاً استفاده شده است. لطفاً آدرس دیگری را امتحان کنید یا به حساب خود وارد شوید.",
+    "full-name": "نام کامل",
+    "successfully-login": "با موفقیت وارد حساب خود شدید"
 }

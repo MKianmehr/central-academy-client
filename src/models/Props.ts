@@ -279,3 +279,27 @@ export interface LCAProp {
     index: number;
     closeBeforeSubSection?: () => void;
 }
+
+enum Role {
+    Subscriber = 'subscriber',
+    Instructor = 'instructor',
+    Admin = 'admin'
+}
+
+export interface User {
+    _id: string;
+    email: string;
+    picture: string;
+    role: Role[],
+    stripe_account_id: string;
+}
+export interface UserAndToken {
+    accessToken: string;
+    user: User
+}
+
+
+export interface UserService {
+    signUp: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
+    signIn: (email: string, password: string) => Promise<void>;
+}

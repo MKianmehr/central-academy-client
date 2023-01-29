@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from 'react'
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
+import validator from 'validator'
 
 // Hook Import
-import useLogin from '../../../hooks/useLogin'
+import UserService from '../../../services/user.service'
 
 // Components Import
 import Input from '../../commons/Input'
@@ -14,7 +15,6 @@ import Button from '@mui/material/Button';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import GoogleIcon from '@mui/icons-material/Google';
-import PersonIcon from '@mui/icons-material/Person';
 
 // Styles Import
 import styles from './styles.module.scss'
@@ -22,18 +22,17 @@ import styles from './styles.module.scss'
 
 const Register = () => {
 
-    const [name, setName] = useState<string>('')
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('')
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
+    const [confirmPasswordError, setConfirmPasswordError] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const { t } = useTranslation('common');
 
-    const { onSubmit } = useLogin({ email, password })
-
-    const handleNameChange = useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
-        setName(event.target.value);
-    }, [setName])
+    const { signUp } = UserService()
 
     const handleEmailChange = useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
         setEmail(event.target.value);
@@ -47,11 +46,35 @@ const Register = () => {
         setConfirmPassword(event.target.value);
     }, [setConfirmPassword])
 
+    const loading = useCallback((loading: boolean) => {
+        setIsLoading(loading)
+    }, [])
+
+
+    const onSubmitForm = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        setEmailError("")
+        setPasswordError("")
+        setConfirmPasswordError("")
+
+        if (!validator.isEmail(email)) {
+            setEmailError(`${t('incorrect-email-error')}`)
+        } else if (password.length < 6) {
+
+            setPasswordError(`${t("pass-length-error")}`)
+        } else if (!(password === confirmPassword)) {
+            setConfirmPasswordError(`${t("password-not-match")}`)
+        } else {
+            const res = await signUp(email, password, loading)
+        }
+    }, [email, password, confirmPassword])
+
 
     return (
         <div className={styles.container}>
             <div className={styles.box}>
-                <form className={styles.form} onSubmit={onSubmit}>
+                <form className={styles.form} onSubmit={onSubmitForm}>
                     <Button className={styles.option}>
                         <GoogleIcon />
                         {t('Sign up with Google')}
@@ -59,19 +82,12 @@ const Register = () => {
                     <Height16 />
                     <div className={styles.inputs}>
                         <Input
-                            name='name'
-                            placeholder={t("name")}
-                            value={name}
-                            onChange={handleNameChange}
-                            icon={<PersonIcon className={styles.icon} />}
-                        />
-                        <Height16 />
-                        <Input
                             name='email'
                             placeholder={t("email")}
                             value={email}
                             onChange={handleEmailChange}
                             icon={<EmailIcon className={styles.icon} />}
+                            error={emailError && emailError}
                         />
                         <Height16 />
                         <Input
@@ -81,6 +97,7 @@ const Register = () => {
                             onChange={handlePasswordChange}
                             icon={<LockIcon className={styles.icon} />}
                             type="password"
+                            error={passwordError && passwordError}
                         />
                         <Height16 />
                         <Input
@@ -90,6 +107,7 @@ const Register = () => {
                             onChange={handleConfirmPasswordChange}
                             icon={<LockIcon className={styles.icon} />}
                             type="password"
+                            error={confirmPasswordError && confirmPasswordError}
                         />
                         <Height16 />
                     </div>
@@ -99,7 +117,7 @@ const Register = () => {
                         {t('already have an account')}
                     </Link>
                     <Height16 />
-                    <Button type='submit' className={styles.button} variant="contained">
+                    <Button type='submit' className={[styles.button, isLoading && styles.loading].join(" ")} variant="contained">
                         {t('register')}
                     </Button>
                 </form>
