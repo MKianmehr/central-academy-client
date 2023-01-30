@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'next-i18next';
 import axios, { AxiosError } from 'axios'
@@ -7,20 +7,34 @@ import { useRouter } from 'next/router';
 // Redux Imports
 import { useAppDispatch } from '../redux/hooks';
 import { login } from '../redux/slices/userSlice';
-
-// Context Imports
-import { GlobalContext } from '../contexts';
+import API from '../ApI';
 
 // Props Import
 import { User, UserServiceInterface } from '../models/Props'
 
 
-const UserService = (): UserServiceInterface => {
+const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface => {
 
     const { t } = useTranslation('common');
-    const { onLoad } = useContext(GlobalContext)
     const dispatch = useAppDispatch()
+    const [loadingGlobal, setLoadingGlobal] = useState(true)
     const router = useRouter()
+
+    // useEffect(() => {
+    //     const CancelToken = axios.CancelToken;
+    //     const source = CancelToken.source();
+    //     (async () => {
+    //         try {
+    //             setLoadingGlobal(true)
+    //             const { data }: { data: User } = await axios.get(API.WHOAMI, { cancelToken: source.token })
+    //             dispatch(login(data))
+    //             setLoadingGlobal(false)
+    //         } catch (e) {
+    //             setLoadingGlobal(false)
+    //         }
+    //     })()
+    //     return () => source.cancel()
+    // }, [])
 
     const signUp = useCallback(
         async (email: string, password: string, loading:
@@ -28,7 +42,7 @@ const UserService = (): UserServiceInterface => {
             onLoad(true)
             loading(true)
             try {
-                const { data }: { data: User } = await axios.post('/api/auth/signup', {
+                const { data }: { data: User } = await axios.post(API.SIGNUP, {
                     email,
                     password
                 })
@@ -57,7 +71,7 @@ const UserService = (): UserServiceInterface => {
             onLoad(true)
             loading(true)
             try {
-                const { data }: { data: User } = await axios.post('/api/auth/signin', {
+                const { data }: { data: User } = await axios.post(API.SIGNIN, {
                     email,
                     password
                 })
@@ -80,6 +94,7 @@ const UserService = (): UserServiceInterface => {
                 }
             }
         }, [])
+
     return { signUp, signIn }
 }
 

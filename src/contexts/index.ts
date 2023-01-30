@@ -39,4 +39,15 @@ export const CurriculumContext = createContext<CurriculumContextProp>(
     }
 )
 
-export const GlobalContext = createContext<{ loading: boolean; onLoad: (loading: boolean) => void }>({ loading: false, onLoad: () => { } })
+interface GlobalContextProp {
+    loading: boolean;
+    onLoad: (loading: boolean) => void;
+    signIn: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
+    signUp: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
+}
+export const GlobalContext = createContext<GlobalContextProp>({
+    loading: false,
+    onLoad: () => { },
+    signIn: async () => { },
+    signUp: async () => { },
+})

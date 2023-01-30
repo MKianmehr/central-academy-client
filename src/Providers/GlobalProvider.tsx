@@ -11,6 +11,7 @@ import OnlineProvider from './OnlineProvider'
 import DarkModeProvider from './DarkModeProvider'
 import useRtl from '../hooks/useRtl'
 import useVh from '../hooks/useVh'
+import UserService from '../services/user.service';
 
 // Context imports
 import { GlobalContext } from '../contexts';
@@ -23,13 +24,14 @@ const GlobalProvider: React.FC<GlobalProp> = ({ children }) => {
 
     useRtl()
     useVh()
-
     const onLoad = useCallback((loading: boolean) => {
         setLoading(loading)
     }, [])
 
+    const { signIn, signUp } = UserService(onLoad)
+
     return (
-        <GlobalContext.Provider value={{ loading, onLoad }}>
+        <GlobalContext.Provider value={{ loading, onLoad, signIn, signUp }}>
             <DndProvider options={HTML5toTouch}>
                 <DarkModeProvider>
                     <OnlineProvider>

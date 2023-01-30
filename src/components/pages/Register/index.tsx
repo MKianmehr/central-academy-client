@@ -1,10 +1,10 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import validator from 'validator'
 
-// Hook Import
-import UserService from '../../../services/user.service'
+// Context Import
+import { GlobalContext } from '../../../contexts';
 
 // Components Import
 import Input from '../../commons/Input'
@@ -30,9 +30,9 @@ const Register = () => {
     const [confirmPasswordError, setConfirmPasswordError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
-    const { t } = useTranslation('common');
+    const { signUp } = useContext(GlobalContext)
 
-    const { signUp } = UserService()
+    const { t } = useTranslation('common');
 
     const handleEmailChange = useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
         setEmail(event.target.value);

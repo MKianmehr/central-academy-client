@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback, useContext } from 'react'
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import validator from 'validator'
 
-// Services Import
-import UserService from '../../../services/user.service';
+// Context Import
+import { GlobalContext } from '../../../contexts';
 
 
 // Components Import
@@ -30,9 +30,10 @@ const Login = () => {
     const inputRef = useRef<HTMLInputElement>(null)
     const [isLoading, setIsLoading] = useState(false)
 
+    const { signIn } = useContext(GlobalContext)
+
     const { t } = useTranslation('common');
 
-    const { signIn } = UserService()
 
     const handleEmailChange = useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
         setEmail(event.target.value);
