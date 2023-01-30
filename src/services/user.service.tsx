@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useTranslation } from 'next-i18next';
 import axios, { AxiosError } from 'axios'
 import { useRouter } from 'next/router';
+import useTranslation from "next-translate/useTranslation";
 
 // Redux Imports
 import { useAppDispatch } from '../redux/hooks';
@@ -48,7 +48,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                 })
 
                 dispatch(login(data))
-                toast.success(t("successfully-register"))
+                toast.success(`${t("successfully-register")}`)
                 onLoad(false)
                 router.replace('/')
             } catch (e) {
@@ -57,7 +57,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                 if (axios.isAxiosError(e)) {
                     e as AxiosError
                     if (e.response?.status === 409) {
-                        toast.error(t("email in use"))
+                        toast.error(`${t("email in use")}`)
                     }
                 } else {
                     toast.error('Sth went wrong try again later')
@@ -77,7 +77,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                 })
 
                 dispatch(login(data))
-                toast.success(t("successfully-login"))
+                toast.success(`${t("successfully-login")}`)
                 onLoad(false)
                 router.replace('/')
             } catch (e) {
@@ -87,7 +87,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                     console.log(e.response?.data.message)
                     e as AxiosError
                     if (e.response?.status === 401) {
-                        toast.error(t("ckeck login credentials"))
+                        toast.error(`${t("ckeck login credentials")}`)
                     }
                 } else {
                     toast.error('Sth went wrong try again later')

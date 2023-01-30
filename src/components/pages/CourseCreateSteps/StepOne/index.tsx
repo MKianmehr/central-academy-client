@@ -8,7 +8,7 @@ import React, {
     Ref
 } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import useTranslation from "next-translate/useTranslation";
 
 // Props Import
 import { StepperChildProp } from '../../../../models/Props';

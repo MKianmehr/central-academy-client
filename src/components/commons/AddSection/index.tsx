@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { useTranslation } from 'next-i18next';
+import useTranslation from "next-translate/useTranslation";
 import { AddSectionProp } from '../../../models/Props';
 
 // component imports

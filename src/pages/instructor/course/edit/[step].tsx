@@ -1,7 +1,6 @@
 import React from 'react'
 import EditCourse from '../../../../components/pages/EditCourse'
 import { GetStaticProps } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Edit = () => {
     return (
@@ -12,7 +11,7 @@ const Edit = () => {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale ? locale : "fa", ["common"]))
+
         }
     }
 }

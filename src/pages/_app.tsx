@@ -1,5 +1,3 @@
-import { appWithTranslation } from 'next-i18next';
-
 // Components import
 import GlobalProvider from '../Providers/GlobalProvider';
 import Navbar from '../components/commons/Navbar';
@@ -31,4 +29,4 @@ function App(props: MyAppProps) {
   )
 }
 
-export default appWithTranslation(App);
+export default App

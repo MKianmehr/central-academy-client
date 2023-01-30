@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useRouter } from 'next/router';
-import { useTranslation } from 'next-i18next';
+import useTranslation from "next-translate/useTranslation";
 import Link from 'next/link';
 
 // Components Import

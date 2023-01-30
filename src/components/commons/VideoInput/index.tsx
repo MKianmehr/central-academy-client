@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'next-i18next';
+import useTranslation from "next-translate/useTranslation";
 
 // Components Import
 import FileInput from '../FileInput'

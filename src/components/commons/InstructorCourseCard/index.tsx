@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
-import { useTranslation } from 'next-i18next';
+import useTranslation from "next-translate/useTranslation";
 
 // Props Import
 import { InstructorCourseCardProp } from '../../../models/Props';

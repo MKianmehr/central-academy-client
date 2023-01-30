@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Link from 'next/link'
-import { useTranslation } from 'next-i18next';
+import useTranslation from "next-translate/useTranslation";
 import LinearProgress from '@mui/material/LinearProgress';
 
 // Mui Imports

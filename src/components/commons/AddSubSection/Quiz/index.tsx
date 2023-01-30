@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { useTranslation } from 'next-i18next';
+import useTranslation from "next-translate/useTranslation";
 
 // Props Imports
 import { SimpleQuiz } from '../../../../models/Props';

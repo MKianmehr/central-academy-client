@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback, useContext } from 'react'
-import { useTranslation } from 'next-i18next';
+import useTranslation from "next-translate/useTranslation";
 import Link from 'next/link';
 import validator from 'validator'
 

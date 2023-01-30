@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useState, CSSProperties, useRef, useEffect } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
-import { useTranslation } from 'next-i18next';
+import useTranslation from "next-translate/useTranslation";
 import { useRouter } from 'next/router';
 import { CourseSectionProp, DragDropSection, DragDropSubSection } from '../../../models/Props';
 import DragDropTypes from '../../../utils/DragDropTypes'

@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react'
 import { useRouter } from 'next/router';
-import { useTranslation } from 'next-i18next';
+import useTranslation from "next-translate/useTranslation";
 
 // components imports
 import Quiz from './Quiz'

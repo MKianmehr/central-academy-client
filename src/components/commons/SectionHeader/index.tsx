@@ -1,5 +1,5 @@
 import { forwardRef, useCallback, useContext, useState } from "react"
-import { useTranslation } from 'next-i18next';
+import useTranslation from "next-translate/useTranslation";
 import { SectionHeaderProps } from "../../../models/Props";
 
 // component imports

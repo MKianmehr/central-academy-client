@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useTranslation } from 'next-i18next';
+import useTranslation from "next-translate/useTranslation";
 
 // mui imports
 import Button from '@mui/material/Button';

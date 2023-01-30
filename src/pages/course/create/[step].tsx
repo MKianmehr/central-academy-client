@@ -1,6 +1,5 @@
 import React from 'react'
 import { GetStaticProps, GetStaticPaths } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import CourseCreateSteps from '../../../components/pages/CourseCreateSteps'
 
 const Steps = () => {
@@ -12,7 +11,7 @@ const Steps = () => {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale ? locale : "fa", ["common"]))
+
         }
     }
 }
