@@ -6,7 +6,7 @@ import useTranslation from "next-translate/useTranslation";
 
 // Redux Imports
 import { useAppDispatch } from '../redux/hooks';
-import { login } from '../redux/slices/userSlice';
+import { login, logOut } from '../redux/slices/userSlice';
 import API from '../ApI';
 
 // Props Import
@@ -17,24 +17,24 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
 
     const { t } = useTranslation('common');
     const dispatch = useAppDispatch()
-    const [loadingGlobal, setLoadingGlobal] = useState(true)
+    const [getUserLoading, setGetUserLoading] = useState(true)
     const router = useRouter()
 
-    // useEffect(() => {
-    //     const CancelToken = axios.CancelToken;
-    //     const source = CancelToken.source();
-    //     (async () => {
-    //         try {
-    //             setLoadingGlobal(true)
-    //             const { data }: { data: User } = await axios.get(API.WHOAMI, { cancelToken: source.token })
-    //             dispatch(login(data))
-    //             setLoadingGlobal(false)
-    //         } catch (e) {
-    //             setLoadingGlobal(false)
-    //         }
-    //     })()
-    //     return () => source.cancel()
-    // }, [])
+    useEffect(() => {
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source();
+        (async () => {
+            try {
+                setGetUserLoading(true)
+                const { data }: { data: User } = await axios.get(API.WHOAMI, { cancelToken: source.token })
+                dispatch(login(data))
+                setGetUserLoading(false)
+            } catch (e) {
+                setGetUserLoading(false)
+            }
+        })()
+        return () => source.cancel()
+    }, [])
 
     const signUp = useCallback(
         async (email: string, password: string, loading:
@@ -95,7 +95,19 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
             }
         }, [])
 
-    return { signUp, signIn }
+    const signOut = useCallback(async (): Promise<void> => {
+        try {
+            onLoad(true)
+            const { data } = await axios.post(API.SIGNOUT)
+            dispatch(logOut())
+            toast.success(`${t("successfully-logout")}`)
+            onLoad(false)
+        } catch (e) {
+            onLoad(false)
+        }
+    }, [])
+
+    return { signUp, signIn, getUserLoading, signOut }
 }
 
 export default UserService

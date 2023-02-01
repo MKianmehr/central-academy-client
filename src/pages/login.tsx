@@ -1,6 +1,7 @@
 import React from 'react'
 import Login from '../components/pages/Login'
 import { GetServerSideProps } from 'next'
+import axios from 'axios'
 
 const login = () => {
     return (
@@ -9,19 +10,22 @@ const login = () => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    if (context.req.cookies.session) {
+    try {
+        const { data } = await axios.get("http://localhost:3000/auth/whoami", {
+            withCredentials: true,
+            headers: context.req.headers
+        })
         return {
             redirect: {
                 destination: '/',
                 permanent: false,
-            }
+            },
         }
-    } else {
+    } catch (e) {
         return {
             props: {}
         }
     }
-
 }
 
 export default login

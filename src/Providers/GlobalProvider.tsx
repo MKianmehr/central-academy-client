@@ -28,10 +28,10 @@ const GlobalProvider: React.FC<GlobalProp> = ({ children }) => {
         setLoading(loading)
     }, [])
 
-    const { signIn, signUp } = UserService(onLoad)
+    const { signIn, signUp, getUserLoading, signOut } = UserService(onLoad)
 
     return (
-        <GlobalContext.Provider value={{ loading, onLoad, signIn, signUp }}>
+        <GlobalContext.Provider value={{ loading, onLoad, signIn, signUp, getUserLoading, signOut }}>
             <DndProvider options={HTML5toTouch}>
                 <DarkModeProvider>
                     <OnlineProvider>

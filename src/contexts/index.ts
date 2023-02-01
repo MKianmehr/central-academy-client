@@ -44,10 +44,14 @@ interface GlobalContextProp {
     onLoad: (loading: boolean) => void;
     signIn: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
     signUp: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
+    getUserLoading: boolean;
+    signOut: () => void;
 }
 export const GlobalContext = createContext<GlobalContextProp>({
     loading: false,
     onLoad: () => { },
     signIn: async () => { },
     signUp: async () => { },
+    getUserLoading: true,
+    signOut: async () => { },
 })

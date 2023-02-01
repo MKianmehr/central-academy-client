@@ -290,11 +290,13 @@ export interface User {
     _id: string;
     email: string;
     picture: string;
-    role: Role[],
+    role: String[],
     stripe_account_id: string;
 }
 
 export interface UserServiceInterface {
     signUp: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
     signIn: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
+    getUserLoading: boolean;
+    signOut: () => void;
 }

@@ -15,12 +15,24 @@
     ;
 }
 
-.pages {
+.notLoggedIn {
     display: flex;
-    margin: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
 }
 
-.page {
-    list-style-type: none;
+.notLoggedInContent {
+    border: 1px solid getColor(primary-text);
+    border-radius: 0;
     color: getColor(primary-text);
+}
+
+.signIn {
+    border: none;
+}
+
+.left {
+    display: flex;
+    align-items: center;
 }

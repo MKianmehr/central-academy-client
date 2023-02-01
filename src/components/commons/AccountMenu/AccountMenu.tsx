@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import useTranslation from "next-translate/useTranslation";
 import { AccountMenuProp } from '../../../models/Props'
@@ -23,6 +23,7 @@ import Logout from '@mui/icons-material/Logout';
 
 // styles import
 import styles from './styles.module.scss'
+import { GlobalContext } from '../../../contexts';
 
 export default function AccountMenu({ toggleTheme, theme }: AccountMenuProp) {
 
@@ -33,6 +34,8 @@ export default function AccountMenu({ toggleTheme, theme }: AccountMenuProp) {
     const { pathname, asPath, query } = router;
 
     const { t } = useTranslation("common")
+
+    const { signOut } = useContext(GlobalContext)
 
     const handleClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -118,7 +121,7 @@ export default function AccountMenu({ toggleTheme, theme }: AccountMenuProp) {
                     </MenuItem>
                 </label>
                 <Divider />
-                <MenuItem className={styles.menuItems}>
+                <MenuItem className={styles.menuItems} onClick={signOut}>
                     <ListItemIcon>
                         <Logout fontSize="small" sx={{ color: (theme === "dark") ? "white" : "black" }} />
                     </ListItemIcon>

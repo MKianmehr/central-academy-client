@@ -4,6 +4,7 @@
     "Sign in with Google": "Sign in with Google",
     "forget password": "Don't remember your password?",
     "or": "Or",
+    "signUp": "Sign Up",
     "create account": "Create a new account",
     "login": "Login",
     "name": "Name",
@@ -102,5 +103,7 @@
     "email in use": "The email address you entered is already in use. Please try a different one or sign in to your existing account.",
     "full-name": "Full name",
     "successfully-login": "Successfully logged in",
-    "ckeck login credentials": "Please check your login credentials"
+    "ckeck login credentials": "Please check your login credentials",
+    "successfully-logout": "Successfully logged out",
+    "teach on central academy": "Teach on central academy"
 }
