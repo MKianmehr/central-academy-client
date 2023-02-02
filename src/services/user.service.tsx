@@ -121,8 +121,11 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
             // cause this function to trigger
             const res = error.response
             if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
-                return new Promise((resolve, reject) => {
-                    signOut()
+                return new Promise(async (resolve, reject) => {
+                    const { data } = await axios.post(API.SIGNOUT)
+                    dispatch(logOut())
+                    userRepo.removeUser()
+                    router.push('/login?redirect=' + encodeURIComponent(router.pathname))
                 })
             }
         }
