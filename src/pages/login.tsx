@@ -17,7 +17,6 @@ login.getInitialProps = async (context) => {
                 withCredentials: true,
                 headers: req.headers
             })
-            res?.setHeader('set-cookie', `user=${JSON.stringify(data)}`)
             res?.writeHead(302, { Location: '/' })
             res?.end()
         } catch (e) {

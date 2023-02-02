@@ -1,6 +1,5 @@
 import React from 'react'
 import Register from '../components/pages/Register'
-import { GetServerSideProps } from 'next'
 import { NextPage } from 'next'
 import axios from 'axios'
 
@@ -18,7 +17,6 @@ register.getInitialProps = async (context) => {
                 withCredentials: true,
                 headers: req.headers
             })
-            res?.setHeader('set-cookie', `user=${JSON.stringify(data)}`)
             res?.writeHead(302, { Location: '/' })
             res?.end()
         } catch (e) {
