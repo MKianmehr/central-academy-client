@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
-import axios, { AxiosError } from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router';
 import useTranslation from "next-translate/useTranslation";
 
@@ -9,9 +9,11 @@ import { useAppDispatch } from '../redux/hooks';
 import { login, logOut } from '../redux/slices/userSlice';
 import API from '../ApI';
 
+// Repo
+import UserRepository from './user.repository';
+
 // Props Import
 import { User, UserServiceInterface } from '../models/Props'
-import UserRepository from './user.repository';
 
 
 const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface => {
@@ -28,6 +30,21 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
         const user = userRepo.getUser()
         user && dispatch(login(user))
         setGetUserLoading(false)
+
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source();
+        (async () => {
+            try {
+                setGetUserLoading(true)
+                const { data }: { data: User } = await axios.get(API.WHOAMI, { cancelToken: source.token })
+                dispatch(login(data))
+                setGetUserLoading(false)
+            } catch (e) {
+                setGetUserLoading(false)
+                dispatch(logOut())
+            }
+        })()
+        return () => source.cancel()
     }, [])
 
     const signUp = useCallback(
@@ -93,7 +110,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                     toast.error('Sth went wrong try again later')
                 }
             }
-        }, [])
+        }, [router])
 
     const signOut = useCallback(async (): Promise<void> => {
         try {
@@ -112,23 +129,31 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
     }, [router])
 
     axios.interceptors.response.use(
-        function (response) {
+        function (response: AxiosResponse) {
             // any status code that is in range of 2xx cause 
             // this function to trigger
             return response
         }, function (error) {
             // any status code that falls outside the range of 2xx 
             // cause this function to trigger
+
             const res = error.response
             if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
-                return new Promise(async (resolve, reject) => {
-                    const { data } = await axios.post(API.SIGNOUT)
-                    dispatch(logOut())
-                    userRepo.removeUser()
-                    router.push('/login?redirect=' + encodeURIComponent(router.pathname))
+                return new Promise((resolve, reject) => {
+                    axios.post("http://localhost:3000/auth/signout")
+                        .then(() => {
+                            dispatch(logOut())
+                            userRepo.removeUser()
+                            router.push('/login')
+                        })
+                        .catch((err) => {
+                            reject(err)
+                        })
                 })
             }
+            return Promise.reject(error);
         }
+
     )
 
     return { signUp, signIn, getUserLoading, signOut }

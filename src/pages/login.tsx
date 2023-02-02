@@ -13,14 +13,13 @@ login.getInitialProps = async (context) => {
     const { req, res } = context
     if (req) {
         try {
-            const { data } = await axios.get("http://localhost:3000/auth/isloggedin", {
+            const response = await axios.get("http://localhost:3000/auth/isloggedin", {
                 withCredentials: true,
                 headers: req.headers
             })
             res?.writeHead(302, { Location: '/' })
             res?.end()
-        } catch (e) {
-        }
+        } catch (e) { }
     }
 }
 
