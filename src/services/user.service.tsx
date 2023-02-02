@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import axios, { AxiosError } from 'axios'
 import { useRouter } from 'next/router';
@@ -11,6 +11,7 @@ import API from '../ApI';
 
 // Props Import
 import { User, UserServiceInterface } from '../models/Props'
+import UserRepository from './user.repository';
 
 
 const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface => {
@@ -19,21 +20,14 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
     const dispatch = useAppDispatch()
     const [getUserLoading, setGetUserLoading] = useState(true)
     const router = useRouter()
+    const userRepo = useMemo(() => {
+        return new UserRepository()
+    }, [])
 
     useEffect(() => {
-        const CancelToken = axios.CancelToken;
-        const source = CancelToken.source();
-        (async () => {
-            try {
-                setGetUserLoading(true)
-                const { data }: { data: User } = await axios.get(API.WHOAMI, { cancelToken: source.token })
-                dispatch(login(data))
-                setGetUserLoading(false)
-            } catch (e) {
-                setGetUserLoading(false)
-            }
-        })()
-        return () => source.cancel()
+        const user = userRepo.getUser()
+        user && dispatch(login(user))
+        setGetUserLoading(false)
     }, [])
 
     const signUp = useCallback(
@@ -48,6 +42,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                 })
 
                 dispatch(login(data))
+                userRepo.setUser(data)
                 toast.success(`${t("successfully-register")}`)
                 onLoad(false)
                 router.replace('/')
@@ -77,6 +72,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                 })
 
                 dispatch(login(data))
+                userRepo.setUser(data)
                 toast.success(`${t("successfully-login")}`)
                 onLoad(false)
                 if (router.query.redirect) {
@@ -104,12 +100,33 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
             onLoad(true)
             const { data } = await axios.post(API.SIGNOUT)
             dispatch(logOut())
+            userRepo.removeUser()
             toast.success(`${t("successfully-logout")}`)
+            if (router.pathname.startsWith('/instructor') || router.pathname.startsWith('/course')) {
+                router.replace('/')
+            }
             onLoad(false)
         } catch (e) {
             onLoad(false)
         }
-    }, [])
+    }, [router])
+
+    axios.interceptors.response.use(
+        function (response) {
+            // any status code that is in range of 2xx cause 
+            // this function to trigger
+            return response
+        }, function (error) {
+            // any status code that falls outside the range of 2xx 
+            // cause this function to trigger
+            const res = error.response
+            if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
+                return new Promise((resolve, reject) => {
+                    signOut()
+                })
+            }
+        }
+    )
 
     return { signUp, signIn, getUserLoading, signOut }
 }
