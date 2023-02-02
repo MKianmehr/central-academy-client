@@ -1,31 +1,29 @@
 import React from 'react'
 import Login from '../components/pages/Login'
-import { GetServerSideProps } from 'next'
+import { NextPage } from 'next'
 import axios from 'axios'
 
-const login = () => {
+const login: NextPage = () => {
     return (
         <Login />
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    try {
-        const { data } = await axios.get("http://localhost:3000/auth/whoami", {
-            withCredentials: true,
-            headers: context.req.headers
-        })
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false,
-            },
-        }
-    } catch (e) {
-        return {
-            props: {}
+login.getInitialProps = async (context) => {
+    const { req, res } = context
+    if (req) {
+        try {
+            const { data } = await axios.get("http://localhost:3000/auth/whoami", {
+                withCredentials: true,
+                headers: req.headers
+            })
+            res?.setHeader('set-cookie', `user=${JSON.stringify(data)}`)
+            res?.writeHead(302, { Location: '/' })
+            res?.end()
+        } catch (e) {
         }
     }
 }
+
 
 export default login
