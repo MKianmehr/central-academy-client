@@ -79,7 +79,11 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                 dispatch(login(data))
                 toast.success(`${t("successfully-login")}`)
                 onLoad(false)
-                router.replace('/')
+                if (router.query.redirect) {
+                    router.replace(router.query.redirect as string)
+                } else {
+                    router.replace('/')
+                }
             } catch (e) {
                 onLoad(false)
                 loading(false)

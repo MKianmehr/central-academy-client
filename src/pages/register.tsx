@@ -13,7 +13,7 @@ register.getInitialProps = async (context) => {
     const { req, res } = context
     if (req) {
         try {
-            const { data } = await axios.get("http://localhost:3000/auth/whoami", {
+            const { data } = await axios.get("http://localhost:3000/auth/isloggedin", {
                 withCredentials: true,
                 headers: req.headers
             })
