@@ -53,6 +53,14 @@
     }
 }
 
+;
+
+@mixin small-screens($size) {
+    @media only screen and (max-width: $size ) {
+        @content
+    }
+}
+
 @mixin margin-horizontal($margin) {
     margin-left: $margin;
     margin-right: $margin;

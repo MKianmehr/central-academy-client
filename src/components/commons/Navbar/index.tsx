@@ -57,7 +57,7 @@ function NavBar() {
                                 {t("ins")}
                             </Link>
                         ) : (
-                            <Link href="/instructor/courses">
+                            <Link href="/teaching">
                                 {t("teach on central academy")}
                             </Link>
                         )

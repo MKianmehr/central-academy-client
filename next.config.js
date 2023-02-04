@@ -8,6 +8,10 @@ module.exports = nextTranslate({
         protocol: 'https',
         hostname: 'img-c.udemycdn.com',
       },
+      {
+        protocol: 'https',
+        hostname: 's.udemycdn.com',
+      }
     ],
   },
   reactStrictMode: true,

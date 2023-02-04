@@ -1,0 +1,8 @@
+@import '../../../styles/main.scss';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: getColor(primary);
+}
