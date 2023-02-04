@@ -105,5 +105,10 @@
     "successfully-login": "با موفقیت وارد حساب خود شدید",
     "ckeck login credentials": "لطفا اطلاعات ورودی را با دقت وارد کنید",
     "successfully-logout": "با موفقیت از حساب خود خارج شدید",
-    "teach on central academy": "مدرس شو"
+    "teach on central academy": "مدرس شو",
+    "Reset Password": "تغییر رمز ورود",
+    "forget-password": "فراموشی رمز",
+    "submit": "تایید",
+    "Reset password email sent": "ایمیل بازنشانی پسورد ارسال شد",
+    "reset-pass-email-sent-paragraph": "به زودی ایمیلی دریافت خواهید کرد که به شما امکان می دهد رمز عبور خود را بازنشانی کنید. لطفاً اگر ایمیل را پیدا نکردید، هرزنامه و سطل زباله خود را بررسی کنید."
 }

@@ -297,6 +297,14 @@ export interface User {
 export interface UserServiceInterface {
     signUp: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
     signIn: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
-    getUserLoading: boolean;
     signOut: () => void;
+    forgetPassword: (email: string, loading: (loading: boolean) => void) => Promise<{
+        success: boolean;
+        message: string;
+    }>;
+    emailPasswordChange: (password: string, resetCode: string, loading: (loading: boolean) => void) => Promise<{
+        success: boolean;
+        message: any;
+    }>;
+    getUserLoading: boolean;
 }

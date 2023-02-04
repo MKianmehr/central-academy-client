@@ -10,6 +10,8 @@
         @include padding-horizontal(10px);
         @include padding-vertical(5px);
         z-index: 1;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .08), 0 4px 12px rgba(0, 0, 0, .08);
+        z-index: 1010;
     }
 
     ;

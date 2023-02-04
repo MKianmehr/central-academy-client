@@ -1,0 +1,86 @@
+@import '../../../styles/main.scss';
+
+
+.container {
+    @include align-justify-center;
+    flex: 1;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    background-color: getColor(primary);
+    width: 100%;
+    height: 100%;
+    padding-top: 25px;
+
+    @include large-screens($breakpoint-sm) {
+        width: 500px;
+        height: max-content;
+        border-radius: 10px;
+    }
+}
+
+.header {
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 10px;
+}
+
+.icon {
+    color: getColor(primary-text);
+}
+
+.or {
+    @include justify-center;
+    padding-top: 10px;
+}
+
+.link {
+    @include justify-center;
+    color: getColor(primary-text);
+    padding-bottom: 10px;
+}
+
+.button {
+    @include make-container(0);
+    padding: 1rem;
+    font-size: 1.2rem;
+}
+
+.loading {
+    background-color: getColor(loading-button);
+
+    &:hover {
+        background-color: getColor(loading-button);
+        cursor: progress;
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    flex: 1
+}
+
+.inputs {
+    @include margin-horizontal(8px);
+    flex: 1;
+}
+
+.successBox {
+    display: flex;
+    background-color: getColor(bg-success);
+    padding: 15px;
+    gap: 15px;
+    width: 100%;
+
+    @include large-screens($breakpoint-sm) {
+        width: 500px;
+    }
+}
+
+.error {
+    color: getColor(error);
+    padding: 10px;
+}

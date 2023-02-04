@@ -46,6 +46,14 @@ interface GlobalContextProp {
     signUp: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
     getUserLoading: boolean;
     signOut: () => void;
+    forgetPassword: (email: string, loading: (loading: boolean) => void) => Promise<{
+        success: boolean;
+        message: string;
+    }>;
+    emailPasswordChange: (password: string, resetCode: string, loading: (loading: boolean) => void) => Promise<{
+        success: boolean;
+        message: any;
+    }>;
 }
 export const GlobalContext = createContext<GlobalContextProp>({
     loading: false,
@@ -54,4 +62,9 @@ export const GlobalContext = createContext<GlobalContextProp>({
     signUp: async () => { },
     getUserLoading: true,
     signOut: async () => { },
+    forgetPassword: async () => {
+        return { success: false, message: "" }
+    },
+    emailPasswordChange: async () => { return { success: false, message: "" } }
+
 })

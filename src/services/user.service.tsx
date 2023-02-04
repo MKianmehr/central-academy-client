@@ -26,6 +26,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
         return new UserRepository()
     }, [])
 
+
     useEffect(() => {
         const user = userRepo.getUser()
         user && dispatch(login(user))
@@ -46,6 +47,8 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
         })()
         return () => source.cancel()
     }, [])
+
+
 
     const signUp = useCallback(
         async (email: string, password: string, loading:
@@ -76,6 +79,9 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                 }
             }
         }, [])
+
+
+
 
     const signIn = useCallback(
         async (email: string, password: string, loading: (loading: boolean) => void):
@@ -112,6 +118,8 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
             }
         }, [router])
 
+
+
     const signOut = useCallback(async (): Promise<void> => {
         try {
             onLoad(true)
@@ -127,6 +135,71 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
             onLoad(false)
         }
     }, [router])
+
+
+
+    const forgetPassword = useCallback(async (email: string, loading: (loading: boolean) => void): Promise<{
+        success: boolean;
+        message: string;
+    }> => {
+        try {
+            onLoad(true)
+            loading(true)
+            console.log("here")
+            const res = await axios.post('/api/auth/forget-password', { email })
+            console.log("res", res.data)
+            const data: { success: boolean, message: string } = res.data
+            loading(false)
+            onLoad(false)
+            return data
+        } catch (e) {
+            loading(false)
+            onLoad(false)
+            if (axios.isAxiosError(e)) {
+                return { success: false, message: e.response?.data.message }
+            }
+            return { success: false, message: "Something went wrong" }
+        }
+    }, [])
+
+
+    const emailPasswordChange = useCallback(async (password: string, resetCode: string, loading: (loading: boolean) => void): Promise<{
+        success: boolean;
+        message: any;
+    }> => {
+        try {
+            onLoad(true)
+            loading(true)
+            const res: AxiosResponse = await axios.post(`/api/auth/email-password-change/${resetCode}`, { password })
+            const data: { success: boolean; message: string; user: User } = res.data
+            loading(false)
+            onLoad(false)
+            toast.success(data.message)
+            dispatch(login(data.user))
+            router.push("/")
+            return data
+        } catch (e) {
+            loading(false)
+            onLoad(false)
+            if (axios.isAxiosError(e)) {
+                return { success: false, message: e.response?.data.message }
+            } else {
+                return { success: false, message: "Something went wrong" }
+            }
+        }
+    }, [])
+
+
+
+
+
+
+
+
+
+
+
+
 
     axios.interceptors.response.use(
         function (response: AxiosResponse) {
@@ -156,7 +229,14 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
 
     )
 
-    return { signUp, signIn, getUserLoading, signOut }
+    return {
+        signUp,
+        signIn,
+        signOut,
+        forgetPassword,
+        emailPasswordChange,
+        getUserLoading,
+    }
 }
 
 export default UserService

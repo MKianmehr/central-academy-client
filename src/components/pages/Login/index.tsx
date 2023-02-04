@@ -98,7 +98,7 @@ const Login = () => {
                         />
                     </div>
                     <Height16 />
-                    <Link className={styles.link} style={{ textDecoration: 'none' }} href="#">
+                    <Link className={styles.link} style={{ textDecoration: 'none' }} href="/user/forget-password">
                         {t('forget password')}
                     </Link>
                     <Height16 />
