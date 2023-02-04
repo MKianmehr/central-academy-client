@@ -2,10 +2,16 @@ import React from 'react'
 import Register from '../components/pages/Register'
 import { NextPage } from 'next'
 import axios from 'axios'
+import SwipeableTempDrawer from '../components/commons/SwipeableTempDrawer'
+import NavBar from '../components/commons/Navbar'
 
 const register: NextPage = () => {
     return (
-        <Register />
+        <>
+            <SwipeableTempDrawer />
+            <NavBar />
+            <Register />
+        </>
     )
 }
 

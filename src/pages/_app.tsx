@@ -19,8 +19,6 @@ function App(props: MyAppProps) {
       <GlobalProvider>
         <CacheProvider value={emotionCache}>
           <div style={{ display: "flex", flexDirection: "column", height: "calc(var(--vh, 1vh) * 100)" }}>
-            <SwipeableTempDrawer />
-            <Navbar />
             <Component {...pageProps} />
           </div>
         </CacheProvider>

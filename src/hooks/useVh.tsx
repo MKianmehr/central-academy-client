@@ -2,8 +2,10 @@ import React, { useEffect, useInsertionEffect, useLayoutEffect, useState } from 
 
 
 const useVh = () => {
-    useLayoutEffect(() => {
+    useInsertionEffect(() => {
         document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    })
+    useEffect(() => {
         const handleResize = () => {
             document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
         }

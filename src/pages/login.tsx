@@ -2,10 +2,16 @@ import React from 'react'
 import Login from '../components/pages/Login'
 import { NextPage } from 'next'
 import axios from 'axios'
+import SwipeableTempDrawer from '../components/commons/SwipeableTempDrawer'
+import NavBar from '../components/commons/Navbar'
 
 const login: NextPage = () => {
     return (
-        <Login />
+        <>
+            <SwipeableTempDrawer />
+            <NavBar />
+            <Login />
+        </>
     )
 }
 

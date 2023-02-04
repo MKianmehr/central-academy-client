@@ -2,10 +2,16 @@ import React from 'react'
 import { NextPage } from 'next'
 import Courses from '../../../components/pages/Courses';
 import axios from 'axios';
+import SwipeableTempDrawer from '../../../components/commons/SwipeableTempDrawer';
+import NavBar from '../../../components/commons/Navbar';
 
 const courses: NextPage = () => {
     return (
-        <Courses />
+        <>
+            <SwipeableTempDrawer />
+            <NavBar />
+            <Courses />
+        </>
     )
 }
 

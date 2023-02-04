@@ -2,10 +2,16 @@ import React from 'react'
 import ForgetPassword from '../../../components/pages/ForgetPassword'
 import { NextPage } from 'next'
 import axios from 'axios'
+import SwipeableTempDrawer from '../../../components/commons/SwipeableTempDrawer'
+import NavBar from '../../../components/commons/Navbar'
 
 const index: NextPage = () => {
     return (
-        <ForgetPassword />
+        <>
+            <SwipeableTempDrawer />
+            <NavBar />
+            <ForgetPassword />
+        </>
     )
 }
 

@@ -46,7 +46,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
             }
         })()
         return () => source.cancel()
-    }, [])
+    }, [API])
 
 
 
@@ -78,7 +78,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                     toast.error('Sth went wrong try again later')
                 }
             }
-        }, [])
+        }, [API])
 
 
 
@@ -107,7 +107,6 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                 onLoad(false)
                 loading(false)
                 if (axios.isAxiosError(e)) {
-                    console.log(e.response?.data.message)
                     e as AxiosError
                     if (e.response?.status === 401) {
                         toast.error(`${t("ckeck login credentials")}`)
@@ -116,7 +115,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                     toast.error('Sth went wrong try again later')
                 }
             }
-        }, [router])
+        }, [router, API])
 
 
 
@@ -134,7 +133,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
         } catch (e) {
             onLoad(false)
         }
-    }, [router])
+    }, [router, API])
 
 
 
@@ -145,9 +144,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
         try {
             onLoad(true)
             loading(true)
-            console.log("here")
-            const res = await axios.post('/api/auth/forget-password', { email })
-            console.log("res", res.data)
+            const res = await axios.post(API.FORGET_PASSWORD, { email })
             const data: { success: boolean, message: string } = res.data
             loading(false)
             onLoad(false)
@@ -160,7 +157,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
             }
             return { success: false, message: "Something went wrong" }
         }
-    }, [])
+    }, [API])
 
 
     const emailPasswordChange = useCallback(async (password: string, resetCode: string, loading: (loading: boolean) => void): Promise<{
@@ -170,7 +167,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
         try {
             onLoad(true)
             loading(true)
-            const res: AxiosResponse = await axios.post(`/api/auth/email-password-change/${resetCode}`, { password })
+            const res: AxiosResponse = await axios.post(`${API.EMAIL_PASSWORD_CHANGE}/${resetCode}`, { password })
             const data: { success: boolean; message: string; user: User } = res.data
             loading(false)
             onLoad(false)
@@ -187,7 +184,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                 return { success: false, message: "Something went wrong" }
             }
         }
-    }, [])
+    }, [API])
 
 
 
