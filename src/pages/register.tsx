@@ -19,7 +19,7 @@ register.getInitialProps = async (context) => {
     const { req, res } = context
     if (req) {
         try {
-            const { data } = await axios.get("http://localhost:3000/auth/isloggedin", {
+            const { data } = await axios.get("http://nginx/auth/isloggedin", {
                 withCredentials: true,
                 headers: req.headers
             })
