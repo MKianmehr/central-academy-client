@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router';
@@ -10,9 +10,6 @@ import { useAppDispatch } from '../redux/hooks';
 import { login, logOut } from '../redux/slices/userSlice';
 import API from '../ApI';
 
-// Repo
-import UserRepository from './user.repository';
-
 // Props Import
 import { User, UserServiceInterface } from '../models/Props'
 
@@ -23,30 +20,29 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
     const dispatch = useAppDispatch()
     const [getUserLoading, setGetUserLoading] = useState(true)
     const router = useRouter()
-    const userRepo = useMemo(() => {
-        return new UserRepository()
-    }, [])
+    const mounted = useRef(false)
 
 
     useEffect(() => {
-        const user = userRepo.getUser()
-        user && dispatch(login(user))
-        setGetUserLoading(false)
 
-        const CancelToken = axios.CancelToken;
-        const source = CancelToken.source();
-        (async () => {
-            try {
-                setGetUserLoading(true)
-                const { data }: { data: User } = await Axios.get(API.WHOAMI, { cancelToken: source.token })
-                dispatch(login(data))
-                setGetUserLoading(false)
-            } catch (e) {
-                setGetUserLoading(false)
-                dispatch(logOut())
-            }
-        })()
-        return () => source.cancel()
+        if (mounted.current) {
+            const CancelToken = axios.CancelToken;
+            const source = CancelToken.source();
+            (async () => {
+                try {
+                    setGetUserLoading(true)
+                    const { data }: { data: User } = await Axios.get(API.WHOAMI, { cancelToken: source.token })
+                    dispatch(login(data))
+                    setGetUserLoading(false)
+                } catch (e) {
+                    setGetUserLoading(false)
+                    dispatch(logOut())
+                }
+            })()
+            return () => source.cancel()
+        } else {
+            mounted.current = true
+        }
     }, [API])
 
 
@@ -63,7 +59,6 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                 })
 
                 dispatch(login(data))
-                userRepo.setUser(data)
                 toast.success(`${t("successfully-register")}`)
                 onLoad(false)
                 router.replace('/')
@@ -96,7 +91,6 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                 })
 
                 dispatch(login(data))
-                userRepo.setUser(data)
                 toast.success(`${t("successfully-login")}`)
                 onLoad(false)
                 if (router.query.redirect) {
@@ -125,7 +119,6 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
             onLoad(true)
             const { data } = await Axios.post(API.SIGNOUT)
             dispatch(logOut())
-            userRepo.removeUser()
             toast.success(`${t("successfully-logout")}`)
             if (router.pathname.startsWith('/instructor') || router.pathname.startsWith('/course')) {
                 router.replace('/')
@@ -211,11 +204,11 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
             const res = error.response
             if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
                 return new Promise((resolve, reject) => {
-                    Axios.post("http://localhost:3000/auth/signout")
+                    Axios.post(API.SIGNOUT)
                         .then(() => {
                             dispatch(logOut())
-                            userRepo.removeUser()
                             router.push('/login')
+                            reject("")
                         })
                         .catch((err) => {
                             reject(err)
