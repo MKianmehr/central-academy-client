@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router';
 import useTranslation from "next-translate/useTranslation";
+import Axios from './axios.service';
 
 // Redux Imports
 import { useAppDispatch } from '../redux/hooks';
@@ -37,7 +38,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
         (async () => {
             try {
                 setGetUserLoading(true)
-                const { data }: { data: User } = await axios.get(API.WHOAMI, { cancelToken: source.token })
+                const { data }: { data: User } = await Axios.get(API.WHOAMI, { cancelToken: source.token })
                 dispatch(login(data))
                 setGetUserLoading(false)
             } catch (e) {
@@ -56,7 +57,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
             onLoad(true)
             loading(true)
             try {
-                const { data }: { data: User } = await axios.post(API.SIGNUP, {
+                const { data }: { data: User } = await Axios.post(API.SIGNUP, {
                     email,
                     password
                 })
@@ -89,7 +90,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
             onLoad(true)
             loading(true)
             try {
-                const { data }: { data: User } = await axios.post(API.SIGNIN, {
+                const { data }: { data: User } = await Axios.post(API.SIGNIN, {
                     email,
                     password
                 })
@@ -122,7 +123,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
     const signOut = useCallback(async (): Promise<void> => {
         try {
             onLoad(true)
-            const { data } = await axios.post(API.SIGNOUT)
+            const { data } = await Axios.post(API.SIGNOUT)
             dispatch(logOut())
             userRepo.removeUser()
             toast.success(`${t("successfully-logout")}`)
@@ -144,7 +145,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
         try {
             onLoad(true)
             loading(true)
-            const res = await axios.post(API.FORGET_PASSWORD, { email })
+            const res = await Axios.post(API.FORGET_PASSWORD, { email })
             const data: { success: boolean, message: string } = res.data
             loading(false)
             onLoad(false)
@@ -167,7 +168,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
         try {
             onLoad(true)
             loading(true)
-            const res: AxiosResponse = await axios.post(`${API.EMAIL_PASSWORD_CHANGE}/${resetCode}`, { password })
+            const res: AxiosResponse = await Axios.post(`${API.EMAIL_PASSWORD_CHANGE}/${resetCode}`, { password })
             const data: { success: boolean; message: string; user: User } = res.data
             loading(false)
             onLoad(false)
@@ -198,7 +199,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
 
 
 
-    axios.interceptors.response.use(
+    Axios.interceptors.response.use(
         function (response: AxiosResponse) {
             // any status code that is in range of 2xx cause 
             // this function to trigger
@@ -210,7 +211,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
             const res = error.response
             if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
                 return new Promise((resolve, reject) => {
-                    axios.post("http://localhost:3000/auth/signout")
+                    Axios.post("http://localhost:3000/auth/signout")
                         .then(() => {
                             dispatch(logOut())
                             userRepo.removeUser()
