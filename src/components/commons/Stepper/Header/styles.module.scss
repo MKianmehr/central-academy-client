@@ -1,0 +1,45 @@
+@import '../../../../styles/main.scss';
+
+.header {
+    background-color: getColor(primary);
+    display: flex;
+    flex-direction: column;
+}
+
+.header__content {
+    display: flex;
+}
+
+.wName {
+    @include padding-vertical(10px);
+    @include padding-horizontal(5px);
+    font-weight: 700;
+    font-size: 1.5rem;
+
+    &>:first-child {
+        color: getColor(tertiary);
+        font-size: 1.7rem;
+    }
+}
+
+.breakLine {
+    @include padding-vertical(10px);
+    border: 1px solid getColor(secondary);
+}
+
+.stepExit {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include padding-vertical(10px);
+    @include padding-horizontal(15px);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.exit {
+    color: getColor(tertiary);
+    font-weight: 600;
+    font-size: 1.1rem;
+}

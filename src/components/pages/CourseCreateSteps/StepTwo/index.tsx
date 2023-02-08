@@ -50,7 +50,7 @@ const StepTwo = forwardRef((_, ref: Ref<StepperChildProp>) => {
         setRemaining(initialValue - e.target.value.length)
     }, [])
 
-    const onNextButtonClick = useCallback(() => {
+    const onNextClick = useCallback(() => {
         if (text) {
             dispatch(setStepTwo(text))
             return true
@@ -60,9 +60,7 @@ const StepTwo = forwardRef((_, ref: Ref<StepperChildProp>) => {
     }, [text])
 
     useImperativeHandle(ref, () => ({
-        onNextButtonClick: () => onNextButtonClick(),
-        title: "question step two",
-        isOkay: "course-create-step2-it's okay"
+        onNextClick: () => onNextClick(),
     }))
 
     return (

@@ -1,0 +1,16 @@
+@import '../../../styles/main.scss';
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: getColor(primary);
+    padding: 15px;
+}
+
+.error {
+    color: getColor(error);
+    margin: 10px;
+}

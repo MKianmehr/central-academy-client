@@ -34,6 +34,7 @@ const GlobalProvider: React.FC<GlobalProp> = ({ children }) => {
         signOut,
         forgetPassword,
         emailPasswordChange,
+        becomeInstructor,
         getUserLoading,
     } = UserService(onLoad)
 
@@ -47,6 +48,7 @@ const GlobalProvider: React.FC<GlobalProp> = ({ children }) => {
                 signOut,
                 forgetPassword,
                 emailPasswordChange,
+                becomeInstructor,
                 getUserLoading,
             }}>
             <DndProvider options={HTML5toTouch}>

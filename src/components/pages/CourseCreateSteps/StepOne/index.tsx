@@ -68,14 +68,13 @@ const StepOne = forwardRef((_, ref: Ref<StepperChildProp>) => {
         setActive(index)
     }, [])
 
-    const onNextButtonClick = useCallback(() => {
+    const onNextClick = useCallback(() => {
         dispatch(setStepOne(options[active].name))
         return true
     }, [active])
 
     useImperativeHandle(ref, () => ({
-        onNextButtonClick: () => onNextButtonClick(),
-        title: "question step one"
+        onNextClick: () => onNextClick(),
     }))
 
     return (

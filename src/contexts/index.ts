@@ -3,7 +3,8 @@ import {
     DarkModeProviderProp,
     SubSectionContextProp,
     SectionContextProp,
-    CurriculumContextProp
+    CurriculumContextProp,
+    GlobalContextProp,
 } from '../models/Props'
 
 export const OnLineContext = createContext<boolean>(true);
@@ -39,22 +40,7 @@ export const CurriculumContext = createContext<CurriculumContextProp>(
     }
 )
 
-interface GlobalContextProp {
-    loading: boolean;
-    onLoad: (loading: boolean) => void;
-    signIn: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
-    signUp: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
-    getUserLoading: boolean;
-    signOut: () => void;
-    forgetPassword: (email: string, loading: (loading: boolean) => void) => Promise<{
-        success: boolean;
-        message: string;
-    }>;
-    emailPasswordChange: (password: string, resetCode: string, loading: (loading: boolean) => void) => Promise<{
-        success: boolean;
-        message: any;
-    }>;
-}
+
 export const GlobalContext = createContext<GlobalContextProp>({
     loading: false,
     onLoad: () => { },
@@ -65,6 +51,7 @@ export const GlobalContext = createContext<GlobalContextProp>({
     forgetPassword: async () => {
         return { success: false, message: "" }
     },
-    emailPasswordChange: async () => { return { success: false, message: "" } }
+    emailPasswordChange: async () => { return { success: false, message: "" } },
+    becomeInstructor: async () => { }
 
 })

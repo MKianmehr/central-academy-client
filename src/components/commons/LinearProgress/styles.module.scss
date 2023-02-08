@@ -1,0 +1,17 @@
+.container {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    height: 4px;
+    background-color: rgb(167, 202, 237);
+}
+
+.child {
+    width: 100%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    transition: transform .4s linear;
+    background-color: #1976d2;
+}

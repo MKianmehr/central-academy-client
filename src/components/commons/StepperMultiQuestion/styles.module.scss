@@ -1,0 +1,18 @@
+@import '../../../styles/main.scss';
+
+.title {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: getColor(primary-text);
+}
+
+.questions {
+    list-style-type: none;
+}
+
+.option {
+    border: 1px solid getColor(primary-text);
+    margin: 5px;
+    @include padding-horizontal(15px);
+    @include padding-vertical(2px);
+}

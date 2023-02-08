@@ -59,7 +59,7 @@ const StepFour = forwardRef((_, ref: Ref<StepperChildProp>) => {
         setValue(JSON.parse(event.target.value));
     }, [])
 
-    const onNextButtonClick = useCallback(() => {
+    const onNextClick = useCallback(() => {
         if (value?.en) {
             dispatch(setStepFour(value))
             return true
@@ -69,9 +69,7 @@ const StepFour = forwardRef((_, ref: Ref<StepperChildProp>) => {
     }, [value])
 
     useImperativeHandle(ref, () => ({
-        onNextButtonClick: () => onNextButtonClick(),
-        title: "question step four",
-        isOkay: "course-create-step4-it's okay"
+        onNextClick: () => onNextClick(),
     }))
 
 

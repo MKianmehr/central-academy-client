@@ -48,7 +48,7 @@ const StepThree = forwardRef((_, ref: Ref<StepperChildProp>) => {
         }
     }, [])
 
-    const onNextButtonClick = useCallback(() => {
+    const onNextClick = useCallback(() => {
         if (labels[0].en !== value.en) {
             dispatch(setStepThree(value))
             return true
@@ -58,9 +58,7 @@ const StepThree = forwardRef((_, ref: Ref<StepperChildProp>) => {
     }, [value, labels])
 
     useImperativeHandle(ref, () => ({
-        onNextButtonClick: () => onNextButtonClick(),
-        title: "question step three",
-        isOkay: "course-create-step3-it's okay"
+        onNextClick: () => onNextClick(),
     }))
 
     const handleChange = useCallback((event: SelectChangeEvent) => {

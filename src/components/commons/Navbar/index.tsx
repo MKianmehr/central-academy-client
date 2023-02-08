@@ -54,7 +54,7 @@ function NavBar() {
                     {!pathname.startsWith("/instructor") && (getUserLoading ? <IconButton><Skeleton variant="rectangular" width={33} height={33} /></IconButton> : (
                         user?.role?.includes(UserTypes.INSTRUCTOR) ? (
                             <Link href="/instructor/courses">
-                                {t("ins")}
+                                {t("instructor panel")}
                             </Link>
                         ) : (
                             <Link href="/teaching">

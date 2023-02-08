@@ -86,12 +86,8 @@ export interface InstructorCourseCardProp {
     numberOfStudent: number;
 }
 
-export interface StepperProp extends children { }
-
 export interface StepperChildProp {
-    onNextButtonClick: () => boolean;
-    title?: string;
-    isOkay?: string;
+    onNextClick: () => boolean;
 }
 export interface StepOneOptionCardProp {
     icon: React.ReactNode;
@@ -306,5 +302,24 @@ export interface UserServiceInterface {
         success: boolean;
         message: any;
     }>;
+    becomeInstructor: (loading: (loading: boolean) => void) => Promise<void>;
     getUserLoading: boolean;
+}
+
+export interface GlobalContextProp {
+    loading: boolean;
+    onLoad: (loading: boolean) => void;
+    signIn: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
+    signUp: (email: string, password: string, loading: (loading: boolean) => void) => Promise<void>;
+    getUserLoading: boolean;
+    signOut: () => void;
+    forgetPassword: (email: string, loading: (loading: boolean) => void) => Promise<{
+        success: boolean;
+        message: string;
+    }>;
+    emailPasswordChange: (password: string, resetCode: string, loading: (loading: boolean) => void) => Promise<{
+        success: boolean;
+        message: any;
+    }>;
+    becomeInstructor: (loading: (loading: boolean) => void) => Promise<void>;
 }

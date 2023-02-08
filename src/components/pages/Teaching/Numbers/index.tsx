@@ -1,6 +1,11 @@
 import React from 'react'
-import styles from './styles.module.scss'
 import { useRouter } from 'next/router'
+
+// Enum Imports
+import Locale from '../../../../utils/localeEnum'
+
+// Styles Import
+import styles from './styles.module.scss'
 
 type Props = {}
 
@@ -28,10 +33,6 @@ const numbersList = [
     },
 ]
 
-export enum Locale {
-    FA = "fa",
-    EN = "en"
-}
 const Numbers = (props: Props) => {
     const router = useRouter()
     const locale = router.locale as Locale

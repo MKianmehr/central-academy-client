@@ -1,0 +1,38 @@
+@import '../../../../styles/main.scss';
+
+
+.container {
+    padding: 10px;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, .08), 0 -4px 12px rgba(0, 0, 0, .08);
+    background-color: getColor(primary);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+
+.next {
+    justify-self: flex-end;
+
+    &> :first-child {
+        color: getColor(primary);
+        background-color: getColor(primary-text);
+        border-radius: 0;
+        @include padding-horizontal(30px);
+        @include padding-vertical(10px);
+    }
+}
+
+.previous {
+    @include padding-horizontal(30px);
+    @include padding-vertical(10px);
+    border-radius: 0;
+    border: 1px solid getColor(primary-text);
+    color: getColor(primary-text);
+}
+
+.loading {
+    &> :first-child {
+        background-color: rgba(0, 0, 0, 0.5);
+        cursor: progress;
+    }
+}

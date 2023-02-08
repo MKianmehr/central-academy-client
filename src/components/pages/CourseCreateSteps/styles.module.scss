@@ -1,0 +1,24 @@
+@import '../../../styles/main.scss';
+
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: getColor(primary);
+    @include padding-horizontal(10px);
+}
+
+.title {
+    font-size: 1.3rem;
+    @include margin-vertical(15px);
+    text-align: center;
+    color: getColor(primary-text);
+}
+
+.okay {
+    text-align: center;
+    font-size: 0.95rem;
+    color: getColor(primary-text);
+}

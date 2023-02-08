@@ -1,68 +1,7 @@
-@import '../../../styles/main.scss';
-
 .container {
-    @include justify-center;
-    align-items: center;
-    height: 100%;
-    padding-top: 1px;
-
-    @include large-screens($breakpoint-sm) {
-        @include padding-vertical(15px);
-    }
-}
-
-.createBox {
-    display: flex;
-    flex-direction: column;
-    background-color: getColor(primary);
-    width: 100%;
-    height: 100%;
-    border-radius: $border-radius;
-    overflow-y: scroll;
-    @include padding-horizontal(5px);
-    @include padding-vertical(35px);
-
-    @include large-screens($breakpoint-sm) {
-        @include padding-horizontal(20px);
-        width: 97%;
-        max-height: 900px;
-        max-width: 1300px;
-    }
-}
-
-.questionsBox {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
-.title {
-    font-size: 1.2rem;
-    @include margin-vertical(35px);
-    text-align: center;
-    color: getColor(primary-text);
-}
-
-.okay {
-    text-align: center;
-    font-size: 0.95rem;
-    color: getColor(primary-text)
-}
-
-
-.labelText {
-    color: getColor(primary-text);
-}
-
-.buttonBox {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-}
-
-.twoButton {
-    & button {
-        margin: 5px;
-    }
+    overflow: hidden;
 }

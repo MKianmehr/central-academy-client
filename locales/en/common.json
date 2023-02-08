@@ -28,6 +28,7 @@
     "newest": "Newest",
     "rate": "Rate",
     "Number of students": "Number of students",
+    "step": "Step",
     "step 1": "Step 1",
     "step 2": "Step 2",
     "step 3": "Step 3",
@@ -110,5 +111,8 @@
     "forget-password": "Forget password",
     "submit": "Submit",
     "Reset password email sent": "Reset password email sent",
-    "reset-pass-email-sent-paragraph": "You should soon receive an email allowing you to reset your password. Please make sure to check your spam and trash if you can't find the email."
+    "reset-pass-email-sent-paragraph": "You should soon receive an email allowing you to reset your password. Please make sure to check your spam and trash if you can't find the email.",
+    "instructor panel": "Instructor",
+    "of": "of",
+    "choose-one-become-instructor": "Please choose one option."
 }

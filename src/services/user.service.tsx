@@ -3,12 +3,14 @@ import { toast } from 'react-toastify';
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { useRouter } from 'next/router';
 import useTranslation from "next-translate/useTranslation";
-import Axios from './axios.service';
 
 // Redux Imports
 import { useAppDispatch } from '../redux/hooks';
 import { login, logOut } from '../redux/slices/userSlice';
+
+// Api Imports
 import API from '../ApI';
+import Axios from './axios.service';
 
 // Props Import
 import { User, UserServiceInterface } from '../models/Props'
@@ -181,6 +183,27 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
     }, [API])
 
 
+    const becomeInstructor = useCallback(async (loading: (loading: boolean) => void) => {
+        try {
+            onLoad(true)
+            loading(true)
+            const res: AxiosResponse = await Axios.post(API.BECOME_INSTRUCTOR)
+            loading(false)
+            onLoad(false)
+            toast.success(res.data.message)
+            router.replace('/instructor/courses')
+
+        } catch (e) {
+            loading(false)
+            onLoad(false)
+            if (axios.isAxiosError(e)) {
+                if (e.status === 409) {
+                    toast.error(e.response?.data.message)
+                }
+            }
+            toast.error("Something went wrong")
+        }
+    }, [router])
 
 
 
@@ -207,7 +230,10 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
                     Axios.post(API.SIGNOUT)
                         .then(() => {
                             dispatch(logOut())
-                            router.push('/login')
+
+                            if (isNeededToBeGuarded(router.asPath)) {
+                                router.push('/login')
+                            }
                             reject("")
                         })
                         .catch((err) => {
@@ -226,6 +252,7 @@ const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface =
         signOut,
         forgetPassword,
         emailPasswordChange,
+        becomeInstructor,
         getUserLoading,
     }
 }
