@@ -1,55 +1,55 @@
-import React from 'react'
-import Link from 'next/link';
-import Image from 'next/image';
-import useTranslation from "next-translate/useTranslation";
+import React, { useCallback } from 'react'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
 
-// Props Import
-import { InstructorCourseCardProp } from '../../../models/Props';
+// Image Import
+import PlaceHolder from '../../../../public/images/InstructorCourseplaceholder.jpg'
 
-// Components Imports
-import Height16 from '../Height16'
+// Components Import
+import LinearProgress from '../LinearProgress'
 
-// Mui Imports
-import Rating from '@mui/material/Rating';
+// Mui Import
+import { Button } from '@mui/material'
 
 // Styles Import
-import styles from './styles.module.scss';
+import styles from './styles.module.scss'
 
-const InstructorCourseCard = (
-    { title, src, rate, numberOfRate, numberOfStudent }:
-        InstructorCourseCardProp
-) => {
-    const { t } = useTranslation("common")
+const InstructorCourseCard = () => {
+    const router = useRouter()
+
+    const onEditClick = useCallback(() => {
+        router.push({
+            pathname: "/instructor/course/edit/curriculum",
+            query: {
+                courseId: "rbrgbvrg"
+            }
+        })
+    }, [])
     return (
-        <Link href="/instructor/course/edit/curriculum" style={{ textDecorationLine: "none" }}>
-            <div className={styles.container}>
-                <Image
-                    src={src}
-                    alt=""
-                    width={1000}
-                    height={1000}
-                    style={{
-                        maxWidth: '100%',
-                        height: 'auto',
-                    }} />
-                <Height16 />
-                <h6 className={styles.title}>{title}</h6>
-                <div className={styles.numbers}>
-                    <div className={styles.numberOfStudents}>
-                        <div>{t("Number of students")}</div>
-                        <div>{numberOfStudent}</div>
-                    </div>
-                    <div className={styles.rateContainer}>
-                        <div>{t("rate")}</div>
-                        <div className={styles.rateValue}>
-                            <div className={styles.value}>{rate}</div>
-                            <Rating value={rate} size="small" readOnly />
-                            <div className={styles.rateNum}>{`(${numberOfRate})`}</div>
-                        </div>
+        <div className={styles.container}>
+            <div>
+                <Image src={PlaceHolder} alt='course' height={118} width={118} />
+            </div>
+            <div className={styles.content}>
+                <div className={styles.titleDraft}>
+                    <div>Titldvnvkjdndkjvndjvkdn vdvjdkvjdvndjvndjkvdvnjdvne</div>
+                    <div className={styles.draftPublic}>
+                        <span>Draft</span>
+                        <span>Public</span>
                     </div>
                 </div>
+                <div className={styles.progress}>
+                    <div>Finish your course</div>
+                    <div className={styles.progressBar}>
+                        <LinearProgress value={50} height={"8px"} borderRadius={"5px"} />
+                    </div>
+                </div>
+                {/* Edit on Hover */}
+                <Button className={styles.edit} onClick={onEditClick}>
+                    Edit / Manage course
+                </Button>
             </div>
-        </Link>
+        </div >
     )
 }
 

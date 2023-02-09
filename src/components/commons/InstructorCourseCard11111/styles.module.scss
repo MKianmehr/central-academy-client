@@ -1,0 +1,58 @@
+@import '../../../styles/main.scss';
+
+.container {
+    @include justify-center;
+    flex-direction: column;
+    position: "absolute";
+    width: 100%;
+    max-width: 300px;
+    margin: 0px;
+
+    @include large-screens($breakpoint-sm) {
+        margin: 10px;
+    }
+}
+
+.title {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    font-size: 1rem;
+    color: getColor(primary-text);
+}
+
+.numbers {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: getColor(primary-text);
+}
+
+.numberOfStudents {
+    display: flex;
+    justify-content: space-between;
+}
+
+.rateContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.rateValue {
+    @include align-center;
+    gap: 2px;
+
+    & .value {
+        font-size: 0.9rem;
+        color: getColor(rating);
+    }
+
+    & .rateNum {
+        color: getColor(rating);
+        font-size: 0.9rem;
+        font-weight: 300;
+    }
+}

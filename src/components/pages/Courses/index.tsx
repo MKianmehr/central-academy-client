@@ -31,6 +31,7 @@ const images = [
 ]
 
 
+
 const Courses = () => {
 
     const { t } = useTranslation("common")
@@ -56,6 +57,7 @@ const Courses = () => {
     if (false) {
         return <NoCourseCard />
     }
+    // <InstructorCourseCard key={image._id} src={image.src} title={image.title} rate={image.rate} numberOfStudent={image.numberOfStudent} numberOfRate={image.numberOfRate} />
 
     return (
         <MiniDrawer>
@@ -74,7 +76,7 @@ const Courses = () => {
                     <Divider />
                     <div className={styles.courseContainer}>
                         {images.map((image) => {
-                            return <InstructorCourseCard key={image._id} src={image.src} title={image.title} rate={image.rate} numberOfStudent={image.numberOfStudent} numberOfRate={image.numberOfRate} />
+                            return <InstructorCourseCard />
                         })}
                     </div>
                 </div>
