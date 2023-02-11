@@ -18,7 +18,7 @@ const VideoInput = () => {
                     {t("Upload Video")}
                 </button>
             </div>
-            <FileInput type={{ fa: "ویدیو", en: "Video" }} description={t("video input condition")} />
+            <FileInput type={t("select video")} description={t("video input condition")} />
         </div>
     )
 }

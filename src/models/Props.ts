@@ -201,11 +201,8 @@ export interface AddSubSectionContentTypeProp {
 }
 
 export interface FileInputProp {
-    type: {
-        fa: string;
-        en: string;
-    };
-    description: string;
+    type: string;
+    description?: string;
 }
 
 export interface RemainingInputProp {
@@ -322,4 +319,18 @@ export interface GlobalContextProp {
         message: any;
     }>;
     becomeInstructor: (loading: (loading: boolean) => void) => Promise<void>;
+}
+
+export interface CustomEventForCustomSelect {
+    target: { value: { [key: string]: string } }
+}
+export interface CustomSelectProps {
+    value: { [key: string]: string };
+    values: { [key: string]: string }[];
+    onChange: (e: CustomEventForCustomSelect) => void;
+    className?: string;
+}
+
+export interface KeyValue {
+    [key: string]: string
 }

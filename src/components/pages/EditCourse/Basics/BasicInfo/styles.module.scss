@@ -1,0 +1,43 @@
+@import '../../../../../styles/main.scss';
+
+.title {
+    font-weight: 550;
+    font-size: 1.1rem;
+    margin-top: 20px;
+}
+
+.selectBox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    @include margin-vertical(15px);
+}
+
+.select {
+    flex: 1;
+    min-width: 250px;
+}
+
+.input {
+    outline: none;
+    padding: 10px;
+    border: 1px solid getColor(primary-text);
+    width: 250px;
+}
+
+.courseImage {
+    @include margin-vertical(35px);
+    display: flex;
+    flex-direction: column;
+
+    @include large-screens(500px) {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.fileInput {
+    @include large-screens(500px) {
+        width: 50%;
+    }
+}

@@ -15,6 +15,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 // Styles Import
 import styles from './styles.module.scss'
+import Basics from './Basics';
 
 
 const lists = [
@@ -36,7 +37,7 @@ const lists = [
     {
         header: { fa: "انتشار دوره", en: "Publish your course" },
         sublists: [
-            { link: "#", text: { fa: "پوستر دوره", en: "Course landing page" } },
+            { link: "/instructor/course/edit/basics", text: { fa: "پوستر دوره", en: "Course landing page" } },
             { link: "#", text: { fa: "قیمت", en: "Price" } }
         ]
     }
@@ -56,9 +57,9 @@ const EditCourse = () => {
                 return (
                     <Curriculum />
                 )
-            case "2":
+            case "basics":
                 return (
-                    <></>
+                    <Basics />
                 )
             case "3":
                 return (

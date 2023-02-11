@@ -22,7 +22,7 @@ const RemainingInput = ({ value, onChange, maxLength, placeHolder, className, er
 
     return (
         <div className={styles.container}>
-            <div className={[styles.input, errorValue && styles.input_error].join(" ")}>
+            <div className={[styles.input, errorValue && styles.input_error, className && className].join(" ")}>
                 <input
                     value={value}
                     onChange={onChangeText}

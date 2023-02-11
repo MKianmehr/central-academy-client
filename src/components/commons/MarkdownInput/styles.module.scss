@@ -1,0 +1,39 @@
+@import '../../../styles/main.scss';
+
+.title {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid getColor(primary-text);
+}
+
+.header {
+    padding: 15px;
+    border-bottom: 1px solid getColor(primary-text);
+    font-weight: 600;
+
+    &>a {
+        background-color: getColor(primary-text);
+        color: getColor(primary);
+        @include padding-vertical(5px);
+        @include padding-horizontal(15px);
+    }
+}
+
+.textarea {
+    padding: 10px;
+    resize: vertical;
+    width: 100%;
+    outline: none;
+    height: auto;
+    border: none;
+    resize: none;
+}
+
+.markdown {
+    padding: 10px;
+}

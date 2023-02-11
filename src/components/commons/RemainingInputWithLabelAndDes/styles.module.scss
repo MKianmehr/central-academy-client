@@ -1,0 +1,11 @@
+@import '../../../styles/main.scss';
+
+.title {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.description {
+    font-size: 0.8rem;
+    @include margin-vertical(5px);
+}

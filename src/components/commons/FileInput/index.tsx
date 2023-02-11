@@ -1,15 +1,12 @@
 import React from 'react'
-import { useRouter } from 'next/router';
 import useTranslation from "next-translate/useTranslation";
 
 // Props Import 
 import { FileInputProp } from '../../../models/Props';
 
-// Utils Imports
-import text from '../../../utils/textEnOrFa';
-
 // Styles Import
 import styles from './styles.module.scss'
+import Locale from '../../../utils/localeEnum';
 
 const FileInput = (
     { type, description }:
@@ -17,8 +14,6 @@ const FileInput = (
 ) => {
 
     const { t } = useTranslation("common")
-    const router = useRouter()
-    const isEng = router.locale === "en"
 
     return (
         <>
@@ -27,15 +22,15 @@ const FileInput = (
                 <label className={styles.inputLabel} htmlFor='video'>
                     <span className={styles.inputLabel__left}>{t("No file selected")}</span>
                     <span className={styles.horizontalLine}></span>
-                    <span className={styles.inputLabel__right}>{t("Select")} {text(type, isEng)}</span>
+                    <span className={styles.inputLabel__right}>{type}</span>
                 </label>
             </div>
-            <div className={styles.description}>
+            {description && <div className={styles.description}>
                 <span className={styles.note}>{t("Note")}:</span>
                 <span className={styles.noteContent}>
                     {description}
                 </span>
-            </div>
+            </div>}
         </>
     )
 }

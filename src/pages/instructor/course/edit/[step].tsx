@@ -21,7 +21,8 @@ export async function getStaticPaths() {
         paths: [
             { params: { step: 'curriculum' }, locale: "en" },
             { params: { step: 'curriculum' }, locale: "fa" },
-            { params: { step: '2' } }
+            { params: { step: 'basics' }, locale: "en" },
+            { params: { step: 'basics' }, locale: "fa" }
         ],
         fallback: false, // can also be true or 'blocking'
     }

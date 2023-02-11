@@ -1,0 +1,20 @@
+@import '../../../styles/main.scss';
+
+
+.menu {
+    padding: 12px;
+    color: getColor(primary-text);
+}
+
+.input {
+    position: relative;
+    background-color: getColor(primary);
+    border: 1px solid getColor(primary-text);
+    padding: 10px 26px 10px 12px;
+    font-size: 16px;
+}
+
+.select {
+    color: getColor(primary-text);
+    background-color: getColor(primary);
+}

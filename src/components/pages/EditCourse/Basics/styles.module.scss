@@ -1,0 +1,28 @@
+@import '../../../../styles/main.scss';
+
+.container {
+    @include padding-horizontal(15px);
+    background-color: getColor(primary);
+    overflow: scroll;
+    padding-bottom: 20px;
+}
+
+.header {
+    color: getColor(primary-text);
+    border-bottom: 1px solid getColor(primary-text);
+    @include padding-vertical(10px);
+}
+
+.paragraph {
+    color: getColor(primary-text);
+    padding: 2px;
+    margin-bottom: 50px;
+
+    @include large-screens($breakpoint-sm) {
+        padding: 20px;
+    }
+}
+
+.input {
+    padding: 8px;
+}

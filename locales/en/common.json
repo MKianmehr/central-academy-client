@@ -114,5 +114,17 @@
     "reset-pass-email-sent-paragraph": "You should soon receive an email allowing you to reset your password. Please make sure to check your spam and trash if you can't find the email.",
     "instructor panel": "Instructor",
     "of": "of",
-    "choose-one-become-instructor": "Please choose one option."
+    "choose-one-become-instructor": "Please choose one option.",
+    "Course landing page": "Course landing page",
+    "basics-describe": "Your course landing page is crucial to your success on CAcademy. If it’s done right, it can also help you gain visibility in search engines like Google. As you complete this section, think about creating a compelling Course Landing Page that demonstrates why someone would want to enroll in your course. ",
+    "insert your course title": "Insert your course title",
+    "edit-course-basics": "Your title should be a mix of attention-grabbing, informative, and optimized for search",
+    "course title": "Course title",
+    "course subtitle": "Course subtitle",
+    "edit-course-basics-course-subtitle": "Use 1 or 2 related keywords, and mention 3-4 of the most important areas that you've covered during your course.",
+    "insert your course subtitle": "Insert your course subtitle",
+    "Markdown Cheat Sheet": "Markdown Cheat Sheet",
+    "Basic Info": "Basic Info",
+    "What is primarily taught in your course": "What is primarily taught in your course",
+    "Course image": "Course image"
 }
