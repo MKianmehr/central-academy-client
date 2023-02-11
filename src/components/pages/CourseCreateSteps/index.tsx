@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import useTranslation from "next-translate/useTranslation";
 import { StepperChildProp } from '../../../models/Props'
@@ -10,8 +10,11 @@ import StepThree from './StepThree'
 import StepFour from './StepFour'
 import Stepper from '../../commons/Stepper'
 
+// Context Import
+import { GlobalContext } from '../../../contexts';
+
 // redux Imports
-import { useAppDispatch } from '../../../redux/hooks'
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
 import { resetSteps } from '../../../redux/slices/createCourseStepSlice'
 
 // Styles Import
@@ -27,11 +30,14 @@ const Index = () => {
     ]
 
     const dispatch = useAppDispatch()
+    const createCourseSteps = useAppSelector(state => state.createCourseSteps.state)
     const router = useRouter()
     const [currentStep, setCurrentStep] = useState(1)
     const [loading, setLoading] = useState(false)
     const stepperRef = useRef<StepperChildProp>()
     const { t } = useTranslation("common")
+
+    const { createCourse } = useContext(GlobalContext)
 
     useEffect(() => {
         return () => {
@@ -39,7 +45,11 @@ const Index = () => {
         }
     }, [])
 
-    const onNextClick = useCallback(() => {
+    const handleLoading = useCallback((loading: boolean) => {
+        setLoading(loading)
+    }, [])
+
+    const onNextClick = useCallback(async () => {
         const validToGo = stepperRef.current?.onNextClick()
         if (validToGo && currentStep < steps.length) {
             setCurrentStep((prev) => {
@@ -47,8 +57,7 @@ const Index = () => {
             })
         }
         if (validToGo && (currentStep == steps.length)) {
-            //  do after
-            console.log("complete")
+            const res = await createCourse(createCourseSteps.stepTwo, createCourseSteps.stepThree.en, handleLoading)
         }
     }, [currentStep, setCurrentStep])
 

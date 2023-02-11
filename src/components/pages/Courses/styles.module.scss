@@ -72,3 +72,12 @@
 .input {
     width: 100%
 }
+
+.loading {
+    @include margin-vertical(55px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}

@@ -52,6 +52,10 @@ export const GlobalContext = createContext<GlobalContextProp>({
         return { success: false, message: "" }
     },
     emailPasswordChange: async () => { return { success: false, message: "" } },
-    becomeInstructor: async () => { }
+    becomeInstructor: async () => { },
+    createCourse: async () => {
+        return { success: false, message: "" }
+    },
+    getCourses: async () => { }
 
 })

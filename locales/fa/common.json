@@ -126,5 +126,9 @@
     "Markdown Cheat Sheet": "راهنمای Markdown",
     "Basic Info": "اطلاعات پایه",
     "What is primarily taught in your course": "آنچه در درجه اول در دوره شما آموزش داده می شود",
-    "Course image": "عکس دوره"
+    "Course image": "عکس دوره",
+    "successfully-add": " دوره با موفقیت اضافه شد",
+    "Edit / Manage course": "ویرایش / مدیریت دوره",
+    "Finish your course": "دوره را تمام کن",
+    "course title is duplicate": "عنوان دوره تکراری می باشد لطفا نام دیگری را وارد کنید."
 }

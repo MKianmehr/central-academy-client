@@ -319,6 +319,12 @@ export interface GlobalContextProp {
         message: any;
     }>;
     becomeInstructor: (loading: (loading: boolean) => void) => Promise<void>;
+
+    createCourse: (name: string, category: string, loading: (loading: boolean) => void) => Promise<{
+        success: boolean;
+        message: string;
+    }>;
+    getCourses: (loading: (loading: boolean) => void) => Promise<void>;
 }
 
 export interface CustomEventForCustomSelect {
@@ -333,4 +339,112 @@ export interface CustomSelectProps {
 
 export interface KeyValue {
     [key: string]: string
+}
+
+export interface CourseServiceInterface {
+    createCourse: (name: string, category: string, loading: (loading: boolean) => void) => Promise<{ success: boolean, message: string }>;
+    getCourses: (loading: (loading: boolean) => void) => Promise<void>;
+}
+
+export enum _Class {
+    Chapter = 'chapter',
+    Quiz = 'quiz',
+    Practice = 'practice',
+    Lecture = 'lecture',
+    Asset = "asset",
+}
+
+export enum _type {
+    Quiz = "quiz",
+    CodingExercise = "coding-exercise",
+}
+
+export enum AssetType {
+    Video = "video",
+    File = "file",
+    Article = "article"
+}
+export interface AssetInterface {
+
+    _id: string;
+
+    _class: _Class;
+
+    title: string;
+
+    asset_type: AssetType;
+
+    thumbnail_url: {};
+
+    source_url: {};
+
+    content_summary: string;
+
+    time_estimation: number;
+
+    processing_errors: []
+}
+
+export interface LessonInterface {
+
+    _id: string;
+
+    _class: _Class;
+
+    title: string;
+
+    type?: _type;
+
+    description: string;
+
+    is_published?: boolean;
+
+    is_draft?: boolean;
+
+    duration?: number;
+
+    pass_percent?: number;
+
+    num_assessments?: number;
+
+    is_downloadable?: boolean;
+
+    is_free?: boolean;
+
+    asset?: Asset;
+
+    supplementary_assets?: Asset[];
+
+    slug: string;
+
+    content?: {};
+
+    video_link?: {};
+
+    free_preview?: boolean;
+}
+
+export interface CourseInterface {
+
+    _id: string;
+
+    name: string;
+
+    slug: string;
+
+    description: {};
+
+    price: number;
+
+    image: {};
+
+    category: string;
+
+    published: boolean;
+
+    paid: boolean;
+
+    instructor: string;
+
+    lessons: LessonInterface[];
 }

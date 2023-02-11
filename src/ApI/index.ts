@@ -6,6 +6,8 @@ const API = {
     FORGET_PASSWORD: "/api/auth/forget-password",
     EMAIL_PASSWORD_CHANGE: "/api/auth/email-password-change",
     BECOME_INSTRUCTOR: "/api/auth/become-instructor",
+    CREATE_COURSE: "/api/course/create",
+    GET_COURSES: "/api/course/get-courses",
 }
 
 export default API

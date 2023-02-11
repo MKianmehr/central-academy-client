@@ -1,7 +1,7 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
 import useTranslation from "next-translate/useTranslation";
-
+import Skeleton from '@mui/material/Skeleton';
 
 // Components Import
 import MiniDrawer from '../../commons/MiniDrawer'
@@ -15,32 +15,39 @@ import InstructorCourseCard from '../../commons/InstructorCourseCard'
 import { SelectChangeEvent } from '@mui/material/Select';
 import { Divider } from '@mui/material';
 
+// Context Import
+import { GlobalContext } from '../../../contexts';
+
+// Redux Import
+import { useAppSelector } from '../../../redux/hooks';
+
 // Styles Import
 import styles from './styles.module.scss'
 
 
 const labels = [{ fa: "جدید ترین", en: "Newest" }, { fa: "پرفروش ترین", en: "Popular" }]
-const images = [
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class", rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 1 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class", rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 2 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class", rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 3 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class", rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 4 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class", rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 5 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class", rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 6 },
-    { src: "https://img-c.udemycdn.com/course/240x135/1178124_76bb_11.jpg", title: "C# 10 | Ultimate Guide - Beginner to Advanced | Master class", rate: 2.5, numberOfStudent: 500, numberOfRate: 100, _id: 7 }
-]
-
 
 
 const Courses = () => {
 
     const { t } = useTranslation("common")
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [searchText, setSearchText] = useState('')
     const [value, setValue] = React.useState(labels[0]);
+    const courses = useAppSelector(state => state.courses)
+
+    const { getCourses } = useContext(GlobalContext)
 
     const router = useRouter()
     const isEng = router.locale === "en"
+
+    const handleLoading = useCallback((loading: boolean) => {
+        setLoading(loading)
+    }, [])
+
+    useEffect(() => {
+        getCourses(handleLoading)
+    }, [])
 
     const onSearchSubmit = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.target.value)
@@ -53,11 +60,6 @@ const Courses = () => {
             }
         });
     }, [isEng, labels])
-
-    if (false) {
-        return <NoCourseCard />
-    }
-    // <InstructorCourseCard key={image._id} src={image.src} title={image.title} rate={image.rate} numberOfStudent={image.numberOfStudent} numberOfRate={image.numberOfRate} />
 
     return (
         <MiniDrawer>
@@ -75,9 +77,18 @@ const Courses = () => {
                     </div>
                     <Divider />
                     <div className={styles.courseContainer}>
-                        {images.map((image) => {
-                            return <InstructorCourseCard />
-                        })}
+                        {loading && (
+                            <div className={styles.loading}>
+                                <Skeleton variant="rectangular" width={"90%"} height={80} />
+                                <Skeleton variant="rectangular" width={"90%"} height={80} />
+                                <Skeleton variant="rectangular" width={"90%"} height={80} />
+                            </div>
+                        )}
+                        {!loading && (
+                            courses.length == 0 ? <NoCourseCard /> : courses.map((course) => {
+                                return <InstructorCourseCard key={course._id} course={course} />
+                            })
+                        )}
                     </div>
                 </div>
             </div>
