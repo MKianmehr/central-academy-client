@@ -6,10 +6,9 @@ import { FileInputProp } from '../../../models/Props';
 
 // Styles Import
 import styles from './styles.module.scss'
-import Locale from '../../../utils/localeEnum';
 
 const FileInput = (
-    { type, description }:
+    { type, description, onChange, fileName }:
         FileInputProp
 ) => {
 
@@ -18,9 +17,9 @@ const FileInput = (
     return (
         <>
             <div className={styles.inputContainer}>
-                <input className={styles.input} type="file" id='video' />
+                <input className={styles.input} type="file" id='video' onChange={onChange} />
                 <label className={styles.inputLabel} htmlFor='video'>
-                    <span className={styles.inputLabel__left}>{t("No file selected")}</span>
+                    <span className={styles.inputLabel__left}>{fileName ? fileName : t("No file selected")}</span>
                     <span className={styles.horizontalLine}></span>
                     <span className={styles.inputLabel__right}>{type}</span>
                 </label>

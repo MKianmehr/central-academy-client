@@ -11,6 +11,10 @@ module.exports = nextTranslate({
       {
         protocol: 'https',
         hostname: 's.udemycdn.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'c-academy.s3.eu-west-3.amazonaws.com'
       }
     ],
   },

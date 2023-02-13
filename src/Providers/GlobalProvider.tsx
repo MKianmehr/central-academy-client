@@ -11,14 +11,19 @@ import OnlineProvider from './OnlineProvider'
 import DarkModeProvider from './DarkModeProvider'
 import useRtl from '../hooks/useRtl'
 import useVh from '../hooks/useVh'
-import UserService from '../services/user.service';
+
+// MUI Imports
+import { LinearProgress } from '@mui/material';
 
 // Context imports
 import { GlobalContext } from '../contexts';
 
+// Services
+import UserService from '../services/user.service';
+import CourseService from '../services/course.service';
+
 // Style provider
 import 'react-toastify/dist/ReactToastify.css';
-import CourseService from '../services/course.service';
 
 const GlobalProvider: React.FC<GlobalProp> = ({ children }) => {
     const [loading, setLoading] = useState(false)
@@ -39,7 +44,7 @@ const GlobalProvider: React.FC<GlobalProp> = ({ children }) => {
         getUserLoading,
     } = UserService(onLoad)
 
-    const { createCourse, getCourses } = CourseService(onLoad)
+    const { createCourse, getCourses, uploadImage } = CourseService(onLoad)
 
     return (
         <GlobalContext.Provider value={
@@ -55,11 +60,13 @@ const GlobalProvider: React.FC<GlobalProp> = ({ children }) => {
                 getUserLoading,
                 createCourse,
                 getCourses,
+                uploadImage,
             }}>
             <DndProvider options={HTML5toTouch}>
                 <DarkModeProvider>
                     <OnlineProvider>
                         <>
+                            {loading && <LinearProgress sx={{ zIndex: 1000 }} />}
                             <ToastContainer position='bottom-right' />
                             {children}
                         </>

@@ -1,31 +1,37 @@
 import React from 'react'
+import { NextPage } from 'next'
 import EditCourse from '../../../../components/pages/EditCourse'
-import { GetStaticProps } from 'next'
+import axios from 'axios'
+import { CourseInterface } from '../../../../models/Props'
 
-const Edit = () => {
+const Edit: NextPage<{ data: CourseInterface | undefined }> = ({ data }) => {
     return (
-        <EditCourse />
+        <EditCourse data={data} />
     )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-    return {
-        props: {
-
+Edit.getInitialProps = async (context) => {
+    const { req, res, query } = context
+    if (req) {
+        try {
+            if (!query.courseId) {
+                res?.writeHead(302, { Location: '/instructor/courses' })
+                res?.end()
+            }
+            const response = await axios.get(`http://nginx/api/course/get-course?courseId=${query.courseId}`, {
+                withCredentials: true,
+                headers: req.headers
+            })
+            return {
+                data: response.data as CourseInterface
+            }
+        } catch (e) {
+            res?.writeHead(302, { Location: '/instructor/courses' })
+            res?.end()
         }
     }
+    return { data: undefined }
 }
 
-export async function getStaticPaths() {
-    return {
-        paths: [
-            { params: { step: 'curriculum' }, locale: "en" },
-            { params: { step: 'curriculum' }, locale: "fa" },
-            { params: { step: 'basics' }, locale: "en" },
-            { params: { step: 'basics' }, locale: "fa" }
-        ],
-        fallback: false, // can also be true or 'blocking'
-    }
-}
 
 export default Edit

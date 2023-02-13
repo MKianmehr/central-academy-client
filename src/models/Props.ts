@@ -203,6 +203,8 @@ export interface AddSubSectionContentTypeProp {
 export interface FileInputProp {
     type: string;
     description?: string;
+    fileName?: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface RemainingInputProp {
@@ -325,6 +327,10 @@ export interface GlobalContextProp {
         message: string;
     }>;
     getCourses: (loading: (loading: boolean) => void) => Promise<void>;
+    uploadImage: (image: string, courseId: string, loading: (loading: boolean) => void) => Promise<{
+        success: boolean;
+        message: string;
+    }>;
 }
 
 export interface CustomEventForCustomSelect {
@@ -344,6 +350,10 @@ export interface KeyValue {
 export interface CourseServiceInterface {
     createCourse: (name: string, category: string, loading: (loading: boolean) => void) => Promise<{ success: boolean, message: string }>;
     getCourses: (loading: (loading: boolean) => void) => Promise<void>;
+    uploadImage: (image: string, courseId: string, loading: (loading: boolean) => void) => Promise<{
+        success: boolean;
+        message: string;
+    }>;
 }
 
 export enum _Class {
@@ -432,11 +442,13 @@ export interface CourseInterface {
 
     slug: string;
 
-    description: {};
+    description: string;
 
     price: number;
 
-    image: {};
+    image: {
+        Location: string;
+    };
 
     category: string;
 

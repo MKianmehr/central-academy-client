@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useTranslation from "next-translate/useTranslation";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+// Redux Imports
+import { useAppSelector } from '../../../redux/hooks';
+import { CourseInterface } from '../../../models/Props';
+
 // Component Imports
 import Curriculum from './Curriculum'
+import Basics from './Basics';
 import MenuEditCourse from '../../commons/MenuEditCourse'
 
 // Mui Imports
@@ -13,9 +18,13 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
+// Context Import
+import { EditCourseContext } from '../../../contexts';
+
 // Styles Import
 import styles from './styles.module.scss'
-import Basics from './Basics';
+
+
 
 
 const lists = [
@@ -43,62 +52,65 @@ const lists = [
     }
 ]
 
-const EditCourse = () => {
+enum EditCoursePages {
+    CURRICULUM = "curriculum",
+    BASICS = 'basics'
+}
+
+const EditCourse = ({ data }: { data: CourseInterface | undefined }) => {
 
     const { t } = useTranslation("common")
 
     const router = useRouter()
     const isEnglish = router.locale === "en"
-    const step = router.query.step
+    const step = router.query.step as EditCoursePages
 
-    const WhichStep = () => {
-        switch (step) {
-            case "curriculum":
-                return (
-                    <Curriculum />
-                )
-            case "basics":
-                return (
-                    <Basics />
-                )
-            case "3":
-                return (
-                    <></>
-                )
-            case "4":
-                return (
-                    <></>
-                )
-            default:
-                return <></>
+    const courses = useAppSelector(state => state.courses)
+    const courseId = router.query.courseId
+    const [course, setCourse] = useState<CourseInterface | undefined>()
 
+    useEffect(() => {
+        if (courses.length === 0) {
+            if (data) {
+                setCourse(data)
+            }
+        } else {
+            const course = courses.find((course) => {
+                return course._id === courseId
+            })
+            setCourse(course)
         }
-    }
+    }, [courseId])
+
+    const steps = { curriculum: <Curriculum />, basics: <Basics /> }
+
 
     return (
-        <div className={styles.container}>
-            <nav className={styles.navbar}>
-                <div className={styles.statusContainer}>
-                    <Link href="/instructor/courses">
-                        {isEnglish ? <ArrowBackIosIcon /> : <ArrowForwardIosIcon />}
-                        {t("Back to Course")}
-                    </Link>
-                    <span className={styles.divider}></span>
-                    <span className={styles.status}> {t("status")} <span>( {t("Draft")} )</span></span>
-                </div>
-                <div>
-                    <IconButton className={styles.settings}>
-                        <SettingsIcon />
-                    </IconButton>
-                </div>
-            </nav>
-            <main className={styles.main}>
-                <MenuEditCourse lists={lists} />
-                <div className={[styles.content, !isEnglish && styles.content_rtl].join(" ")}>
-                    {WhichStep()}
-                </div>
-            </main>
-        </div>
+        <EditCourseContext.Provider value={{ course }}>
+            <div className={styles.container}>
+                <nav className={styles.navbar}>
+                    <div className={styles.statusContainer}>
+                        <Link href="/instructor/courses">
+                            {isEnglish ? <ArrowBackIosIcon /> : <ArrowForwardIosIcon />}
+                            {t("Back to Course")}
+                        </Link>
+                        <span className={styles.divider}></span>
+                        <span className={styles.status}> {t("status")} <span>( {t("Draft")} )</span></span>
+                    </div>
+                    <div>
+                        <IconButton className={styles.settings}>
+                            <SettingsIcon />
+                        </IconButton>
+                    </div>
+                </nav>
+                <main className={styles.main}>
+                    <MenuEditCourse lists={lists} />
+                    <div className={[styles.content, !isEnglish && styles.content_rtl].join(" ")}>
+                        {steps[step]}
+                    </div>
+                </main>
+            </div>
+        </EditCourseContext.Provider>
     )
 }
 

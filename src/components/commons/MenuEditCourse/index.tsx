@@ -79,7 +79,7 @@ const Lists = (
             {lists.map((list) => {
                 const border = currentRoute === list.link ? (isEnglish ? { borderRight: borderValue } : { borderLeft: borderValue }) : {}
                 return (
-                    <Link key={list.text.en} href={list.link} className={[styles.list, currentRoute === list.link ? styles.active : ""].join(" ")} style={border}>
+                    <Link key={list.text.en} href={`${list.link}/?courseId=${router.query.courseId}`} className={[styles.list, currentRoute === list.link ? styles.active : ""].join(" ")} style={border}>
                         <RadioButtonUncheckedIcon />
                         <span>
                             {text(list.text, isEnglish)}

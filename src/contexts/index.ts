@@ -5,6 +5,7 @@ import {
     SectionContextProp,
     CurriculumContextProp,
     GlobalContextProp,
+    CourseInterface,
 } from '../models/Props'
 
 export const OnLineContext = createContext<boolean>(true);
@@ -56,6 +57,11 @@ export const GlobalContext = createContext<GlobalContextProp>({
     createCourse: async () => {
         return { success: false, message: "" }
     },
-    getCourses: async () => { }
+    getCourses: async () => { },
+    uploadImage: async () => { return { success: false, message: "" } }
+})
 
+
+export const EditCourseContext = createContext<{ course: CourseInterface | undefined }>({
+    course: undefined
 })

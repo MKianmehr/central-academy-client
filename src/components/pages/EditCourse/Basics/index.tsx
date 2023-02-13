@@ -1,15 +1,19 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import useTranslation from "next-translate/useTranslation";
 import styles from './styles.module.scss'
 import RemainingInputWithLabelAndDes from '../../../commons/RemainingInputWithLabelAndDes';
 import MarkdownInput from '../../../commons/MarkdownInput';
 import BasicInfo from './BasicInfo';
+import { EditCourseContext } from '../../../../contexts';
 
 const Basics = () => {
+    const { course } = useContext(EditCourseContext)
+
     const { t } = useTranslation("common")
-    const [title, setTitle] = useState('')
+    const [title, setTitle] = useState(course?.name || "")
     const [subtitle, setSubtitle] = useState('')
-    const [description, setDescription] = useState('')
+    const [description, setDescription] = useState(course?.description || "")
+
 
     const titleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value)
@@ -19,9 +23,10 @@ const Basics = () => {
         setSubtitle(e.target.value)
     }, [])
 
-    const descriptionOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const descriptionOnChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(e.target.value)
-    }
+    }, [])
+
     return (
         <div className={styles.container}>
             <h3 className={styles.header}>{t("Course landing page")}</h3>

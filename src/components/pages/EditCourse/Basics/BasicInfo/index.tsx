@@ -1,5 +1,11 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import useTranslation from "next-translate/useTranslation";
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import Image from 'next/image';
+
+// Context Import 
+import { EditCourseContext, GlobalContext } from '../../../../../contexts';
 
 // Props Import
 import { CustomEventForCustomSelect, KeyValue } from '../../../../../models/Props'
@@ -7,6 +13,9 @@ import { CustomEventForCustomSelect, KeyValue } from '../../../../../models/Prop
 // Components Imports
 import CustomSelect from '../../../../commons/CustomSelect'
 import FileInput from '../../../../commons/FileInput';
+
+// Utils Import
+import fileResizer from '../../../../../utils/imageResizer';
 
 // Styles Import
 import styles from './styles.module.scss'
@@ -28,8 +37,20 @@ const BasicInfo = () => {
     const [selectedLang, setSelectedLang] = useState(languages[0])
     const [level, setLevel] = useState(courseLevels[0])
     const [category, setCategory] = useState(categories[0])
+    const [imagePreview, setImagePreview] = useState('')
+    const [imageName, setImageName] = useState('')
+    const [imageLoading, setImageLoading] = useState(false)
+
+    const router = useRouter()
+    const [courseId, setCourseId] = useState(router.query.courseId)
+
+    useEffect(() => {
+        setCourseId(router.query.courseId)
+    }, [router.query])
 
     const { t } = useTranslation("common")
+    const { uploadImage } = useContext(GlobalContext)
+    const { course } = useContext(EditCourseContext)
 
     const onSelectLang = useCallback((e: CustomEventForCustomSelect) => {
         setSelectedLang(e.target.value)
@@ -42,6 +63,25 @@ const BasicInfo = () => {
     const onSelectCategory = useCallback((e: CustomEventForCustomSelect) => {
         setCategory(e.target.value)
     }, [])
+
+    const handleLoading = useCallback((loading: boolean) => {
+        setImageLoading(loading)
+    }, [])
+
+    const handleImage = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0]
+            setImagePreview(window.URL.createObjectURL(file))
+            setImageName(file.name)
+            try {
+                const image = await fileResizer({ file, width: 750, height: 422 }) as string
+                uploadImage(image, courseId as string, handleLoading)
+            } catch (e) {
+                toast.warning(`${e}`)
+            }
+        }
+    }, [courseId])
 
     return (
         <div className={styles.container}>
@@ -56,13 +96,20 @@ const BasicInfo = () => {
                 <input className={styles.input} placeholder='e.g. Landscape Photography' />
             </div>
             <div className={styles.courseImage}>
-                <div>
+                <div className={styles.imagewithTitle}>
                     <h4 className={styles.title}>{t("Course image")}</h4>
-                    {/* Images */}
+                    <div className={styles.imageContainer}>
+                        {imagePreview ? <Image className={styles.image} src={imagePreview} fill={true} alt='course image' /> : (
+                            course?.image && course?.image?.Location && <Image className={styles.image} src={course?.image.Location} fill={true} alt='course image' />
+                        )}
+                    </div>
                 </div>
                 <div className={styles.fileInput}>
-                    <p>Upload your course image here. It must meet our course image quality standards to be accepted. Important guidelines: 750x422 pixels; .jpg, .jpeg,. gif, or .png. no text on the image.</p>
-                    <FileInput type={"Upload File"} />
+                    <p className={styles.info}>{t("image conditions")}</p>
+                    <FileInput
+                        fileName={imageName}
+                        type={t("Upload File")} onChange={handleImage}
+                    />
                 </div>
             </div>
         </div>

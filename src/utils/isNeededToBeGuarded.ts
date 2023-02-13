@@ -10,3 +10,5 @@ const isNeededToBeGuarded = (route: string): boolean => {
     if (isProtected) return true
     return false
 }
+
+export default isNeededToBeGuarded

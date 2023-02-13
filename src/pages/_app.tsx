@@ -1,7 +1,5 @@
 // Components import
 import GlobalProvider from '../Providers/GlobalProvider';
-import Navbar from '../components/commons/Navbar';
-import SwipeableTempDrawer from '../components/commons/SwipeableTempDrawer'
 import createEmotionCache from '../utils/createEmotionCache'
 import { CacheProvider } from '@emotion/react';
 import { MyAppProps } from '../models/Props'

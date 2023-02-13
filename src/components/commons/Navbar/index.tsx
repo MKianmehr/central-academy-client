@@ -1,7 +1,6 @@
 import React, { useCallback, useContext } from 'react';
 import Link from 'next/link'
 import useTranslation from "next-translate/useTranslation";
-import LinearProgress from '@mui/material/LinearProgress';
 import { useRouter } from 'next/router';
 
 // Props Import
@@ -32,7 +31,7 @@ import styles from './styles.module.scss'
 function NavBar() {
 
     const { theme, toggleTheme } = useContext(DarkModeContext)
-    const { loading, getUserLoading } = useContext(GlobalContext)
+    const { getUserLoading } = useContext(GlobalContext)
     const user: Partial<User> = useAppSelector(state => state.user)
     const { t } = useTranslation("common")
 
@@ -45,7 +44,6 @@ function NavBar() {
 
     return (
         <>
-            {loading && <LinearProgress />}
             <div className={styles.container}>
                 <h6>
                     <Link className={styles.page} style={{ textDecoration: "none" }} href="/"> {t("website-name")}</Link>

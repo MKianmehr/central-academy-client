@@ -130,5 +130,7 @@
     "successfully-add": "Course successfully added ",
     "Edit / Manage course": "Edit / Manage course",
     "Finish your course": "Finish your course",
-    "course title is duplicate": "Course title is duplicate"
+    "course title is duplicate": "Course title is duplicate",
+    "image conditions": "Upload your course image here. It must meet our course image quality standards to be accepted. Important guidelines: 750x422 pixels; .jpg, .jpeg,. gif, or .png. no text on the image.",
+    "Upload File": "Upload File"
 }

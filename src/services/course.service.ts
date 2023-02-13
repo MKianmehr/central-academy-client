@@ -53,7 +53,6 @@ const CourseService = (onLoad: (loading: boolean) => void): CourseServiceInterfa
                     toast.error('Sth went wrong try again later')
                 }
                 return { success: false, message: "" }
-
             }
         }, [API])
 
@@ -61,7 +60,11 @@ const CourseService = (onLoad: (loading: boolean) => void): CourseServiceInterfa
         onLoad(true)
         loading(true)
         try {
-            const { data } = await Axios.get(API.GET_COURSES)
+            const { data } = await Axios.get(API.GET_COURSES, {
+                params: {
+                    skip: 10,
+                }
+            })
             dispatch(uploadCourses(data))
             onLoad(false)
             loading(false)
@@ -72,9 +75,39 @@ const CourseService = (onLoad: (loading: boolean) => void): CourseServiceInterfa
         }
     }, [API])
 
+    const uploadImage = useCallback(async (image: string, courseId: string, loading: (loading: boolean) => void) => {
+        try {
+            onLoad(true)
+            loading(true)
+            const { data } = await Axios.post('/api/course/upload-image', {
+                image,
+                courseId
+            })
+            onLoad(false)
+            loading(false)
+            toast.success("Image successfully added")
+            return { success: true, message: "Image successfully added" }
+        } catch (e) {
+            onLoad(false)
+            loading(false)
+            if (axios.isAxiosError(e)) {
+                e as AxiosError
+                if (e?.response?.status === 413) {
+                    toast.error(e.response.data.message)
+                    return { success: false, message: e.response.data.message }
+                } else {
+                    toast.error(e?.response?.data)
+                    return { success: false, message: "" }
+                }
+            }
+            return { success: false, message: "" }
+        }
+    }, [])
+
     return {
         createCourse,
         getCourses,
+        uploadImage,
     }
 }
 

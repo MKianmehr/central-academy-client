@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import useTranslation from "next-translate/useTranslation";
 
 // Components Import
@@ -11,6 +11,8 @@ const VideoInput = () => {
 
     const { t } = useTranslation("common")
 
+    const onChangeFile = useCallback((e: React.ChangeEvent<HTMLInputElement>) => { }, [])
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -18,7 +20,11 @@ const VideoInput = () => {
                     {t("Upload Video")}
                 </button>
             </div>
-            <FileInput type={t("select video")} description={t("video input condition")} />
+            <FileInput
+                onChange={onChangeFile}
+                type={t("select video")}
+                description={t("video input condition")}
+            />
         </div>
     )
 }

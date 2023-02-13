@@ -52,7 +52,7 @@ const MarkdownInput: React.FC<Props> = ({ value, onChange, placeHolder, title })
             {title && <div className={styles.title}>{title}</div>}
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <a target="_blank" href='https://www.markdownguide.org/cheat-sheet/'>
+                    <a target="_blank" rel="noreferrer" href='https://www.markdownguide.org/cheat-sheet/'>
                         {t("Markdown Cheat Sheet")}
                     </a>
                 </div>

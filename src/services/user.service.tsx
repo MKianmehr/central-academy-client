@@ -15,6 +15,9 @@ import Axios from './axios.service';
 // Props Import
 import { User, UserServiceInterface } from '../models/Props'
 
+// Utils Imports
+import isNeededToBeGuarded from '../utils/isNeededToBeGuarded';
+
 
 const UserService = (onLoad: (loading: boolean) => void): UserServiceInterface => {
 
