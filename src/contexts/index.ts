@@ -35,8 +35,8 @@ export const CurriculumContext = createContext<CurriculumContextProp>(
         onDragSection: () => { },
         onDragSubSection: () => { },
         curriculumItems: [],
-        handleAddCurriculumItem: () => { return false },
-        handleEditCurriculumItem: () => { return false },
+        handleAddCurriculumItem: async () => { return false },
+        handleEditCurriculumItem: async () => { return false },
         handleDeleteCurriculumItem: () => { return false },
     }
 )
@@ -58,10 +58,12 @@ export const GlobalContext = createContext<GlobalContextProp>({
         return { success: false, message: "" }
     },
     getCourses: async () => { },
-    uploadImage: async () => { return { success: false, message: "" } }
+    uploadImage: async () => { return { success: false, message: "" } },
+    addLesson: async () => { return { success: false, message: "" } },
+    editLesson: async () => { return { success: false, message: "" } },
 })
 
 
-export const EditCourseContext = createContext<{ course: CourseInterface | undefined }>({
-    course: undefined
+export const EditCourseContext = createContext<{ course: CourseInterface }>({
+    course: { _id: "", name: "", slug: "", description: "", price: 0, image: { Location: "" }, category: "", published: false, paid: false, instructor: "", lessons: [] }
 })

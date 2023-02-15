@@ -17,6 +17,7 @@ import ClassOptions, { QuizOptions } from '../../../utils/curriculumClasses';
 
 // Styles Import
 import styles from './styles.module.scss'
+import { _Class, _type } from '../../../models/Props';
 
 const AddSubSection = ({ index, closeBeforeSubSection }: { index: number; closeBeforeSubSection: () => void }) => {
 
@@ -38,8 +39,8 @@ const AddSubSection = ({ index, closeBeforeSubSection }: { index: number; closeB
         if (buttonName === ClassOptions.Quiz) {
             setSubSectionOption(<Quiz
                 index={index}
-                _class={ClassOptions.Quiz}
-                type={ClassOptions.Quiz}
+                _class={_Class.Quiz}
+                type={_type.Quiz}
                 handleCloseSubSectionOption={handleCloseSubSectionOption}
                 closeBeforeSubSection={closeBeforeSubSection}
             />)
@@ -48,8 +49,8 @@ const AddSubSection = ({ index, closeBeforeSubSection }: { index: number; closeB
             setSubSectionOption(<LCA
                 closeBeforeSubSection={closeBeforeSubSection}
                 index={index}
-                _class={(buttonName === QuizOptions.CodingExercise) ? ClassOptions.Quiz : buttonName}
-                type={(buttonName === QuizOptions.CodingExercise) ? buttonName : undefined}
+                _class={((buttonName === QuizOptions.CodingExercise) ? ClassOptions.Quiz : buttonName) as _Class}
+                type={((buttonName === QuizOptions.CodingExercise) ? buttonName : undefined) as _type}
                 handleCloseSubSectionOption={handleCloseSubSectionOption}
             />)
             setShowSubSectionCreation(true)

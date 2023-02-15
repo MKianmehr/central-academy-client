@@ -46,23 +46,24 @@ const Quiz = ({ type, _class, index, handleCloseSubSectionOption, content, close
         setDescription(e.target.value)
     }
 
-    const onClickConfirm = useCallback(() => {
+    const onClickConfirm = useCallback(async () => {
 
         // closeBeforeSubSection is use just for when we create a subsection not editing
 
         if (text) {
             if (content && index) {
-                const res = handleEditCurriculumItem({
+                const res = await handleEditCurriculumItem({
                     index, data: {
                         title: text,
-                        description
+                        description,
+                        lessonId: content._id,
                     }
                 })
                 if (res) {
                     handleCloseSubSectionOption()
                 }
             } else if (closeBeforeSubSection) {
-                const res = handleAddCurriculumItem({
+                const res = await handleAddCurriculumItem({
                     index: index
                     , data: {
                         title: text,

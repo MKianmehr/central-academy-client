@@ -67,7 +67,7 @@ const EditCourse = ({ data }: { data: CourseInterface | undefined }) => {
 
     const courses = useAppSelector(state => state.courses)
     const courseId = router.query.courseId
-    const [course, setCourse] = useState<CourseInterface | undefined>()
+    const [course, setCourse] = useState<CourseInterface>({ _id: "", name: "", slug: "", description: "", price: 0, image: { Location: "" }, category: "", published: false, paid: false, instructor: "", lessons: [] })
 
     useEffect(() => {
         if (courses.length === 0) {
@@ -78,7 +78,9 @@ const EditCourse = ({ data }: { data: CourseInterface | undefined }) => {
             const course = courses.find((course) => {
                 return course._id === courseId
             })
-            setCourse(course)
+            if (course) {
+                setCourse(course)
+            }
         }
     }, [courseId])
 

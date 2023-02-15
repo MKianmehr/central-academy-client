@@ -133,8 +133,7 @@ const CourseSection = ({ index, section, subSections, indexToShow }: CourseSecti
                     {section && isEditSectionActive && (
                         <AddSection
                             onClick={handleEditSection}
-                            title={section?.title}
-                            goal={section.description}
+                            section={section}
                             index={index}
                         />
                     )}

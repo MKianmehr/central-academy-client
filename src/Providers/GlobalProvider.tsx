@@ -24,6 +24,7 @@ import CourseService from '../services/course.service';
 
 // Style provider
 import 'react-toastify/dist/ReactToastify.css';
+import LessonService from '../services/lesson.service';
 
 const GlobalProvider: React.FC<GlobalProp> = ({ children }) => {
     const [loading, setLoading] = useState(false)
@@ -44,7 +45,16 @@ const GlobalProvider: React.FC<GlobalProp> = ({ children }) => {
         getUserLoading,
     } = UserService(onLoad)
 
-    const { createCourse, getCourses, uploadImage } = CourseService(onLoad)
+    const {
+        createCourse,
+        getCourses,
+        uploadImage
+    } = CourseService(onLoad)
+
+    const {
+        addLesson,
+        editLesson,
+    } = LessonService(onLoad)
 
     return (
         <GlobalContext.Provider value={
@@ -61,6 +71,8 @@ const GlobalProvider: React.FC<GlobalProp> = ({ children }) => {
                 createCourse,
                 getCourses,
                 uploadImage,
+                addLesson,
+                editLesson,
             }}>
             <DndProvider options={HTML5toTouch}>
                 <DarkModeProvider>

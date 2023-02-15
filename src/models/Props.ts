@@ -115,12 +115,12 @@ export type EditCourseMenuProp = {
 export interface CourseSectionProp {
     index: number;
     indexToShow: number;
-    section?: CurriculumItem;
-    subSections?: CurriculumItem[];
+    section?: LessonInterface;
+    subSections?: LessonInterface[];
 }
 
 export interface CourseSubSectionProp {
-    content: CurriculumItem;
+    content: LessonInterface;
     index: number;
     sectionIndex: number;
 }
@@ -156,9 +156,9 @@ export interface CurriculumContextProp {
         targetSectionIndex: number;
         currentSectionIndex: number;
     }) => void;
-    curriculumItems: CurriculumItem[];
-    handleAddCurriculumItem: ({ data, index }: { data: AddCurriculumItem; index: number }) => boolean;
-    handleEditCurriculumItem: ({ data, index }: { data: CurriculumItem; index: number }) => boolean;
+    curriculumItems: LessonInterface[];
+    handleAddCurriculumItem: ({ data, index }: { data: AddCurriculumItem; index: number; }) => Promise<boolean>;
+    handleEditCurriculumItem: ({ data, index }: { data: EditCurriculumItem; index: number; }) => Promise<boolean>;
     handleDeleteCurriculumItem: ({ index }: { index: number }) => boolean;
 }
 
@@ -166,13 +166,13 @@ export interface DragDropSubSection {
     currentSectionIndex: number;
     index: number;
     type: string;
-    _id: number;
+    _id: string;
 }
 
 export interface DragDropSection {
     index: number;
     type: string;
-    _id: number;
+    _id: string;
 }
 
 export interface SectionHeaderProps {
@@ -185,8 +185,7 @@ export interface SectionHeaderProps {
 
 export interface AddSectionProp {
     onClick: () => void;
-    title?: string;
-    goal?: string;
+    section?: LessonInterface;
     index: number;
 }
 
@@ -253,24 +252,20 @@ export interface CurriculumItem {
     supplementary_assets?: Asset[];
 }
 
-export interface AddCurriculumItem extends CurriculumItem {
-    _class: string;
-}
-
 export interface SimpleQuiz {
-    _class: string;
-    type?: string;
+    _class: _Class;
+    type?: _type;
     index: number;
     handleCloseSubSectionOption: () => void;
-    content?: CurriculumItem;
+    content?: LessonInterface;
     closeBeforeSubSection?: () => void;
 }
 
 export interface LCAProp {
-    _class: string;
-    type?: string;
+    _class: _Class;
+    type?: _type;
     handleCloseSubSectionOption: () => void;
-    content?: CurriculumItem;
+    content?: LessonInterface;
     index: number;
     closeBeforeSubSection?: () => void;
 }
@@ -331,6 +326,18 @@ export interface GlobalContextProp {
         success: boolean;
         message: string;
     }>;
+
+    addLesson: ({ loading, ...updatedFields }: AddLessonInterface) => Promise<{
+        success: boolean;
+        message: string;
+        lesson?: LessonInterface;
+    }>;
+
+    editLesson: ({ loading, ...updatedFields }: EditLessonInterface) => Promise<{
+        success: boolean;
+        message: string;
+        lesson?: LessonInterface | undefined;
+    }>;
 }
 
 export interface CustomEventForCustomSelect {
@@ -355,6 +362,41 @@ export interface CourseServiceInterface {
         message: string;
     }>;
 }
+
+
+export interface AddLessonInterface {
+    _class: _Class;
+    title: string;
+    courseId: string;
+    index: number;
+    loading: (loading: boolean) => void;
+    description?: string;
+    type?: _type;
+}
+
+export interface EditLessonInterface {
+    title?: string;
+    description?: string;
+    targetIndex?: number;
+    courseId: string;
+    lessonId: string;
+    loading: (loading: boolean) => void;
+}
+export interface LessonServiceInterface {
+    addLesson: ({ loading, ...updatedFields }: AddLessonInterface) => Promise<{
+        success: boolean;
+        message: string;
+        lesson?: LessonInterface;
+    }>;
+
+    editLesson: ({ loading, ...updatedFields }: EditLessonInterface) => Promise<{
+        success: boolean;
+        message: string;
+        lesson?: LessonInterface;
+    }>;
+}
+
+
 
 export enum _Class {
     Chapter = 'chapter',
@@ -425,7 +467,7 @@ export interface LessonInterface {
 
     supplementary_assets?: Asset[];
 
-    slug: string;
+    slug?: string;
 
     content?: {};
 
@@ -459,4 +501,29 @@ export interface CourseInterface {
     instructor: string;
 
     lessons: LessonInterface[];
+}
+
+
+export interface AddCurriculumItem {
+
+    _class: _Class;
+
+    title: string;
+
+    type?: _type;
+
+    description?: string;
+
+}
+
+export interface EditCurriculumItem {
+
+    title?: string;
+
+    description?: string;
+
+    lessonId: string;
+
+    targetIndex?: number;
+
 }

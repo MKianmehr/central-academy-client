@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import useTranslation from "next-translate/useTranslation";
-import { AddSectionProp } from '../../../models/Props';
+import { AddSectionProp, _Class } from '../../../models/Props';
 
 // component imports
 import RemainingInput from '../RemaingInput'
@@ -17,12 +17,13 @@ import ClassOptions from '../../../utils/curriculumClasses';
 // styles import
 import styles from './styles.module.scss'
 
-const AddSection = ({ onClick, title, goal, index }: AddSectionProp) => {
+const AddSection = ({ onClick, section, index }: AddSectionProp) => {
 
-    const [localTitle, setLocalTitle] = useState(title ? title : "")
+    const [localTitle, setLocalTitle] = useState(section?.title ? section.title : "")
     const [titleError, setTitleError] = useState(false)
-    const [localGoal, setLocalGoal] = useState(goal ? goal : "")
+    const [localGoal, setLocalGoal] = useState(section?.description ? section.description : "")
     const [mounted, setMounted] = useState(false)
+
 
     const { t } = useTranslation("common")
 
@@ -51,52 +52,49 @@ const AddSection = ({ onClick, title, goal, index }: AddSectionProp) => {
     }, [])
 
 
-    const onConfirmButtonClick = useCallback(() => {
-        if (!localTitle) {
+    const onConfirmButtonClick = useCallback(async () => {
+        if (!localTitle || localTitle.length < 3) {
             setTitleError(true)
             return
         }
-        const res = handleAddCurriculumItem({
+        const res = await handleAddCurriculumItem({
             index, data: {
+                _class: ClassOptions.Chapter as _Class,
                 title: localTitle,
                 description: localGoal,
-                _class: ClassOptions.Chapter
             }
         })
         if (res) {
             onClick()
-        } else {
-            // say somthing went wrong
         }
     }, [localTitle, localGoal, index, onClick, handleAddCurriculumItem])
 
 
-    const onEditSectionButtonClick = useCallback(() => {
-        if (!localTitle) {
+    const onEditSectionButtonClick = useCallback(async () => {
+        if (!localTitle || localTitle.length < 3) {
             setTitleError(true)
             return
         }
-        const res = handleEditCurriculumItem({
-            data: { title: localTitle, description: localGoal }
-            , index
-        })
-        if (res) {
-            onClick()
-        } else {
-            // say somthing went wrong
+        if (section) {
+            const res = await handleEditCurriculumItem({
+                data: { title: localTitle, description: localGoal, lessonId: section._id }, index
+            })
+            if (res) {
+                onClick()
+            }
         }
     }, [localTitle, localGoal, index, onClick, handleEditCurriculumItem])
 
 
     return (
         <div className={styles.container}>
-            <h5 className={styles.title}>{title ? t("Edit Section") : t("New Section")}:</h5>
+            <h5 className={styles.title}>{section ? t("Edit Section") : t("New Section")}:</h5>
             <RemainingInput
                 value={localTitle}
                 onChange={onTitleChange}
                 maxLength={80}
                 placeHolder={`${t('Enter a title')}`}
-                errorValue={titleError ? `${t("This field may not be blank.")}` : ""}
+                errorValue={titleError ? `${t("Please enter a value that is at least 3 characters long in this field")}` : ""}
             />
             <p className={styles.description}>
                 {t("sectionIncome")}
@@ -109,7 +107,7 @@ const AddSection = ({ onClick, title, goal, index }: AddSectionProp) => {
             />
             <div className={styles.buttonContainer}>
                 <Button onClick={onClick} className={styles.cancel}>{t("Cancel")}</Button>
-                <Button onClick={title ? onEditSectionButtonClick : onConfirmButtonClick} className={styles.confirm}>{title ? t("Edit Section") : t("Add Section")}</Button>
+                <Button onClick={section ? onEditSectionButtonClick : onConfirmButtonClick} className={styles.confirm}>{section ? t("Edit Section") : t("Add Section")}</Button>
             </div>
         </div>
     )

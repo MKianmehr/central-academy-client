@@ -79,7 +79,7 @@
     "Note": "Note",
     "No file selected": "No file selected",
     "Select": "Select",
-    "This field may not be blank.": "This field may not be blank.",
+    "Please enter a value that is at least 3 characters long in this field": "Please enter a value that is at least 3 characters long in this field",
     "Please Confirm": "Please Confirm",
     "section delete message": "You are about to remove a curriculum item. Are you sure you want to continue?",
     "ok": "OK",

@@ -8,6 +8,8 @@ const API = {
     BECOME_INSTRUCTOR: "/api/auth/become-instructor",
     CREATE_COURSE: "/api/course/create",
     GET_COURSES: "/api/course/get-courses",
+    ADD_LESSON: "/api/course/add-lesson",
+    EDIT_LESSON: "/api/course/edit-lesson",
 }
 
 export default API

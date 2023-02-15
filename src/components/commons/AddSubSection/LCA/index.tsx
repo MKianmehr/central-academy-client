@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState } from 'react'
 import useTranslation from "next-translate/useTranslation";
 
 // Props Import
-import { LCAProp } from '../../../../models/Props';
+import { LCAProp, _Class } from '../../../../models/Props';
 
 // Mui Imports
 import { Button } from '@mui/material';
@@ -39,22 +39,23 @@ const LCA = (
         handleCloseSubSectionOption()
     }
 
-    const onClickConfirm = useCallback(() => {
+    const onClickConfirm = useCallback(async () => {
 
         // closeBeforeSubSection is use just for when we create a subsection not editing
 
         if (text) {
             if (content && index) {
-                const res = handleEditCurriculumItem({
+                const res = await handleEditCurriculumItem({
                     index, data: {
-                        title: text
+                        title: text,
+                        lessonId: content._id,
                     }
                 })
                 if (res) {
                     handleCloseSubSectionOption()
                 }
             } else if (closeBeforeSubSection) {
-                const res = handleAddCurriculumItem({
+                const res = await handleAddCurriculumItem({
                     index: index
                     , data: {
                         title: text,

@@ -1,9 +1,9 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from 'next/router';
 
 // Props Import 
-import { AddCurriculumItem, CurriculumItem } from '../../../../models/Props';
+import { AddCurriculumItem, CurriculumItem, EditCurriculumItem, LessonInterface } from '../../../../models/Props';
 
 // Components Imports
 import CourseSection from '../../../commons/CourseSection'
@@ -14,7 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { Button, IconButton } from '@mui/material';
 
 // Contexts Import
-import { CurriculumContext } from '../../../../contexts';
+import { CurriculumContext, EditCourseContext, GlobalContext } from '../../../../contexts';
 
 // Utils Imports
 
@@ -24,165 +24,38 @@ import ClassOptions from '../../../../utils/curriculumClasses';
 import styles from './styles.module.scss'
 
 
-const response = {
-    count: 5,
-    next: "",
-    previous: "",
-    results: [
-        {
-            _class: "chapter",
-            _id: 451,
-            title: "Chapter o",
-            description: "",
-            object_index: 1,
-        },
-        {
-            _class: "quiz",
-            _id: 154321,
-            title: "Quiz fe",
-            type: "quiz",
-            description: "",
-            is_published: true,
-            object_index: 1,
-            is_draft: false,
-            duration: 0,
-            pass_percent: 70,
-            num_assessments: 0, // number of questions
-            requires_draft: false,
-            is_randomized: false
-        },
-        {
-            _class: "chapter",
-            _id: 3211,
-            title: "Chapter Two",
-            description: "",
-            object_index: 1,
-        },
-        {
-            _class: "quiz",
-            _id: 5672,
-            title: "Quiz fe",
-            type: "quiz",
-            description: "",
-            is_published: true,
-            object_index: 1,
-            is_draft: false,
-            duration: 0,
-            pass_percent: 70,
-            num_assessments: 0, // number of questions
-            requires_draft: false,
-            is_randomized: false
-        },
-        {
-            _class: "chapter",
-            _id: 17098760,
-            title: "Chapter One",
-            description: "",
-            object_index: 1,
-        },
-        {
-            _class: "quiz",
-            _id: 12154,
-            title: "quiz code exe",
-            type: "coding-exercise",
-            description: "",
-            is_published: false,
-            object_index: 0,
-            is_draft: false,
-            duration: 0,
-            pass_percent: 70,
-            num_assessments: 1,
-            requires_draft: false,
-            is_randomized: false
-        },
-        {
-            _class: "practice", // it is assessment
-            _id: 876544,
-            title: "practice",
-            is_published: false,
-            object_index: 0 // default if is publishid we check real number
-        },
-        {
-            _class: "lecture",
-            _id: 98765435675,
-            title: "lect",
-            description: "",
-            is_published: true,
-            is_downloadable: false,
-            is_free: true,
-            asset: {  // or null
-                _class: "asset",
-                _id: 987656786,
-                asset_type: "Video",
-                title: "video name",
-                created: "2023.01.13",
-                status: 1,
-                body: "",
-                thumbnail_url: "http://",
-                source_url: "",
-                content_summary: "00.50",
-                processing_errors: [],
-                time_estimation: 50
-            },
-            object_index: 1,
-            supplementary_assets: [
-                {
-                    _class: "asset",
-                    _id: 78765898765,
-                    asset_type: "File",
-                    title: "doc.pdf",
-                    created: "2023",
-                    status: 1,
-                    body: "",
-                    thumbnail_url: "htt",
-                    source_url: "",
-                    content_summary: "310kb",
-                    processing_errors: [],
-                    time_estimation: 0,
-                }
-            ]
-        },
-        {
-            _class: "lecture",
-            _id: 695968,
-            title: "dx",
-            description: "",
-            is_published: true,
-            is_downloadable: true,
-            is_free: false,
-            asset: {
-                _class: "asset",
-                _id: 894939,
-                asset_type: "Article",
-                title: "",
-                created: "2023.01.13",
-                status: 1,
-                body: "",
-                thumbnail_url: "http://",
-                source_url: "",
-                content_summary: "00.50",
-                processing_errors: [],
-                time_estimation: 50
-            },
-            object_index: 4,
-            supplementary_assets: []
-        }
-    ]
-}
-
 const Curriculum = () => {
 
+    const { course } = useContext(EditCourseContext)
+    const { addLesson, editLesson } = useContext(GlobalContext)
     const { t } = useTranslation("common")
     const [isOpenAddSection, setIsOpenAddSection] = useState(false)
-    const [curriculumItems, setCurriculumItems] = useState<CurriculumItem[]>(response.results)
+    const [curriculumItems, setCurriculumItems] = useState<LessonInterface[]>(course?.lessons || [])
+    const [loading, setLoading] = useState(false)
 
+    const handleLoading = useCallback((loading: boolean) => {
+        setLoading(loading)
+    }, [])
+
+    useEffect(() => {
+        if (curriculumItems.length === 0) {
+            setCurriculumItems(course?.lessons || [])
+        }
+    }, [course])
+
+
+    // *********
     const SubSectionsBeforeTheFirstSection = useMemo(
         () => {
             return curriculumItems
-                .slice(0, curriculumItems.findIndex((curriculumItem) => curriculumItem._class === ClassOptions.Chapter))
+                .slice(0, curriculumItems.findIndex((curriculumItem) => {
+                    return curriculumItem._class === ClassOptions.Chapter
+                }))
         },
         [curriculumItems]
     )
+
+    // *********
 
     const Sections = useMemo(() => {
         const sections = []
@@ -244,26 +117,33 @@ const Curriculum = () => {
         }
     }, [curriculumItems])
 
-    const handleAddCurriculumItem = (
+    const handleAddCurriculumItem = async (
         { data, index }:
             { data: AddCurriculumItem, index: number }
     ) => {
-        const allCurriculumItems = [...curriculumItems]
-        allCurriculumItems.splice(index, 0, { ...data, _id: Math.floor(Math.random() * 10000) + 1 })
-        setCurriculumItems(allCurriculumItems)
-        return true
-        // or return false
+        const res = await addLesson({ ...data, courseId: course._id, index, loading: handleLoading })
+        if (res.success) {
+            const allCurriculumItems = [...curriculumItems]
+            if (res.lesson) {
+                allCurriculumItems.splice(index, 0, res.lesson)
+                setCurriculumItems(allCurriculumItems)
+                return true
+            }
+        }
+
+        return false
     }
 
-    const handleEditCurriculumItem = (
+    const handleEditCurriculumItem = async (
         { data, index }:
-            { data: CurriculumItem; index: number }
+            { data: EditCurriculumItem; index: number }
     ) => {
+        editLesson({ loading: handleLoading, ...data, courseId: course._id })
         const allCurriculumItems = [...curriculumItems]
 
         const [currentItem] = allCurriculumItems.splice(index, 1)
 
-        const newItem: CurriculumItem = {
+        const newItem: LessonInterface = {
             ...currentItem, ...data
         }
 
