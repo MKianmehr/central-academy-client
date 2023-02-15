@@ -27,7 +27,7 @@ import styles from './styles.module.scss'
 const Curriculum = () => {
 
     const { course } = useContext(EditCourseContext)
-    const { addLesson, editLesson } = useContext(GlobalContext)
+    const { addLesson, editLesson, updateLessonsOrder } = useContext(GlobalContext)
     const { t } = useTranslation("common")
     const [isOpenAddSection, setIsOpenAddSection] = useState(false)
     const [curriculumItems, setCurriculumItems] = useState<LessonInterface[]>(course?.lessons || [])
@@ -89,6 +89,7 @@ const Curriculum = () => {
         const NumberOfElementsToMove = i - max
         const removedItems = allCurriculumItems.splice(max, NumberOfElementsToMove)
         allCurriculumItems.splice(min, 0, ...removedItems)
+        updateLessonsOrder({ loading: handleLoading, lessons: allCurriculumItems, courseId: course._id })
         setCurriculumItems(allCurriculumItems)
 
     }, [curriculumItems])
@@ -103,6 +104,7 @@ const Curriculum = () => {
         if (currentIndex > targetIndex && !SubToSub) {
             const [currentSubSection] = allCurriculumItems.splice(currentIndex, 1)
             allCurriculumItems.splice(targetIndex + 1, 0, currentSubSection)
+            updateLessonsOrder({ loading: handleLoading, lessons: allCurriculumItems, courseId: course._id })
             setCurriculumItems(allCurriculumItems)
             return
         }
@@ -113,6 +115,7 @@ const Curriculum = () => {
         } else {
             const [currentSubSection] = allCurriculumItems.splice(currentIndex, 1)
             allCurriculumItems.splice(targetIndex, 0, currentSubSection)
+            updateLessonsOrder({ loading: handleLoading, lessons: allCurriculumItems, courseId: course._id })
             setCurriculumItems(allCurriculumItems)
         }
     }, [curriculumItems])

@@ -71,9 +71,39 @@ const LessonService = (onLoad: (loading: boolean) => void): LessonServiceInterfa
         }, [API])
 
 
+    const updateLessonsOrder = useCallback(async ({ courseId, lessons, loading }: { courseId: string; lessons: LessonInterface[]; loading: (loading: boolean) => void; }) => {
+        onLoad(true)
+        loading(true)
+        try {
+
+            const { data }: { data: LessonInterface } = await Axios.patch(API.REORDER_LESSONS, {
+                lessons,
+                courseId,
+            })
+            onLoad(false)
+            return { success: true, message: "" }
+        } catch (e) {
+            onLoad(false)
+            loading(false)
+            if (axios.isAxiosError(e)) {
+                e as AxiosError
+                if (e.response?.status === 400) {
+                    toast.error(`${e.response.data.message[0]}`)
+                } else if (e.response?.status === 409) {
+                    toast.error(`${e.response.data.message}`)
+                }
+            } else {
+                toast.error('Sth went wrong try again later')
+            }
+            return { success: false, message: "" }
+        }
+    }, [API])
+
+
     return {
         addLesson,
         editLesson,
+        updateLessonsOrder,
     }
 }
 

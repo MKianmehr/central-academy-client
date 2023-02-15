@@ -338,6 +338,15 @@ export interface GlobalContextProp {
         message: string;
         lesson?: LessonInterface | undefined;
     }>;
+
+    updateLessonsOrder: ({ courseId, lessons, loading }: {
+        courseId: string;
+        lessons: LessonInterface[];
+        loading: (loading: boolean) => void;
+    }) => Promise<{
+        success: boolean;
+        message: string;
+    }>;
 }
 
 export interface CustomEventForCustomSelect {
@@ -377,7 +386,6 @@ export interface AddLessonInterface {
 export interface EditLessonInterface {
     title?: string;
     description?: string;
-    targetIndex?: number;
     courseId: string;
     lessonId: string;
     loading: (loading: boolean) => void;
@@ -393,6 +401,15 @@ export interface LessonServiceInterface {
         success: boolean;
         message: string;
         lesson?: LessonInterface;
+    }>;
+
+    updateLessonsOrder: ({ courseId, lessons, loading }: {
+        courseId: string;
+        lessons: LessonInterface[];
+        loading: (loading: boolean) => void;
+    }) => Promise<{
+        success: boolean;
+        message: string;
     }>;
 }
 

@@ -10,6 +10,7 @@ const API = {
     GET_COURSES: "/api/course/get-courses",
     ADD_LESSON: "/api/course/add-lesson",
     EDIT_LESSON: "/api/course/edit-lesson",
+    REORDER_LESSONS: "/api/course/reorder-lessons"
 }
 
 export default API

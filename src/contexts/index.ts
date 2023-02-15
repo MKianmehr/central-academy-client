@@ -61,6 +61,7 @@ export const GlobalContext = createContext<GlobalContextProp>({
     uploadImage: async () => { return { success: false, message: "" } },
     addLesson: async () => { return { success: false, message: "" } },
     editLesson: async () => { return { success: false, message: "" } },
+    updateLessonsOrder: async () => { return { success: false, message: "" } }
 })
 
 

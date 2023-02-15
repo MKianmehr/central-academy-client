@@ -62,7 +62,7 @@ const CourseService = (onLoad: (loading: boolean) => void): CourseServiceInterfa
         try {
             const { data } = await Axios.get(API.GET_COURSES, {
                 params: {
-                    skip: 10,
+                    skip: 0,
                 }
             })
             dispatch(uploadCourses(data))
