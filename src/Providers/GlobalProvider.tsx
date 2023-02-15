@@ -55,6 +55,7 @@ const GlobalProvider: React.FC<GlobalProp> = ({ children }) => {
         addLesson,
         editLesson,
         updateLessonsOrder,
+        deleteLesson,
     } = LessonService(onLoad)
 
     return (
@@ -75,6 +76,7 @@ const GlobalProvider: React.FC<GlobalProp> = ({ children }) => {
                 addLesson,
                 editLesson,
                 updateLessonsOrder,
+                deleteLesson,
             }}>
             <DndProvider options={HTML5toTouch}>
                 <DarkModeProvider>

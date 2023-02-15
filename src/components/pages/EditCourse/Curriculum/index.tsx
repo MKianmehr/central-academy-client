@@ -27,7 +27,7 @@ import styles from './styles.module.scss'
 const Curriculum = () => {
 
     const { course } = useContext(EditCourseContext)
-    const { addLesson, editLesson, updateLessonsOrder } = useContext(GlobalContext)
+    const { addLesson, editLesson, updateLessonsOrder, deleteLesson } = useContext(GlobalContext)
     const { t } = useTranslation("common")
     const [isOpenAddSection, setIsOpenAddSection] = useState(false)
     const [curriculumItems, setCurriculumItems] = useState<LessonInterface[]>(course?.lessons || [])
@@ -157,15 +157,19 @@ const Curriculum = () => {
         // or return false
     }
 
-    const handleDeleteCurriculumItem = ({ index }:
+    const handleDeleteCurriculumItem = async ({ index }:
         { index: number }
     ) => {
 
         const allCurriculumItems = [...curriculumItems]
         allCurriculumItems.splice(index, 1)
-        setCurriculumItems(allCurriculumItems)
-        return true
-        // or return false
+        const res = await deleteLesson({ courseId: course._id, index, loading: handleLoading })
+        if (res.success) {
+            setCurriculumItems(allCurriculumItems)
+            return true
+        }
+
+        return false
     }
 
 

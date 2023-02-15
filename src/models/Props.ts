@@ -159,7 +159,9 @@ export interface CurriculumContextProp {
     curriculumItems: LessonInterface[];
     handleAddCurriculumItem: ({ data, index }: { data: AddCurriculumItem; index: number; }) => Promise<boolean>;
     handleEditCurriculumItem: ({ data, index }: { data: EditCurriculumItem; index: number; }) => Promise<boolean>;
-    handleDeleteCurriculumItem: ({ index }: { index: number }) => boolean;
+    handleDeleteCurriculumItem: ({ index }: {
+        index: number;
+    }) => Promise<boolean>;
 }
 
 export interface DragDropSubSection {
@@ -347,6 +349,15 @@ export interface GlobalContextProp {
         success: boolean;
         message: string;
     }>;
+
+    deleteLesson: ({ courseId, index, loading }: {
+        courseId: string;
+        index: number;
+        loading: (loading: boolean) => void;
+    }) => Promise<{
+        success: boolean;
+        message: string;
+    }>;
 }
 
 export interface CustomEventForCustomSelect {
@@ -406,6 +417,15 @@ export interface LessonServiceInterface {
     updateLessonsOrder: ({ courseId, lessons, loading }: {
         courseId: string;
         lessons: LessonInterface[];
+        loading: (loading: boolean) => void;
+    }) => Promise<{
+        success: boolean;
+        message: string;
+    }>;
+
+    deleteLesson: ({ courseId, index, loading }: {
+        courseId: string;
+        index: number;
         loading: (loading: boolean) => void;
     }) => Promise<{
         success: boolean;

@@ -8,7 +8,7 @@ import API from '../ApI';
 import Axios from './axios.service';
 
 // Props Import
-import { LessonServiceInterface, _Class, LessonInterface, _type, AddLessonInterface, EditLessonInterface } from '../models/Props'
+import { LessonServiceInterface, _Class, LessonInterface, _type, AddLessonInterface, EditLessonInterface, CourseInterface } from '../models/Props'
 import cleanObject from '../utils/cleanObject';
 
 
@@ -70,13 +70,43 @@ const LessonService = (onLoad: (loading: boolean) => void): LessonServiceInterfa
             }
         }, [API])
 
+    const deleteLesson = useCallback(async ({ courseId, index, loading }: { courseId: string; index: number; loading: (loading: boolean) => void; }) => {
+        onLoad(true)
+        loading(true)
+
+        try {
+            const { data } = await Axios.patch(API.DELETE_LESSON, {
+                index,
+                courseId,
+            })
+            onLoad(false)
+            loading(false)
+            return { success: true, message: "" }
+
+        } catch (e) {
+            onLoad(false)
+            loading(false)
+            if (axios.isAxiosError(e)) {
+                e as AxiosError
+                if (e.response?.status === 400) {
+                    toast.error(`${e.response.data.message[0]}`)
+                } else if (e.response?.status === 409) {
+                    toast.error(`${e.response.data.message}`)
+                }
+            } else {
+                toast.error('Sth went wrong try again later')
+            }
+            return { success: false, message: "" }
+        }
+    }, [API])
+
 
     const updateLessonsOrder = useCallback(async ({ courseId, lessons, loading }: { courseId: string; lessons: LessonInterface[]; loading: (loading: boolean) => void; }) => {
         onLoad(true)
         loading(true)
         try {
 
-            const { data }: { data: LessonInterface } = await Axios.patch(API.REORDER_LESSONS, {
+            const { data }: { data: CourseInterface } = await Axios.patch(API.REORDER_LESSONS, {
                 lessons,
                 courseId,
             })
@@ -104,6 +134,7 @@ const LessonService = (onLoad: (loading: boolean) => void): LessonServiceInterfa
         addLesson,
         editLesson,
         updateLessonsOrder,
+        deleteLesson,
     }
 }
 

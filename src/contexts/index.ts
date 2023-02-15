@@ -37,7 +37,7 @@ export const CurriculumContext = createContext<CurriculumContextProp>(
         curriculumItems: [],
         handleAddCurriculumItem: async () => { return false },
         handleEditCurriculumItem: async () => { return false },
-        handleDeleteCurriculumItem: () => { return false },
+        handleDeleteCurriculumItem: async () => { return false },
     }
 )
 
@@ -61,7 +61,8 @@ export const GlobalContext = createContext<GlobalContextProp>({
     uploadImage: async () => { return { success: false, message: "" } },
     addLesson: async () => { return { success: false, message: "" } },
     editLesson: async () => { return { success: false, message: "" } },
-    updateLessonsOrder: async () => { return { success: false, message: "" } }
+    updateLessonsOrder: async () => { return { success: false, message: "" } },
+    deleteLesson: async () => { return { success: false, message: "" } },
 })
 
 
