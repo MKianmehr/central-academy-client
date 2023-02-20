@@ -1,5 +1,5 @@
 import axios from "axios";
 
-const Axios = axios.create({ timeout: 100000 })
+const Axios = axios.create({ timeout: 500000 })
 
 export default Axios

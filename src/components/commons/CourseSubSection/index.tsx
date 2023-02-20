@@ -127,8 +127,8 @@ const CourseSubSection = (
     }, [isOpenDialog])
 
 
-    const onConfirmDeleteDialog = useCallback(() => {
-        const res = handleDeleteCurriculumItem({ index })
+    const onConfirmDeleteDialog = useCallback(async () => {
+        const res = await handleDeleteCurriculumItem({ index })
         if (res) {
             onOpenDialog()
         }
@@ -162,6 +162,7 @@ const CourseSubSection = (
                 onResourseButtonClick,
                 OnClickContentType: handleContentTitleByOnClickContentType,
                 _class: content._class,
+                content
             }
         }
         >

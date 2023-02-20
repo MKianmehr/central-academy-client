@@ -8,7 +8,7 @@ import { FileInputProp } from '../../../models/Props';
 import styles from './styles.module.scss'
 
 const FileInput = (
-    { type, description, onChange, fileName }:
+    { type, description, onChange, fileName, accept }:
         FileInputProp
 ) => {
 
@@ -17,7 +17,7 @@ const FileInput = (
     return (
         <>
             <div className={styles.inputContainer}>
-                <input className={styles.input} type="file" id='video' onChange={onChange} />
+                <input className={styles.input} type="file" id='video' onChange={onChange} accept={accept && accept} />
                 <label className={styles.inputLabel} htmlFor='video'>
                     <span className={styles.inputLabel__left}>{fileName ? fileName : t("No file selected")}</span>
                     <span className={styles.horizontalLine}></span>

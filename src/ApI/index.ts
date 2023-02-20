@@ -12,6 +12,7 @@ const API = {
     EDIT_LESSON: "/api/course/edit-lesson",
     REORDER_LESSONS: "/api/course/reorder-lessons",
     DELETE_LESSON: "/api/course/delete-lesson",
+    VIDEO_UPLOAD: "/api/course/video-upload",
 }
 
 export default API

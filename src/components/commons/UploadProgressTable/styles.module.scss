@@ -1,0 +1,35 @@
+@import '../../../styles/main.scss';
+
+.table__container {
+    width: 100%;
+}
+
+.table__header {
+    border-bottom: 1px solid #d1d7dc;
+}
+
+.progressTd {
+    min-width: 6.5rem;
+}
+
+.progress {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    @include padding-horizontal(5px);
+}
+
+.trBody {
+
+    &>td {
+        @include padding-vertical(8px);
+    }
+}
+
+.fileName {
+    width: 30%;
+}
+
+.progressContainer {
+    flex: 1;
+}

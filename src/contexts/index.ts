@@ -6,6 +6,7 @@ import {
     CurriculumContextProp,
     GlobalContextProp,
     CourseInterface,
+    _Class,
 } from '../models/Props'
 
 export const OnLineContext = createContext<boolean>(true);
@@ -22,6 +23,7 @@ export const SubSectionContext = createContext<SubSectionContextProp>(
         subSectionOptions: [],
         OnClickContentType: () => { },
         _class: "",
+        content: { _id: "", _class: _Class.Chapter, title: "", description: "" }
     }
 )
 
@@ -38,6 +40,7 @@ export const CurriculumContext = createContext<CurriculumContextProp>(
         handleAddCurriculumItem: async () => { return false },
         handleEditCurriculumItem: async () => { return false },
         handleDeleteCurriculumItem: async () => { return false },
+        handleUploadVideo: async () => ({ success: false, message: "" }),
     }
 )
 
@@ -63,6 +66,7 @@ export const GlobalContext = createContext<GlobalContextProp>({
     editLesson: async () => { return { success: false, message: "" } },
     updateLessonsOrder: async () => { return { success: false, message: "" } },
     deleteLesson: async () => { return { success: false, message: "" } },
+    uploadVideo: async () => { return { success: false, message: "" } },
 })
 
 

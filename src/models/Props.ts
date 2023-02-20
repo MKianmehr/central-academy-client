@@ -137,6 +137,7 @@ export interface SubSectionContextProp {
     subSectionOptions: string[];
     OnClickContentType: (title: string) => void;
     _class?: string;
+    content: LessonInterface;
 }
 
 export interface SectionContextProp {
@@ -162,6 +163,15 @@ export interface CurriculumContextProp {
     handleDeleteCurriculumItem: ({ index }: {
         index: number;
     }) => Promise<boolean>;
+
+    handleUploadVideo: ({ lessonId, videoData, handleProgress }: {
+        lessonId: string;
+        videoData: File;
+        handleProgress: (status: number) => void;
+    }) => Promise<{
+        success: boolean;
+        message: string;
+    }>;
 }
 
 export interface DragDropSubSection {
@@ -206,6 +216,7 @@ export interface FileInputProp {
     description?: string;
     fileName?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    accept?: string;
 }
 
 export interface RemainingInputProp {
@@ -355,6 +366,11 @@ export interface GlobalContextProp {
         index: number;
         loading: (loading: boolean) => void;
     }) => Promise<{
+        success: boolean;
+        message: string;
+    }>;
+
+    uploadVideo: ({ courseId, lessonId, videoData, handleProgress }: UploadVideoInterface) => Promise<{
         success: boolean;
         message: string;
     }>;
@@ -563,4 +579,19 @@ export interface EditCurriculumItem {
 
     targetIndex?: number;
 
+}
+
+export interface UploadVideoInterface {
+    courseId: string;
+    lessonId: string;
+    videoData: File;
+    handleProgress: (status: number) => void;
+}
+
+
+export interface AssetServiceInterface {
+    uploadVideo: ({ courseId, lessonId, videoData, handleProgress }: UploadVideoInterface) => Promise<{
+        success: boolean;
+        message: string;
+    }>;
 }

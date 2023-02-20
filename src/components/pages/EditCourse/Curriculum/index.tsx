@@ -27,7 +27,7 @@ import styles from './styles.module.scss'
 const Curriculum = () => {
 
     const { course } = useContext(EditCourseContext)
-    const { addLesson, editLesson, updateLessonsOrder, deleteLesson } = useContext(GlobalContext)
+    const { addLesson, editLesson, updateLessonsOrder, deleteLesson, uploadVideo } = useContext(GlobalContext)
     const { t } = useTranslation("common")
     const [isOpenAddSection, setIsOpenAddSection] = useState(false)
     const [curriculumItems, setCurriculumItems] = useState<LessonInterface[]>(course?.lessons || [])
@@ -172,6 +172,10 @@ const Curriculum = () => {
         return false
     }
 
+    const handleUploadVideo = useCallback(({ lessonId, videoData, handleProgress }: { lessonId: string; videoData: File; handleProgress: (status: number) => void }) => {
+        return uploadVideo({ courseId: course._id, lessonId, videoData, handleProgress })
+    }, [course])
+
 
     const onClickOpenAddSection = useCallback(() => {
         setIsOpenAddSection(!isOpenAddSection)
@@ -185,6 +189,7 @@ const Curriculum = () => {
             handleAddCurriculumItem,
             handleEditCurriculumItem,
             handleDeleteCurriculumItem,
+            handleUploadVideo,
         }}
         >
             <div className={styles.container}>
