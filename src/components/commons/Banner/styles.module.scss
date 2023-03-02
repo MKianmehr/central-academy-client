@@ -1,0 +1,112 @@
+@import '../../../styles/main.scss';
+
+.bannerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    max-width: 1340px;
+}
+
+.banner {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding-bottom: 75%;
+    min-height: 250px;
+    overflow: hidden;
+
+    @include large-screens($breakpoint-sm) {
+        padding-bottom: unset;
+        height: 400px;
+        max-width: 1800px;
+    }
+
+    ;
+
+}
+
+.banner__image {
+    object-fit: cover;
+    object-position: 75% 50%;
+    height: auto;
+    max-width: 100%;
+    min-width: 250px;
+
+    @include large-screens(600px) {
+        object-position: 55% 50%;
+    }
+}
+
+.banner__text {
+    @include margin-vertical(20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: getColor(primary);
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .08), 0 4px 12px rgba(0, 0, 0, .08);
+
+    &>h1 {
+        font-weight: 700;
+        font-size: 25px;
+        text-align: center;
+        letter-spacing: -0.05rem;
+        user-select: none
+    }
+
+    ;
+
+    &>p {
+        text-align: left;
+        font-size: 15px;
+        text-align: center
+    }
+
+    ;
+
+    @include large-screens(600px) {
+        position: absolute;
+        width: 50%;
+        max-width: 320px;
+        right: 50%;
+        top: 25%
+    }
+
+    ;
+
+    @include large-screens(750px) {
+        right: 55%;
+    }
+
+    ;
+
+    @include large-screens(800px) {
+        right: 60%;
+    }
+
+    ;
+
+    @include large-screens(850px) {
+        right: 60%;
+    }
+}
+
+.banner__button {
+    background-color: getColor(primary-text);
+    color: getColor(primary);
+    border-radius: 0;
+    width: 99%;
+    font-weight: 700;
+    font-size: 1.1rem;
+    @include padding-vertical(15px);
+
+    @include large-screens(600px) {
+        max-width: 320px;
+    }
+
+    &:hover {
+        background-color: getColor(primary-text);
+    }
+}
