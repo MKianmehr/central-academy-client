@@ -136,5 +136,8 @@
     "FileName": "FileName",
     "Type": "Type",
     "Status": "Status",
-    "Date": "Date"
+    "Date": "Date",
+    "homepage-banner-title": "Subscribe to the best of CA",
+    "homepage-banner-description": "With Personal Plan, you get access to 8,000 of our top-rated courses in tech, business, and more.",
+    "homepage-banner-button-text": "Try it free."
 }
