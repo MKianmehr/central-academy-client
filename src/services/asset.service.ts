@@ -42,7 +42,14 @@ const AssetService = (onLoad: (loading: boolean) => void): AssetServiceInterface
             return { success: true, message: "" }
         }
         catch (e) {
-            toast.error("Video upload faild")
+            if (axios.isAxiosError(e)) {
+                e as AxiosError
+                if (e.response?.status === 413) {
+                    toast.error(`${t("too large")}`)
+                }
+            } else {
+                toast.error('Sth went wrong try again later')
+            }
             return { success: false, message: "" }
         }
     }, [API, courses])
