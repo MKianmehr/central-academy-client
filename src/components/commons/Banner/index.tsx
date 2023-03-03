@@ -6,16 +6,17 @@ import { Button } from '@mui/material'
 
 // Styles Import
 import styles from './styles.module.scss'
+import Link from 'next/link';
 
 interface Banner {
-    onClickButton: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    href: string;
     title: string;
     description: string;
     buttonText: string;
     imageAlt: string;
     imageSrc: string;
 }
-const Banner: React.FC<Banner> = ({ onClickButton, title, description, buttonText, imageAlt, imageSrc }) => {
+const Banner: React.FC<Banner> = ({ href, title, description, buttonText, imageAlt, imageSrc }) => {
     return (
         <div className={styles.bannerContainer}>
             <div className={styles.banner}>
@@ -29,7 +30,7 @@ const Banner: React.FC<Banner> = ({ onClickButton, title, description, buttonTex
             <div className={styles.banner__text}>
                 <h1>{title}</h1>
                 <p>{description}</p>
-                <Button onClick={onClickButton} className={styles.banner__button}>{buttonText}</Button>
+                <Link href={href} className={styles.banner__button}>{buttonText}</Link>
             </div>
         </div>
     )
